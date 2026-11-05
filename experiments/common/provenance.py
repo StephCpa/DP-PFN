@@ -36,7 +36,7 @@ def provenance(script: str, seed: int | None = None, extra: dict | None = None) 
     block = {
         "script": os.path.relpath(script, REPO_ROOT),
         "git_commit": _git("rev-parse", "HEAD"),
-        "git_dirty": bool(_git("status", "--porcelain")),
+        "git_dirty": bool(_git("status", "--porcelain", "--untracked-files=no")),
         "utc_time": _dt.datetime.now(_dt.timezone.utc).isoformat(timespec="seconds"),
         "python": sys.version.split()[0],
         "platform": platform.platform(),
