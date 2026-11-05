@@ -1,0 +1,616 @@
+% DP-PFN bibliography.
+% Every entry carries a `verified` field:
+%   web      = title/authors/venue confirmed by web search on 2026-11-05
+%   code     = additionally checked against the official repository
+%   memory   = standard reference, not re-checked online (low risk)
+%   unverified = could not be confirmed; do not cite until checked
+% Full-text arXiv/OpenReview pages were not reachable from the research
+% container (network policy), so page-level claims carry the caveats noted.
+
+% ------------------------------------------------------------------ PFNs / backbones
+@inproceedings{muller2022pfn,
+  title     = {Transformers Can Do Bayesian Inference},
+  author    = {M{\"u}ller, Samuel and Hollmann, Noah and Pineda Arango, Sebastian and Grabocka, Josif and Hutter, Frank},
+  booktitle = {ICLR},
+  year      = {2022},
+  verified  = {memory}
+}
+
+@article{hollmann2025tabpfn,
+  title     = {Accurate predictions on small data with a tabular foundation model},
+  author    = {Hollmann, Noah and M{\"u}ller, Samuel and Purucker, Lennart and others},
+  journal   = {Nature},
+  year      = {2025},
+  doi       = {10.1038/s41586-024-08328-6},
+  verified  = {web}
+}
+
+@misc{priorlabs2025tabpfn25,
+  title     = {{TabPFN-2.5}: Advancing the State of the Art in Tabular Foundation Models},
+  author    = {{Prior Labs}},
+  year      = {2025},
+  eprint    = {2511.08667},
+  archivePrefix = {arXiv},
+  note      = {Up to 50,000 rows and 2,000 features (5x rows, 4x features of v2). Real-TabPFN-2.5 is a variant fine-tuned on real data. The "64 thinking rows" detail in the proposal was not confirmed.},
+  verified  = {web}
+}
+
+@misc{garg2025realtabpfn,
+  title     = {Real-{TabPFN}: Improving Tabular Foundation Models via Continued Pre-training With Real-World Data},
+  author    = {Garg, Anurag and others},
+  year      = {2025},
+  eprint    = {2507.03971},
+  archivePrefix = {arXiv},
+  note      = {Proposition 0 failure case: weights depend on real tables.},
+  verified  = {web}
+}
+
+@misc{regenwetter2026tredbench,
+  title     = {Engineering Regression Without Real-Data Training},
+  author    = {Regenwetter, Lyle and Yu, Rosen and Picard, Cyril and Ahmed, Faez},
+  year      = {2026},
+  eprint    = {2603.04692},
+  archivePrefix = {arXiv},
+  note      = {Introduces TREDBench; continued pretraining of TabPFN-2.5 on 200 synthetic datasets SELECTED (out of 10,000) by embedding similarity to real engineering data. Weights therefore depend on real reference data through selection; Prop. 0 holds only if the private table is disjoint from that reference set. Regression only.},
+  verified  = {web}
+}
+
+@inproceedings{choi2026nodepfn,
+  title     = {Learning Posterior Predictive Distributions for Node Classification from Synthetic Graph Priors},
+  author    = {Choi, Jeongwhan and Kim, Jongwoo and Kang, Woosung and Park, Noseong},
+  booktitle = {ICLR},
+  year      = {2026},
+  eprint    = {2604.19028},
+  archivePrefix = {arXiv},
+  url       = {https://github.com/jeongwhanchoi/NodePFN},
+  note      = {Checked against code (commit cac883d): pretraining graphs have 1024 nodes (bptt=1024); prior = 50/50 SBM and Erdos-Renyi; SBM "homophily_rate" h in U(0.1,0.9) sets p_out = p_in (1-h) with p_in in U(0.01,0.1) (always assortative); ER p in U(0.01,0.05); classes U{2..20}. Inference: gcn_norm symmetric normalisation with self-loops, optional feature smoothing (0-4 steps), TruncatedSVD fitted on ALL node features (10-50 comps), ensemble size 1-32 -- all set per dataset in run.sh.},
+  verified  = {code}
+}
+
+@inproceedings{eremeev2026graphpfn,
+  title     = {{GraphPFN}: A Prior-Data Fitted Graph Foundation Model},
+  author    = {Eremeev, Dmitry and Platonov, Oleg and Bazhenov, Gleb and Babenko, Artem and Prokhorenkova, Liudmila},
+  year      = {2025},
+  eprint    = {2509.21489},
+  archivePrefix = {arXiv},
+  note      = {Built on LimiX with attention-based message passing; pretrained on synthetic graphs. A second graph PFN backbone, not only a source for attention masking.},
+  verified  = {web}
+}
+
+@inproceedings{eremeev2025g2tfm,
+  title     = {Turning Tabular Foundation Models into Graph Foundation Models},
+  author    = {Eremeev, Dmitry and Bazhenov, Gleb and Platonov, Oleg and Babenko, Artem and Prokhorenkova, Liudmila},
+  booktitle = {NeurIPS},
+  year      = {2025},
+  eprint    = {2508.20906},
+  archivePrefix = {arXiv},
+  note      = {G2T-FM: neighbourhood aggregation + structural encodings + TabPFNv2/LimiX. The proposal's "GAP features + TabPFN" baseline is a DP version of this.},
+  verified  = {web}
+}
+
+@inproceedings{nagler2023pfnstats,
+  title     = {Statistical Foundations of Prior-Data Fitted Networks},
+  author    = {Nagler, Thomas},
+  booktitle = {ICML},
+  year      = {2023},
+  eprint    = {2305.11097},
+  archivePrefix = {arXiv},
+  note      = {Variance vanishes iff per-sample sensitivity vanishes; directly relevant to Prop. B3 / T3.},
+  verified  = {web}
+}
+
+@inproceedings{feuer2024tunetables,
+  title     = {{TuneTables}: Context Optimization for Scalable Prior-Data Fitted Networks},
+  author    = {Feuer, Benjamin and Schirrmeister, Robin Tibor and Cherepanova, Valeriia and Hegde, Chinmay and Hutter, Frank and Goldblum, Micah and Cohen, Niv and White, Colin},
+  booktitle = {NeurIPS},
+  year      = {2024},
+  eprint    = {2402.11137},
+  archivePrefix = {arXiv},
+  note      = {Suggests DP prompt tuning with PFNs as future work.},
+  verified  = {web}
+}
+
+% ------------------------------------------------------------------ DP + tabular foundation models (closest work)
+@misc{alrawajfeh2026privtab,
+  title     = {Efficient Provably Private Classification with a Tabular Foundation Model},
+  author    = {Alrawajfeh, Talal and others, incl. Diaconu, Cristiana and R{\"a}is{\"a}, Ossi and Honkela, Antti},
+  year      = {2026},
+  eprint    = {2610.10068},
+  archivePrefix = {arXiv},
+  url       = {https://github.com/TrustworthyMLHelsinki/PrivTab},
+  note      = {PrivTab. Checked against code (commit 26c6b6d): synthetic-only pretraining (TabICL mix_scm prior); 3 private Perceiver cross-attention layers with tanh-bounded scores and unit-norm values (replace-one sensitivity 2 sqrt(128) per layer, Lean-verified), Gaussian noise sigma = 2 sqrt(384)/mu, mu-GDP over 3 adaptive layers; mu is sampled log-uniformly in [0.16, 64] during training (noise-aware); release = reusable 5x128x256 summary, predictions are post-processing. Baselines: DP-LR, DP-MLP on 33 TabArena datasets. CLOSEST CONCURRENT WORK to DP-PFN Sections 3 (B3/T3) and 5.},
+  verified  = {code}
+}
+
+@misc{wahdany2026tabpate,
+  title     = {{TabPATE}: Differentially Private Tabular In-Context Learning Without Public Data},
+  author    = {Wahdany, Dariush and Jagielski, Matthew and Cresswell, Jesse C. and Dziedzic, Adam and Boenisch, Franziska},
+  year      = {2026},
+  eprint    = {2606.31474},
+  archivePrefix = {arXiv},
+  howpublished = {2nd ICML Workshop on Foundation Models for Structured Data},
+  note      = {Disjoint-shard teachers = one frozen TFM; synthetic queries from the feature schema (optional DP marginals); private aggregation (reported as Confident-GNMax in secondary summaries; not confirmed from full text); releases a student context. Overlaps Mechanisms C1 and C4.},
+  verified  = {web}
+}
+
+@misc{poetry2026,
+  title     = {Private {PoEtry}: Private In-Context Learning via Product of Experts},
+  year      = {2026},
+  eprint    = {2602.05012},
+  archivePrefix = {arXiv},
+  note      = {Product-of-experts aggregation of ICL predictions in log space with clipping for bounded sensitivity; (eps, delta)-DP w.r.t. one in-context example. Overlaps Mechanism C3 (LogPool). Authors not confirmed.},
+  verified  = {web}
+}
+
+@inproceedings{carey2024dptabicl,
+  title     = {{DP-TabICL}: In-Context Learning with Differentially Private Tabular Data},
+  author    = {Carey, Alycia N. and Bhaila, Karuna and Edemacu, Kennedy and Wu, Xintao},
+  booktitle = {IEEE BigData},
+  year      = {2024},
+  eprint    = {2403.05681},
+  archivePrefix = {arXiv},
+  verified  = {web}
+}
+
+@misc{carvalho2026amia,
+  title     = {Privacy Vulnerabilities of Attention Layers in Tabular Foundation Models and Protection of High-Risk Queries},
+  author    = {Carvalho, T{\^a}nia and Cordy, Maxime},
+  year      = {2026},
+  eprint    = {2601.15874},
+  archivePrefix = {arXiv},
+  verified  = {web}
+}
+
+@misc{probing2026memorization,
+  title     = {Probing Memorization of Tabular In-Context Learning},
+  year      = {2026},
+  eprint    = {2606.31208},
+  archivePrefix = {arXiv},
+  note      = {Only the title and reference list surfaced; content not checked.},
+  verified  = {unverified}
+}
+
+@inproceedings{datasetinference2026tfm,
+  title     = {Dataset Inference for Data Provenance and Privacy Auditing in Tabular Foundation Models},
+  booktitle = {ICML},
+  year      = {2026},
+  note      = {Small TabPFN-style models trained with TFM-Playground (automl/TFM-Playground); artefacts at huggingface.co/SprintML/tfms.},
+  verified  = {web}
+}
+
+@misc{byun2025riskincontext,
+  title     = {Risk In Context: Benchmarking Privacy Leakage of Foundation Models in Synthetic Tabular Data Generation},
+  author    = {Byun, Jessup and Lin, Xiaofeng and Ward, Joshua and Cheng, Guang},
+  year      = {2025},
+  eprint    = {2507.17066},
+  archivePrefix = {arXiv},
+  verified  = {web}
+}
+
+@inproceedings{tran2026tabpe,
+  title     = {Differentially Private Synthetic Data via {APIs} 4: Tabular Data},
+  author    = {{Tran} and {Backurs} and {Lin} and {Reis} and {Xiong} and {Yekhanin}},
+  booktitle = {ICML},
+  year      = {2026},
+  eprint    = {2606.08259},
+  archivePrefix = {arXiv},
+  note      = {Surnames only, as listed by the search result; fill in given names from the paper before citing.},
+  verified  = {web}
+}
+
+% ------------------------------------------------------------------ DP in-context learning
+@inproceedings{wu2024dpicl,
+  title     = {Privacy-Preserving In-Context Learning for Large Language Models},
+  author    = {Wu, Tong and Panda, Ashwinee and Wang, Jiachen T. and Mittal, Prateek},
+  booktitle = {ICLR},
+  year      = {2024},
+  eprint    = {2305.01639},
+  archivePrefix = {arXiv},
+  note      = {arXiv v1 (2023) was titled "Differentially Private In-Context Learning" with Panda first; the proposal's "Panda et al. 2023" refers to this line. Cite the ICLR 2024 version.},
+  verified  = {web}
+}
+
+@inproceedings{cautionary2024dpicl,
+  title     = {A Cautionary Tale on the Evaluation of Differentially Private In-Context Learning},
+  booktitle = {NeurIPS 2024 Workshop},
+  year      = {2024},
+  url       = {https://neurips.cc/virtual/2024/103349},
+  verified  = {web}
+}
+
+@inproceedings{duan2023promptpate,
+  title     = {Flocks of Stochastic Parrots: Differentially Private Prompt Learning for Large Language Models},
+  author    = {Duan, Haonan and Dziedzic, Adam and Papernot, Nicolas and Boenisch, Franziska},
+  booktitle = {NeurIPS},
+  year      = {2023},
+  note      = {PromptPATE; TabPATE follows its teacher-student design.},
+  verified  = {memory}
+}
+
+% ------------------------------------------------------------------ Bayesian DP, posterior sampling, noise-aware inference
+@inproceedings{dimitrakakis2014robust,
+  title     = {Robust and Private {B}ayesian Inference},
+  author    = {Dimitrakakis, Christos and Nelson, Blaine and Mitrokotsa, Aikaterini and Rubinstein, Benjamin I. P.},
+  booktitle = {ALT},
+  year      = {2014},
+  verified  = {memory}
+}
+
+@inproceedings{wang2015privacyforfree,
+  title     = {Privacy for Free: Posterior Sampling and Stochastic Gradient {M}onte {C}arlo},
+  author    = {Wang, Yu-Xiang and Fienberg, Stephen E. and Smola, Alexander J.},
+  booktitle = {ICML},
+  year      = {2015},
+  eprint    = {1502.07645},
+  archivePrefix = {arXiv},
+  note      = {Bounded log-likelihood => one posterior sample is DP. The 4B constant (for |log p| <= B) matches the proposal's remark but was not re-read from the PDF.},
+  verified  = {web}
+}
+
+@inproceedings{foulds2016ops,
+  title     = {On the Theory and Practice of Privacy-Preserving {B}ayesian Data Analysis},
+  author    = {Foulds, James and Geumlek, Joseph and Welling, Max and Chaudhuri, Kamalika},
+  booktitle = {UAI},
+  year      = {2016},
+  eprint    = {1603.07294},
+  archivePrefix = {arXiv},
+  note      = {One-posterior-sample (OPS) is data-inefficient (asymptotic relative efficiency) versus Laplace noise on sufficient statistics + Bayesian inference. Direct prior evidence for open question T2.},
+  verified  = {web}
+}
+
+@inproceedings{geumlek2017rdp,
+  title     = {R{\'e}nyi Differential Privacy Mechanisms for Posterior Sampling},
+  author    = {Geumlek, Joseph and Song, Shuang and Chaudhuri, Kamalika},
+  booktitle = {NeurIPS},
+  year      = {2017},
+  verified  = {memory}
+}
+
+@inproceedings{williams2010probabilistic,
+  title     = {Probabilistic Inference and Differential Privacy},
+  author    = {Williams, Oliver and McSherry, Frank},
+  booktitle = {NeurIPS},
+  year      = {2010},
+  verified  = {memory}
+}
+
+@inproceedings{bernstein2018dpbayes,
+  title     = {Differentially Private {B}ayesian Inference for Exponential Families},
+  author    = {Bernstein, Garrett and Sheldon, Daniel R.},
+  booktitle = {NeurIPS},
+  year      = {2018},
+  verified  = {memory}
+}
+
+@inproceedings{ju2022damcmc,
+  title     = {Data Augmentation {MCMC} for {B}ayesian Inference from Privatized Data},
+  author    = {Ju, Nianqiao and Awan, Jordan and Gong, Ruobin and Rao, Vinayak},
+  booktitle = {NeurIPS},
+  year      = {2022},
+  verified  = {memory}
+}
+
+@article{xiong2025sbi,
+  title     = {Simulation-based {B}ayesian Inference from Privacy Protected Data},
+  author    = {Xiong, Yifei and Ju, Nianqiao and Zhang, Sanguo},
+  journal   = {TMLR},
+  year      = {2025},
+  eprint    = {2310.12781},
+  archivePrefix = {arXiv},
+  verified  = {web}
+}
+
+@inproceedings{raisa2023napsu,
+  title     = {Noise-Aware Statistical Inference with Differentially Private Synthetic Data},
+  author    = {R{\"a}is{\"a}, Ossi and J{\"a}lk{\"o}, Joonas and Kaski, Samuel and Honkela, Antti},
+  booktitle = {AISTATS},
+  year      = {2023},
+  eprint    = {2205.14485},
+  archivePrefix = {arXiv},
+  note      = {NAPSU-MQ. Naive analysis of DP synthetic data gives too-narrow intervals; noise-aware generation fixes it. Prior evidence for Prop. D2 (synthetic rows => over-confidence).},
+  verified  = {web}
+}
+
+@article{raisa2025consistent,
+  title     = {On Consistent {B}ayesian Inference from Synthetic Data},
+  author    = {R{\"a}is{\"a}, Ossi and J{\"a}lk{\"o}, Joonas and Honkela, Antti},
+  journal   = {JMLR},
+  volume    = {26},
+  year      = {2025},
+  note      = {Needs synthetic sets larger than the original and congeniality; with DP data the PPD must be noise-aware.},
+  verified  = {web}
+}
+
+@inproceedings{esmaeili2021antipodes,
+  title     = {Antipodes of Label Differential Privacy: {PATE} and {ALIBI}},
+  author    = {Malek Esmaeili, Mani and Mironov, Ilya and Prasad, Karthik and Shilov, Igor and Tram{\`e}r, Florian},
+  booktitle = {NeurIPS},
+  year      = {2021},
+  eprint    = {2106.03408},
+  archivePrefix = {arXiv},
+  note      = {ALIBI = Laplace label noise + Bayesian denoising (a noise-aware label-DP baseline for E4/E5).},
+  verified  = {web}
+}
+
+@inproceedings{ghazi2021labeldp,
+  title     = {Deep Learning with Label Differential Privacy},
+  author    = {Ghazi, Badih and Golowich, Noah and Kumar, Ravi and Manurangsi, Pasin and Zhang, Chiyuan},
+  booktitle = {NeurIPS},
+  year      = {2021},
+  note      = {RR-with-prior; label-DP baseline.},
+  verified  = {memory}
+}
+
+% ------------------------------------------------------------------ private prediction / PATE
+@inproceedings{nissim2007smooth,
+  title     = {Smooth Sensitivity and Sampling in Private Data Analysis},
+  author    = {Nissim, Kobbi and Raskhodnikova, Sofya and Smith, Adam},
+  booktitle = {STOC},
+  year      = {2007},
+  note      = {Subsample-and-aggregate; Mechanism C1 is an instance.},
+  verified  = {memory}
+}
+
+@inproceedings{dwork2018privatepred,
+  title     = {Privacy-preserving Prediction},
+  author    = {Dwork, Cynthia and Feldman, Vitaly},
+  booktitle = {COLT},
+  year      = {2018},
+  verified  = {memory}
+}
+
+@inproceedings{bassily2018modelagnostic,
+  title     = {Model-Agnostic Private Learning},
+  author    = {Bassily, Raef and Thakkar, Om and Thakurta, Abhradeep},
+  booktitle = {NeurIPS},
+  year      = {2018},
+  verified  = {memory}
+}
+
+@inproceedings{naor2023everlasting,
+  title     = {Private Everlasting Prediction},
+  author    = {Naor, Moni and Nissim, Kobbi and Stemmer, Uri and Yan, Chao},
+  booktitle = {NeurIPS},
+  year      = {2023},
+  eprint    = {2305.09579},
+  archivePrefix = {arXiv},
+  note      = {Theory for unbounded query streams (R1 vs R2 trade-off).},
+  verified  = {web}
+}
+
+@inproceedings{papernot2017pate,
+  title     = {Semi-supervised Knowledge Transfer for Deep Learning from Private Training Data},
+  author    = {Papernot, Nicolas and Abadi, Mart{\'\i}n and Erlingsson, {\'U}lfar and Goodfellow, Ian and Talwar, Kunal},
+  booktitle = {ICLR},
+  year      = {2017},
+  verified  = {memory}
+}
+
+@inproceedings{papernot2018gnmax,
+  title     = {Scalable Private Learning with {PATE}},
+  author    = {Papernot, Nicolas and Song, Shuang and Mironov, Ilya and Raghunathan, Ananth and Talwar, Kunal and Erlingsson, {\'U}lfar},
+  booktitle = {ICLR},
+  year      = {2018},
+  verified  = {memory}
+}
+
+@inproceedings{balle2018subsampling,
+  title     = {Privacy Amplification by Subsampling: Tight Analyses via Couplings and Divergences},
+  author    = {Balle, Borja and Barthe, Gilles and Gaboardi, Marco},
+  booktitle = {NeurIPS},
+  year      = {2018},
+  note      = {WOR + substitution: log(1 + (m/n)(e^eps - 1)); used in Thm. A7 (numbers re-derived in X0).},
+  verified  = {memory}
+}
+
+@inproceedings{papernot2022tuning,
+  title     = {Hyperparameter Tuning with {R}{\'e}nyi Differential Privacy},
+  author    = {Papernot, Nicolas and Steinke, Thomas},
+  booktitle = {ICLR},
+  year      = {2022},
+  verified  = {memory}
+}
+
+@inproceedings{mironov2017rdp,
+  title     = {R{\'e}nyi Differential Privacy},
+  author    = {Mironov, Ilya},
+  booktitle = {IEEE CSF},
+  year      = {2017},
+  verified  = {memory}
+}
+
+@article{kasiviswanathan2014semantics,
+  title     = {On the `Semantics' of Differential Privacy: A {B}ayesian Formulation},
+  author    = {Kasiviswanathan, Shiva Prasad and Smith, Adam},
+  journal   = {Journal of Privacy and Confidentiality},
+  year      = {2014},
+  verified  = {memory}
+}
+
+@inproceedings{steinke2023onerun,
+  title     = {Privacy Auditing with One (1) Training Run},
+  author    = {Steinke, Thomas and Nasr, Milad and Jagielski, Matthew},
+  booktitle = {NeurIPS},
+  year      = {2023},
+  verified  = {memory}
+}
+
+@article{tresp2000bcm,
+  title     = {A {B}ayesian Committee Machine},
+  author    = {Tresp, Volker},
+  journal   = {Neural Computation},
+  year      = {2000},
+  verified  = {memory}
+}
+
+@article{fong2023martingale,
+  title     = {Martingale Posterior Distributions},
+  author    = {Fong, Edwin and Holmes, Chris and Walker, Stephen G.},
+  journal   = {JRSS-B},
+  year      = {2023},
+  verified  = {memory}
+}
+
+@inproceedings{kim2021lipschitz,
+  title     = {The {L}ipschitz Constant of Self-Attention},
+  author    = {Kim, Hyunjik and Papamakarios, George and Mnih, Andriy},
+  booktitle = {ICML},
+  year      = {2021},
+  verified  = {memory}
+}
+
+% ------------------------------------------------------------------ graphs
+@inproceedings{sajadmanesh2023gap,
+  title     = {{GAP}: Differentially Private Graph Neural Networks with Aggregation Perturbation},
+  author    = {Sajadmanesh, Sina and Shamsabadi, Ali Shahin and Bellet, Aur{\'e}lien and Gatica-Perez, Daniel},
+  booktitle = {USENIX Security},
+  year      = {2023},
+  pages     = {3223--3240},
+  url       = {https://github.com/sisaman/GAP},
+  verified  = {web}
+}
+
+@inproceedings{sajadmanesh2024progap,
+  title     = {{ProGAP}: Progressive Graph Neural Networks with Differential Privacy Guarantees},
+  author    = {Sajadmanesh, Sina and Gatica-Perez, Daniel},
+  booktitle = {WSDM},
+  year      = {2024},
+  verified  = {memory}
+}
+
+@inproceedings{chien2023dpdgc,
+  title     = {Differentially Private Decoupled Graph Convolutions for Multigranular Topology Protection},
+  author    = {Chien, Eli and Chen, Wei-Ning and Pan, Chao and Li, Pan and {\"O}zg{\"u}r, Ayfer and Milenkovic, Olgica},
+  booktitle = {NeurIPS},
+  year      = {2023},
+  verified  = {memory}
+}
+
+@inproceedings{zhu2023blink,
+  title     = {Blink: Link Local Differential Privacy in Graph Neural Networks via {B}ayesian Estimation},
+  author    = {Zhu, Xiaochen and Tan, Vincent Y. F. and Xiao, Xiaokui},
+  booktitle = {ACM CCS},
+  year      = {2023},
+  verified  = {memory}
+}
+
+@inproceedings{wu2022linkteller,
+  title     = {{LinkTeller}: Recovering Private Edges from Graph Neural Networks via Influence Analysis},
+  author    = {Wu, Fan and Long, Yunhui and Zhang, Ce and Li, Bo},
+  booktitle = {IEEE S\&P},
+  year      = {2022},
+  eprint    = {2108.06504},
+  archivePrefix = {arXiv},
+  note      = {Link-inference attack for E7; also introduces the LapGraph DP-GCN baseline.},
+  verified  = {web}
+}
+
+@inproceedings{sajadmanesh2021lpgnn,
+  title     = {Locally Private Graph Neural Networks},
+  author    = {Sajadmanesh, Sina and Gatica-Perez, Daniel},
+  booktitle = {ACM CCS},
+  year      = {2021},
+  verified  = {memory}
+}
+
+@article{olatunji2023privgnn,
+  title     = {Releasing Graph Neural Networks with Differential Privacy Guarantees},
+  author    = {Olatunji, Iyiola E. and Funke, Thorben and Khosla, Megha},
+  journal   = {TMLR},
+  year      = {2023},
+  eprint    = {2109.08907},
+  archivePrefix = {arXiv},
+  verified  = {web}
+}
+
+@misc{daigavane2021nodedp,
+  title     = {Node-Level Differentially Private Graph Neural Networks},
+  author    = {Daigavane, Ameya and Madan, Gagan and Sinha, Aditya and Thakurta, Abhradeep Guha and Aggarwal, Gaurav and Jain, Prateek},
+  year      = {2021},
+  verified  = {memory}
+}
+
+@inproceedings{bhaila2024ldpgnn,
+  title     = {Local Differential Privacy in Graph Neural Networks: a Reconstruction Approach},
+  author    = {Bhaila, Karuna and Huang, Wen and Wu, Yongkai and Wu, Xintao},
+  booktitle = {SDM},
+  year      = {2024},
+  eprint    = {2309.08569},
+  archivePrefix = {arXiv},
+  note      = {Label RR + denoising for node classification (E5 baseline).},
+  verified  = {web}
+}
+
+@inproceedings{deshpande2018csbm,
+  title     = {Contextual Stochastic Block Models},
+  author    = {Deshpande, Yash and Sen, Subhabrata and Montanari, Andrea and Mossel, Elchanan},
+  booktitle = {NeurIPS},
+  year      = {2018},
+  note      = {Threshold rigorous in the large-degree limit -- the regime edge RR puts the graph in (degree ~ N rho).},
+  verified  = {web}
+}
+
+@article{lu2023csbm,
+  title     = {Contextual Stochastic Block Model: Sharp Thresholds and Contiguity},
+  author    = {Lu, Chen and Sen, Subhabrata},
+  journal   = {JMLR},
+  volume    = {24},
+  year      = {2023},
+  eprint    = {2011.09841},
+  archivePrefix = {arXiv},
+  verified  = {web}
+}
+
+@article{hehir2022spectralldp,
+  title     = {Consistency of Privacy-Preserving Spectral Clustering under the Stochastic Block Model},
+  author    = {Hehir, Jonathan and Slavkovi{\'c}, Aleksandra and Niu, Xiaoyue},
+  journal   = {Journal of Privacy and Confidentiality},
+  year      = {2022},
+  eprint    = {2105.12615},
+  archivePrefix = {arXiv},
+  note      = {Edge-flip (RR) + spectral clustering under edge-LDP; closest prior work to T7.},
+  verified  = {web}
+}
+
+@misc{koskela2025spectralsbm,
+  title     = {On the Price of Differential Privacy for Spectral Clustering over Stochastic Block Models},
+  author    = {Koskela, Antti and Seif, Mohamad and Goldsmith, Andrea},
+  year      = {2025},
+  eprint    = {2505.05816},
+  archivePrefix = {arXiv},
+  verified  = {web}
+}
+
+% ------------------------------------------------------------------ DP tabular baselines
+@article{mckenna2022aim,
+  title     = {{AIM}: An Adaptive and Iterative Mechanism for Differentially Private Synthetic Data},
+  author    = {McKenna, Ryan and Mullins, Brett and Sheldon, Daniel and Miklau, Gerome},
+  journal   = {PVLDB},
+  year      = {2022},
+  verified  = {memory}
+}
+
+@article{mckenna2021mst,
+  title     = {Winning the {NIST} Contest: A Scalable and General Approach to Differentially Private Synthetic Data},
+  author    = {McKenna, Ryan and Miklau, Gerome and Sheldon, Daniel},
+  journal   = {Journal of Privacy and Confidentiality},
+  year      = {2021},
+  note      = {MST.},
+  verified  = {memory}
+}
+
+@article{zhang2017privbayes,
+  title     = {{PrivBayes}: Private Data Release via {B}ayesian Networks},
+  author    = {Zhang, Jun and Cormode, Graham and Procopiuc, Cecilia M. and Srivastava, Divesh and Xiao, Xiaokui},
+  journal   = {ACM TODS},
+  year      = {2017},
+  verified  = {memory}
+}
+
+@inproceedings{nori2021dpebm,
+  title     = {Accuracy, Interpretability, and Differential Privacy via Explainable Boosting},
+  author    = {Nori, Harsha and Caruana, Rich and Bu, Zhiqi and Shen, Judy Hanwen and Kulkarni, Janardhan},
+  booktitle = {ICML},
+  year      = {2021},
+  verified  = {memory}
+}
