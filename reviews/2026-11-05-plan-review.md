@@ -17,7 +17,7 @@ Companion files:
 3. **Prop. G3's threshold should use the dense-regime SNR.** Simulation confirms this. At NodePFN's graph size, ε = 2 edge RR erases structural signal, so edge-LDP gains must come from features.
 4. **NodePFN facts in Sections 6–7 need fixing.** The prior is always assortative, RR leaves its density range, and the released pipeline tunes preprocessing per dataset.
 5. **E1-lite supports the amortization caveat, moderately.** A PFN within 0.0006 nats of exact Bayes tracks the exact leakage on typical data, but leaks 1.2–2.5× the exact worst case under search. It stayed far below 2B_y.
-6. **D2-check confirms Prop. D2 strongly for label RR, weakly for DP synthetic data.** Gate 2's premise holds; E4 needs high-dimensional releases to test the synthetic-data half.
+6. **Gate 2 passes in pilot form for label RR.** D2-check confirms Prop. D2 strongly for label RR, weakly for DP synthetic data. E4-lite then trained an actual noise-aware PFN: it recovers 71–86% of the exact noise-aware NLL gain over naive plug-in at n = 128, with unchanged accuracy and no cost on clean data. The synthetic-data half needs high-dimensional releases.
 
 Recommended plan changes are in §5. Hypothesis status is in §6.
 
@@ -196,6 +196,31 @@ Spectral recovery on edge-RR SBMs, a = 20, b = 4. Figure: `artifacts/G3-rr-sbm-t
 - **The dense-regime SNR fits.** Simulated corr² tracks 1 − 1/SNR_dense (ε = 2, N = 100: 0.552 vs 0.552), up to finite-size smoothing near the threshold. The sparse KS form is too pessimistic at small ε. The proposal's heuristic is close only by cancellation of dropped terms.
 - **Consequence for E6.** At NodePFN's training size (N = 1024) and ε = 2, structure-only signal is essentially gone (overlap 0.04). Edge-LDP DP-NodePFN can only win through node features. The "learned denoising beats Blink" hypothesis must be tested where structure survives: ε ≥ 4, small or dense graphs.
 
+### 4.6 E4-lite: a trained noise-aware PFN on label RR (H4, Gate 2)
+
+*Added after the first review pass.* Same prior as D2-check. Two E1-architecture networks, each trained 4,000 steps × 64 tasks with n ~ U{8..128}:
+
+- `aware`: RR contexts with ε ~ log-U[0.25, 6] and ρ as input, **clean** query targets.
+- `naive`: clean training, then fed the RR release, like off-the-shelf TabPFN.
+
+200 tasks × 400 clean test labels per cell. Artifacts: `artifacts/E4-lite-noise-aware-rr/{evaluation,summary}.json`.
+
+| n | ε | NLL naive PFN / **aware PFN** / exact aware | ECE naive / **aware** / exact | Over-conf. naive / **aware** / exact | KL to exact aware target: naive / **aware** | Gap recovered |
+| ---: | ---: | --- | --- | --- | --- | ---: |
+| 128 | 0.5 | 0.644 / **0.623** / 0.615 | 0.140 / **0.126** / 0.117 | −0.091 / **−0.039** / +0.005 | 0.029 / **0.008** | **71%** |
+| 128 | 1 | 0.604 / **0.575** / 0.571 | 0.120 / **0.084** / 0.079 | −0.097 / **−0.018** / +0.007 | 0.035 / **0.004** | **86%** |
+| 128 | 2 | 0.565 / **0.554** / 0.552 | 0.079 / **0.064** / 0.062 | −0.056 / **−0.014** / +0.000 | 0.013 / **0.002** | **84%** |
+| 128 | ∞ (clean) | 0.5358 / **0.5357** / 0.5342 | 0.056 / **0.056** / 0.052 | −0.010 / **−0.007** / +0.002 | 0.001 / 0.001 | — |
+| 32 | 1 | 0.614 / **0.611** / 0.607 | 0.126 / **0.119** / 0.118 | −0.041 / **+0.017** / −0.012 | 0.005 / 0.004 | 49% |
+| 32 | 0.5 | 0.6538 / **0.6537** / 0.6527 | 0.132 / 0.134 / 0.132 | −0.015 / +0.016 / −0.016 | 0.002 / 0.005 | — (no gap) |
+
+Gap recovered = (NLL naive PFN − NLL aware PFN) / (NLL naive PFN − NLL exact aware). It is not reported where that gap is < 0.002.
+
+- **The naive PFN *is* the naive target.** Its KL to the exact naive posterior predictive is ≤ 0.0004 under RR. So "TabPFN on RR data is under-confident" is now shown for a trained network, not only for the exact target.
+- **The noise-aware PFN realises most of Thm. D1's gain.** At n = 128 it recovers 71–86% of the achievable NLL improvement, cuts ECE by 0.014–0.036, moves over-confidence from −0.06…−0.10 to −0.01…−0.04, and sits 3.5–8× closer to the exact target. Accuracy is unchanged in every cell. On clean data it costs nothing (NLL 0.5357 vs 0.5358).
+- **Where it falls short.** In the noisiest cell (n = 128, ε = 0.5) it stays under-confident (−0.039 vs the target's +0.005). At n = 32 the naive and aware targets nearly coincide, so amortization error dominates and the network overshoots slightly (+0.016). More training or capacity is the obvious first fix; 4,000 steps is short.
+- **Gate 2 reading: pass for label RR, in pilot form.** It remains open for DP synthetic data and marginals, and at backbone scale with real tables.
+
 ## 5. Recommended changes to the plan
 
 In priority order. Each item says what to change and why.
@@ -237,7 +262,7 @@ In priority order. Each item says what to change and why.
 | H1 | partially supported | Prop. 0 and the wrapper and post-processing guarantees are correct (X0). A third route must be added: certified-by-architecture PFNs (PrivTab). The TREDBench caveat limits "synthetic-only continued pretraining". |
 | H2 | partially supported | E1-lite. Λ is small on typical data and grows under search. The network leaks up to 2.5× the exact worst case, so exact-PPD privacy is not inherited. Better-trained PFNs leak more (B5). **Not observed:** leakage "driven large": stays below 2B_y for a small network. |
 | H3 | partially supported | E3-lite (idealised prior, exact-Bayes teachers). PFN-like teachers win at small n·ε, and C2 picks m within 2× in 42/45 configurations. But C2 needs a pointwise bias floor, and its n* is 2–10× conservative. Real PFN teachers, and trained teachers with charged tuning, are untested. |
-| H4 | partially supported | D2-check (target level, exact Bayes). Confirmed strongly for label RR; the synthetic-data effect is small in low dimension. A *trained* noise-aware PFN has not been tested yet (E4). |
+| H4 | partially supported (label RR: supported in pilot) | D2-check shows the targets differ as predicted. E4-lite shows a *trained* noise-aware PFN recovers 71–86% of the exact NLL gain over naive plug-in at n = 128, at equal accuracy and free on clean data. Open: the synthetic-data half (effect small in low dimension), real data and TabPFN scale. |
 
 ## 7. Limitations of this review and next steps
 
@@ -245,7 +270,7 @@ In priority order. Each item says what to change and why.
 - **No released checkpoints.** HuggingFace was blocked, so no TabPFN or NodePFN weights were run. Every pilot uses closed-form priors and small in-house networks or exact Bayes. They test the *mechanisms and targets*, not backbone-scale behaviour.
 - **Search budgets are small.** E1-lite's adversarial search is a lower bound with a modest budget. E3-lite's trained teacher is untuned logistic regression.
 - **Suggested next iteration**, in order:
-  1. E4 with a *trained* noise-aware PFN on label RR (the cheapest route to Gate 2).
+  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). Next for E4: high-dimensional DP synthetic data and noisy marginals, and longer training for the noisiest cell.
   2. Rerun E3-lite with the E1 network as the teacher, and with tuned plus charged trained teachers.
   3. Write C2′ and the T4 calibration argument (soft scores waste sensitivity) as short theorems.
   4. Read PrivTab and decide the paper's positioning.

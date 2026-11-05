@@ -41,5 +41,6 @@ Iteration 1 (5 Nov 2026) is done: a plan review plus first-round research. Start
   - E3-lite: C2, PFN vs trained teachers, Vote vs LogPool.
   - D2-check: noise-aware calibration.
   - G3-check: edge-RR threshold.
+  - E4-lite: a trained noise-aware PFN on label RR. It recovers 71–86% of the exact calibration gain over naive TabPFN-style use, so Gate 2 passes in pilot form for label RR.
 
 T1–T9 and the full E1–E8 (TabPFN/NodePFN scale, real data) remain to do. Three go/no-go gates (E1, E4, E6) decide whether later phases proceed; the review recommends splitting Gate 1 in two.

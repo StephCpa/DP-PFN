@@ -21,6 +21,8 @@ def main() -> None:
     m = json.loads(MANIFEST.read_text())
     e1 = json.loads((ROOT / "artifacts/E1-lite-amortization-gap/summary.json").read_text()) \
         if (ROOT / "artifacts/E1-lite-amortization-gap/summary.json").exists() else None
+    e4 = json.loads((ROOT / "artifacts/E4-lite-noise-aware-rr/summary.json").read_text()) \
+        if (ROOT / "artifacts/E4-lite-noise-aware-rr/summary.json").exists() else None
 
     experiments = [
         dict(id="X0-theory-audit", title="Numerical audit of all proposal constants; exact one-draw privacy loss",
@@ -51,6 +53,13 @@ def main() -> None:
              summary="Label RR: naive is under-confident, growing with n (n=1000, eps=0.5: ECE 0.165 vs 0.068, "
                      "over-confidence -0.159 vs -0.001); noise-aware fixes it at equal accuracy. DP synthetic data: "
                      "naive over-confident only at n=50 (+0.032) in a 2-parameter model."),
+        dict(id="E4-lite-noise-aware-rr", title="Trained noise-aware PFN vs naive PFN on label-RR releases",
+             tests=["H4"], status="done" if e4 else "running", code="experiments/E4-lite-noise-aware-rr/",
+             artifacts=["artifacts/E4-lite-noise-aware-rr/training_aware.json",
+                        "artifacts/E4-lite-noise-aware-rr/training_naive.json",
+                        "artifacts/E4-lite-noise-aware-rr/evaluation.json",
+                        "artifacts/E4-lite-noise-aware-rr/summary.json"],
+             summary=(e4 or {}).get("headline", "pending")),
         dict(id="G3-rr-sbm-threshold", title="Spectral recovery on edge-RR SBMs vs threshold formulas",
              tests=[], status="done", code="experiments/G3-rr-sbm-threshold/",
              artifacts=["artifacts/G3-rr-sbm-threshold/results.json", "artifacts/G3-rr-sbm-threshold/threshold_eps2.png"],
@@ -66,9 +75,9 @@ def main() -> None:
                "E3-lite (idealised Gaussian prior, exact-Bayes teacher): PFN-like teachers lower DP-Vote error at small "
                "n*eps, and C2 picks m within 2x. But C2 must be pointwise (bias floor 13-16% at m=2) and its n* is "
                "conservative by ~3-10x. Real PFN teachers and tuned/charged trained teachers still to test (E2/E3)."),
-        "H4": ("partially-supported",
-               "Target-level (exact Bayes) D2-check: confirmed strongly for label RR; synthetic-data over-confidence is "
-               "small in low-dimensional settings. A trained noise-aware PFN has not been tested yet (E4)."),
+        "H4": ((e4 or {}).get("h4_status", "partially-supported"),
+               (e4 or {}).get("h4_note", "Target-level (exact Bayes) D2-check: confirmed strongly for label RR; "
+                                         "synthetic-data over-confidence is small in low-dimensional settings.")),
     }
     for h in m["hypotheses"]:
         if h["id"] in status:
@@ -86,7 +95,18 @@ def main() -> None:
         at=NOW, iteration=1, kind="review",
         text="Plan reviewed: theory audit (X0), citation audit + related work (PrivTab, Private PoEtry, TabPATE overlap), "
              "and four CPU pilots (E1-lite, E3-lite, D2-check, G3-check). See reviews/2026-11-05-plan-review.md."))
-    m["updatedAt"] = NOW
+    m["loop"]["history"].append(dict(
+        at="2026-11-05T11:20:00.000Z", iteration=1, kind="replication",
+        text="Independent rerun on a second machine (gpu-gfkd; commit 8f95ca4 logs) reproduced E1 training exactly and "
+             "E1/E3/D2/G3 numbers within sampling noise."))
+    if e4:
+        m["loop"]["history"].append(dict(
+            at="2026-11-05T12:30:00.000Z", iteration=1, kind="experiment",
+            text="E4-lite: " + e4["headline"] + " Gate 2: " + e4["gate2"] + "."))
+        NOW_ = "2026-11-05T12:30:00.000Z"
+    else:
+        NOW_ = NOW
+    m["updatedAt"] = NOW_
     MANIFEST.write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
     print("updated", MANIFEST)
 

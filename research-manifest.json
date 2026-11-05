@@ -47,10 +47,11 @@
       "text": "A PFN trained with the release mechanism inside the prior matches the private-data posterior predictive. Versus naive TabPFN on the same release, it reduces under-confidence on label randomized response and over-confidence on bulk DP synthetic rows, lowering NLL and ECE at the same ε (Thm. D1, Prop. D2).",
       "status": "partially-supported",
       "experiments": [
-        "D2-noise-aware-calibration"
+        "D2-noise-aware-calibration",
+        "E4-lite-noise-aware-rr"
       ],
       "source": "proposal Section 5; tested by E4, Gate 2",
-      "evidence": "Target-level (exact Bayes) D2-check: confirmed strongly for label RR; synthetic-data over-confidence is small in low-dimensional settings. A trained noise-aware PFN has not been tested yet (E4)."
+      "evidence": "D2-check (exact targets) plus E4-lite (trained network): for label RR, a trained noise-aware PFN recovers most of the calibration gain at equal accuracy and costs nothing on clean data. Open: the synthetic-data half of D2, real-data/backbone scale (TabPFN), and the noisiest cell (n=128, eps=0.5), where the network remains under-confident."
     }
   ],
   "loop": {
@@ -67,6 +68,18 @@
         "iteration": 1,
         "kind": "review",
         "text": "Plan reviewed: theory audit (X0), citation audit + related work (PrivTab, Private PoEtry, TabPATE overlap), and four CPU pilots (E1-lite, E3-lite, D2-check, G3-check). See reviews/2026-11-05-plan-review.md."
+      },
+      {
+        "at": "2026-11-05T11:20:00.000Z",
+        "iteration": 1,
+        "kind": "replication",
+        "text": "Independent rerun on a second machine (gpu-gfkd; commit 8f95ca4 logs) reproduced E1 training exactly and E1/E3/D2/G3 numbers within sampling noise."
+      },
+      {
+        "at": "2026-11-05T12:30:00.000Z",
+        "iteration": 1,
+        "kind": "experiment",
+        "text": "E4-lite: A trained noise-aware PFN on label-RR releases recovers 71-86% of the exact noise-aware NLL gain over naive plug-in at n=128 (NLL 0.623/0.575/0.554 vs naive 0.644/0.604/0.565), with unchanged accuracy and no cost on clean data (max NLL difference 0.0002). The naive PFN matches the exact naive target (KL <= 0.0013), i.e. it is under-confident as Prop. D2 predicts. Gate 2: pass (pilot, label RR only)."
       }
     ]
   },
@@ -130,6 +143,22 @@
       "summary": "Label RR: naive is under-confident, growing with n (n=1000, eps=0.5: ECE 0.165 vs 0.068, over-confidence -0.159 vs -0.001); noise-aware fixes it at equal accuracy. DP synthetic data: naive over-confident only at n=50 (+0.032) in a 2-parameter model."
     },
     {
+      "id": "E4-lite-noise-aware-rr",
+      "title": "Trained noise-aware PFN vs naive PFN on label-RR releases",
+      "tests": [
+        "H4"
+      ],
+      "status": "done",
+      "code": "experiments/E4-lite-noise-aware-rr/",
+      "artifacts": [
+        "artifacts/E4-lite-noise-aware-rr/training_aware.json",
+        "artifacts/E4-lite-noise-aware-rr/training_naive.json",
+        "artifacts/E4-lite-noise-aware-rr/evaluation.json",
+        "artifacts/E4-lite-noise-aware-rr/summary.json"
+      ],
+      "summary": "A trained noise-aware PFN on label-RR releases recovers 71-86% of the exact noise-aware NLL gain over naive plug-in at n=128 (NLL 0.623/0.575/0.554 vs naive 0.644/0.604/0.565), with unchanged accuracy and no cost on clean data (max NLL difference 0.0002). The naive PFN matches the exact naive target (KL <= 0.0013), i.e. it is under-confident as Prop. D2 predicts."
+    },
+    {
       "id": "G3-rr-sbm-threshold",
       "title": "Spectral recovery on edge-RR SBMs vs threshold formulas",
       "tests": [],
@@ -152,6 +181,10 @@
     "artifacts/E3-lite-vote-sample-complexity/results_n250.json",
     "artifacts/E3-lite-vote-sample-complexity/results_n500.json",
     "artifacts/E3-lite-vote-sample-complexity/vote_vs_m_n500.png",
+    "artifacts/E4-lite-noise-aware-rr/evaluation.json",
+    "artifacts/E4-lite-noise-aware-rr/summary.json",
+    "artifacts/E4-lite-noise-aware-rr/training_aware.json",
+    "artifacts/E4-lite-noise-aware-rr/training_naive.json",
     "artifacts/G3-rr-sbm-threshold/results.json",
     "artifacts/G3-rr-sbm-threshold/threshold_eps2.png",
     "artifacts/X0-theory-audit/audit.json"
@@ -168,5 +201,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-11-05T11:00:00.000Z"
+  "updatedAt": "2026-11-05T12:30:00.000Z"
 }

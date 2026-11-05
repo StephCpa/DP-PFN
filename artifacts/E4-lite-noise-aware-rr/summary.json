@@ -1,0 +1,273 @@
+{
+  "provenance": {
+    "script": "experiments/E4-lite-noise-aware-rr/summarize.py",
+    "git_commit": "2b06b617e1bead801e089e49617f5a23663f4619",
+    "git_dirty": false,
+    "utc_time": "2026-11-05T12:04:25+00:00",
+    "python": "3.13.18",
+    "platform": "Linux-6.18.44-fc-v236-x86_64-with-glibc2.39",
+    "libraries": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "torch": "2.15.0+cu132",
+      "sklearn": "1.9.1",
+      "networkx": "3.7"
+    },
+    "seed": null,
+    "argv": []
+  },
+  "rows": [
+    {
+      "n": 32,
+      "eps": 0.5,
+      "rho": 0.3775406777858734,
+      "nll": {
+        "naive_pfn": 0.6537806525850307,
+        "aware_pfn": 0.653653126950207,
+        "aware_exact": 0.652697423436353,
+        "oracle": 0.5610193392240526
+      },
+      "ece": {
+        "naive_pfn": 0.13216623843982817,
+        "aware_pfn": 0.13369915594831108,
+        "aware_exact": 0.13214139955498735
+      },
+      "overconf": {
+        "naive_pfn": -0.014539539387077097,
+        "aware_pfn": 0.015985454808920618,
+        "aware_exact": -0.01613673506469493
+      },
+      "acc": {
+        "naive_pfn": 0.6146375,
+        "aware_pfn": 0.61615
+      },
+      "kl_to_aware_target": {
+        "naive_pfn": 0.0014823790988270267,
+        "aware_pfn": 0.005129838693384505
+      },
+      "kl_naive_pfn_to_naive_target": 0.0002055754305040836,
+      "gap_recovered": null
+    },
+    {
+      "n": 32,
+      "eps": 1.0,
+      "rho": 0.2689414322376251,
+      "nll": {
+        "naive_pfn": 0.6140767799390607,
+        "aware_pfn": 0.6104638786136681,
+        "aware_exact": 0.6066783580452266,
+        "oracle": 0.543570598524538
+      },
+      "ece": {
+        "naive_pfn": 0.1262242247063201,
+        "aware_pfn": 0.11886431598030031,
+        "aware_exact": 0.11796134127501687
+      },
+      "overconf": {
+        "naive_pfn": -0.040707623044261704,
+        "aware_pfn": 0.017183091692812742,
+        "aware_exact": -0.012459284398262417
+      },
+      "acc": {
+        "naive_pfn": 0.666625,
+        "aware_pfn": 0.6695
+      },
+      "kl_to_aware_target": {
+        "naive_pfn": 0.004821090249419374,
+        "aware_pfn": 0.004254921854105595
+      },
+      "kl_naive_pfn_to_naive_target": 0.0003504076932119182,
+      "gap_recovered": 0.4883340497794022
+    },
+    {
+      "n": 32,
+      "eps": 2.0,
+      "rho": 0.11920291930437088,
+      "nll": {
+        "naive_pfn": 0.5700366974177511,
+        "aware_pfn": 0.5659421890502406,
+        "aware_exact": 0.5654680639727953,
+        "oracle": 0.5448061362844626
+      },
+      "ece": {
+        "naive_pfn": 0.09092575613535009,
+        "aware_pfn": 0.08794025008091703,
+        "aware_exact": 0.08779190512186996
+      },
+      "overconf": {
+        "naive_pfn": -0.0338489174256567,
+        "aware_pfn": 0.0014016166174784259,
+        "aware_exact": -0.01002935119810559
+      },
+      "acc": {
+        "naive_pfn": 0.7074,
+        "aware_pfn": 0.7062124999999999
+      },
+      "kl_to_aware_target": {
+        "naive_pfn": 0.0029075715858587195,
+        "aware_pfn": 0.0013601285263131777
+      },
+      "kl_naive_pfn_to_naive_target": 0.00038225046053019796,
+      "gap_recovered": 0.8962216857277421
+    },
+    {
+      "n": 32,
+      "eps": Infinity,
+      "rho": 0.0,
+      "nll": {
+        "naive_pfn": 0.5708864341358603,
+        "aware_pfn": 0.5710139037753054,
+        "aware_exact": 0.5697753450675451,
+        "oracle": 0.5697753450675451
+      },
+      "ece": {
+        "naive_pfn": 0.0749438028580742,
+        "aware_pfn": 0.07546586815868504,
+        "aware_exact": 0.07328994456867947
+      },
+      "overconf": {
+        "naive_pfn": 0.009174864711309783,
+        "aware_pfn": 0.012231346583412961,
+        "aware_exact": 0.005197510081288508
+      },
+      "acc": {
+        "naive_pfn": 0.7012375,
+        "aware_pfn": 0.7018
+      },
+      "kl_to_aware_target": {
+        "naive_pfn": 0.0005429130044434765,
+        "aware_pfn": 0.001066776464384764
+      },
+      "kl_naive_pfn_to_naive_target": 0.0005429130044434765,
+      "gap_recovered": null
+    },
+    {
+      "n": 128,
+      "eps": 0.5,
+      "rho": 0.3775406777858734,
+      "nll": {
+        "naive_pfn": 0.6437563108996927,
+        "aware_pfn": 0.6229307466603493,
+        "aware_exact": 0.614471292399305,
+        "oracle": 0.541562858361722
+      },
+      "ece": {
+        "naive_pfn": 0.13980123265497385,
+        "aware_pfn": 0.1256584290647879,
+        "aware_exact": 0.11666130873184896
+      },
+      "overconf": {
+        "naive_pfn": -0.09133213474713266,
+        "aware_pfn": -0.03879800101798028,
+        "aware_exact": 0.005243274226838935
+      },
+      "acc": {
+        "naive_pfn": 0.6567500000000001,
+        "aware_pfn": 0.6561125000000001
+      },
+      "kl_to_aware_target": {
+        "naive_pfn": 0.029250536257042936,
+        "aware_pfn": 0.008194708554357878
+      },
+      "kl_naive_pfn_to_naive_target": 0.00010717433756418277,
+      "gap_recovered": 0.71113372317206
+    },
+    {
+      "n": 128,
+      "eps": 1.0,
+      "rho": 0.2689414322376251,
+      "nll": {
+        "naive_pfn": 0.6038717367681994,
+        "aware_pfn": 0.5753942555684243,
+        "aware_exact": 0.5708863801349053,
+        "oracle": 0.5441918305357414
+      },
+      "ece": {
+        "naive_pfn": 0.1197292776664719,
+        "aware_pfn": 0.08402075816979632,
+        "aware_exact": 0.07877316819464669
+      },
+      "overconf": {
+        "naive_pfn": -0.09679200502540916,
+        "aware_pfn": -0.017617228001262995,
+        "aware_exact": 0.006931351894261557
+      },
+      "acc": {
+        "naive_pfn": 0.7007000000000001,
+        "aware_pfn": 0.6997375
+      },
+      "kl_to_aware_target": {
+        "naive_pfn": 0.03489540238276652,
+        "aware_pfn": 0.004348056653173249
+      },
+      "kl_naive_pfn_to_naive_target": 0.00016143491115173865,
+      "gap_recovered": 0.8633370715486255
+    },
+    {
+      "n": 128,
+      "eps": 2.0,
+      "rho": 0.11920291930437088,
+      "nll": {
+        "naive_pfn": 0.5647835956189604,
+        "aware_pfn": 0.5541649471536935,
+        "aware_exact": 0.5521336234984615,
+        "oracle": 0.544656831245719
+      },
+      "ece": {
+        "naive_pfn": 0.07942565954844466,
+        "aware_pfn": 0.06365175756593235,
+        "aware_exact": 0.0617447113498798
+      },
+      "overconf": {
+        "naive_pfn": -0.05626292364154943,
+        "aware_pfn": -0.013983428664086384,
+        "aware_exact": 0.00027122476646709664
+      },
+      "acc": {
+        "naive_pfn": 0.716975,
+        "aware_pfn": 0.7166
+      },
+      "kl_to_aware_target": {
+        "naive_pfn": 0.012607012346312448,
+        "aware_pfn": 0.0017587475349844775
+      },
+      "kl_naive_pfn_to_naive_target": 0.00028236754260817644,
+      "gap_recovered": 0.8394207010195497
+    },
+    {
+      "n": 128,
+      "eps": Infinity,
+      "rho": 0.0,
+      "nll": {
+        "naive_pfn": 0.5358498515691741,
+        "aware_pfn": 0.5356912094605231,
+        "aware_exact": 0.534192798686757,
+        "oracle": 0.534192798686757
+      },
+      "ece": {
+        "naive_pfn": 0.05632117287483998,
+        "aware_pfn": 0.05634052725173533,
+        "aware_exact": 0.052496492836567626
+      },
+      "overconf": {
+        "naive_pfn": -0.010333751451270653,
+        "aware_pfn": -0.007211137033812703,
+        "aware_exact": 0.0017453265664303143
+      },
+      "acc": {
+        "naive_pfn": 0.726675,
+        "aware_pfn": 0.7268875
+      },
+      "kl_to_aware_target": {
+        "naive_pfn": 0.001340674100726939,
+        "aware_pfn": 0.0013892045755064981
+      },
+      "kl_naive_pfn_to_naive_target": 0.001340674100726939,
+      "gap_recovered": null
+    }
+  ],
+  "headline": "A trained noise-aware PFN on label-RR releases recovers 71-86% of the exact noise-aware NLL gain over naive plug-in at n=128 (NLL 0.623/0.575/0.554 vs naive 0.644/0.604/0.565), with unchanged accuracy and no cost on clean data (max NLL difference 0.0002). The naive PFN matches the exact naive target (KL <= 0.0013), i.e. it is under-confident as Prop. D2 predicts.",
+  "gate2": "pass (pilot, label RR only)",
+  "h4_status": "partially-supported",
+  "h4_note": "D2-check (exact targets) plus E4-lite (trained network): for label RR, a trained noise-aware PFN recovers most of the calibration gain at equal accuracy and costs nothing on clean data. Open: the synthetic-data half of D2, real-data/backbone scale (TabPFN), and the noisiest cell (n=128, eps=0.5), where the network remains under-confident."
+}
