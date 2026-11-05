@@ -54,7 +54,7 @@
         "E4c-lite-mst-margins"
       ],
       "source": "proposal Section 5; tested by E4, Gate 2",
-      "evidence": "Label RR: a trained noise-aware PFN recovers 71-86% of the exact NLL gain over naive plug-in (E4-lite). Synthetic data: the sign of naive mis-calibration depends on the generator. It is under-confident for a noisy full histogram (D2-sparse, exact targets) and over-confident in 12/12 cells for a marginal-based, naive-Bayes-structured synthesizer (E4b-lite, trained networks: +0.081 to +0.186), where non-private naive Bayes is already over-confident (+0.098 to +0.165) and extra synthetic rows add little (+0.003 to +0.040). In E4b-lite the trained noise-aware PFN is calibrated (|over-confidence| <= 0.014) and lowers NLL in 12/12 cells. E4c-lite adds an MST of feature pairs at the same total budget: naive over-confidence rises in all 12 cells (+0.009 to +0.061), most at low eps, because the split budget adds more noise than the tree recovers. The retrained noise-aware PFN stays within +/-0.025 and lowers NLL in every cell. Open: a generator that selects which pairs to release rather than spending a fixed half budget, real data, TabPFN scale."
+      "evidence": "Label RR: a trained noise-aware PFN recovers 71-86% of the exact NLL gain over naive plug-in (E4-lite). Synthetic data: the sign of naive mis-calibration depends on the generator. It is under-confident for a noisy full histogram (D2-sparse, exact targets) and over-confident in 12/12 cells for a marginal-based, naive-Bayes-structured synthesizer (E4b-lite, trained networks: +0.081 to +0.186), where non-private naive Bayes is already over-confident (+0.098 to +0.165) and extra synthetic rows add little (+0.003 to +0.040). In E4b-lite the trained noise-aware PFN is calibrated (|over-confidence| <= 0.014) and lowers NLL in 12/12 cells. E4c-lite spends half the budget on 15 feature-pair tables chosen by label informativeness (a star, not a dependence-selected MST tree): naive over-confidence rises in 8/12 cells (by up to +0.061) because the split budget adds noise and the star recovers little correlation; the noise-aware PFN stays in -0.008..+0.025 and lowers NLL in 12/12 cells. Open: a dependence-selected (MST-style) tree, real data, TabPFN scale."
     }
   ],
   "loop": {
@@ -95,6 +95,12 @@
         "iteration": 1,
         "kind": "experiment",
         "text": "E4b-lite: Marginal-based DP synthesizer (d=16, 12 cells): naive PFN on synthetic rows is over-confident in 12, under-confident in 0 and calibrated in 0 cells (largest +0.186 at n=32, eps=1, k=4); quadrupling the synthetic rows changes its over-confidence by +0.003 to +0.040. The noise-aware PFN lowers NLL in 12/12 cells (gain +0.031 to +0.145 nats), with |over-confidence| <= 0.014 and accuracy within 0.016 of naive."
+      },
+      {
+        "at": "2026-11-05T15:29:53.000Z",
+        "iteration": 1,
+        "kind": "experiment",
+        "text": "E4c-lite: Same budget as E4b, half spent on 15 (x_u, x_v, y) pair tables along a star chosen by label informativeness (not MST's dependence selection; the star's edges are no more correlated than random pairs). Naive over-confidence rises in 8/12 cells (+0.008 to +0.061) and is flat or lower in the rest (-0.012 to +0.001). The noise-aware PFN stays in -0.008..+0.025 and lowers NLL in 12/12 cells (0.026 to 0.205). Run on gpu-gfkd by the project author."
       }
     ]
   },
@@ -203,6 +209,21 @@
       "summary": "Marginal-based DP synthesizer (d=16, 12 cells): naive PFN on synthetic rows is over-confident in 12, under-confident in 0 and calibrated in 0 cells (largest +0.186 at n=32, eps=1, k=4); quadrupling the synthetic rows changes its over-confidence by +0.003 to +0.040. The noise-aware PFN lowers NLL in 12/12 cells (gain +0.031 to +0.145 nats), with |over-confidence| <= 0.014 and accuracy within 0.016 of naive."
     },
     {
+      "id": "E4c-lite-mst-margins",
+      "title": "E4b's synthesizer plus 15 feature-pair tables at the same total budget (star tree, not MST selection)",
+      "tests": [
+        "H4"
+      ],
+      "status": "done",
+      "code": "experiments/E4c-lite-mst-margins/",
+      "artifacts": [
+        "artifacts/E4c-lite-mst-margins/training_aware.json",
+        "artifacts/E4c-lite-mst-margins/training_naive.json",
+        "artifacts/E4c-lite-mst-margins/evaluation.json"
+      ],
+      "summary": "Same budget as E4b, half spent on 15 (x_u, x_v, y) pair tables along a star chosen by label informativeness (not MST's dependence selection; the star's edges are no more correlated than random pairs). Naive over-confidence rises in 8/12 cells (+0.008 to +0.061) and is flat or lower in the rest (-0.012 to +0.001). The noise-aware PFN stays in -0.008..+0.025 and lowers NLL in 12/12 cells (0.026 to 0.205). Run on gpu-gfkd by the project author."
+    },
+    {
       "id": "G3-rr-sbm-threshold",
       "title": "Spectral recovery on edge-RR SBMs vs threshold formulas",
       "tests": [],
@@ -234,6 +255,9 @@
     "artifacts/E4b-lite-noise-aware-synthetic/summary.json",
     "artifacts/E4b-lite-noise-aware-synthetic/training_aware.json",
     "artifacts/E4b-lite-noise-aware-synthetic/training_naive.json",
+    "artifacts/E4c-lite-mst-margins/evaluation.json",
+    "artifacts/E4c-lite-mst-margins/training_aware.json",
+    "artifacts/E4c-lite-mst-margins/training_naive.json",
     "artifacts/G3-rr-sbm-threshold/results.json",
     "artifacts/G3-rr-sbm-threshold/threshold_eps2.png",
     "artifacts/X0-theory-audit/audit.json"
@@ -250,5 +274,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-11-05T14:00:00.000Z"
+  "updatedAt": "2026-11-05T15:30:00.000Z"
 }

@@ -26,6 +26,30 @@ def main() -> None:
     e4b = json.loads((ROOT / "artifacts/E4b-lite-noise-aware-synthetic/summary.json").read_text()) \
         if (ROOT / "artifacts/E4b-lite-noise-aware-synthetic/summary.json").exists() else None
     old_h4 = next((h for h in m["hypotheses"] if h["id"] == "H4"), {})
+    e4c_note, e4c_summary = "", "pending"
+    e4c_path = ROOT / "artifacts/E4c-lite-mst-margins/evaluation.json"
+    if e4c_path.exists() and (ROOT / "artifacts/E4b-lite-noise-aware-synthetic/evaluation.json").exists():
+        rb = {(r["n"], r["eps"], r["k"]): r["results"] for r in
+              json.loads((ROOT / "artifacts/E4b-lite-noise-aware-synthetic/evaluation.json").read_text())["rows"]}
+        rc = {(r["n"], r["eps"], r["k"]): r["results"] for r in json.loads(e4c_path.read_text())["rows"]}
+        dl = [rc[c]["naive_pfn"]["overconf"] - rb[c]["naive_pfn"]["overconf"] for c in rc]
+        up = [d for d in dl if d > 0.005]
+        aoc = [rc[c]["aware_pfn"]["overconf"] for c in rc]
+        gain = [rc[c]["naive_pfn"]["nll"] - rc[c]["aware_pfn"]["nll"] for c in rc]
+        e4c_summary = (
+            "Same budget as E4b, half spent on 15 (x_u, x_v, y) pair tables along a star chosen by label informativeness "
+            "(not MST's dependence selection; the star's edges are no more correlated than random pairs). Naive "
+            "over-confidence rises in %d/%d cells (%+.3f to %+.3f) and is flat or lower in the rest (%+.3f to %+.3f). "
+            "The noise-aware PFN stays in %+.3f..%+.3f and lowers NLL in %d/%d cells (%.3f to %.3f). Run on gpu-gfkd "
+            "by the project author." % (
+                len(up), len(dl), min(up), max(up), min(d for d in dl if d <= 0.005), max(d for d in dl if d <= 0.005),
+                min(aoc), max(aoc), sum(g > 0 for g in gain), len(gain), min(gain), max(gain)))
+        e4c_note = (" E4c-lite spends half the budget on 15 feature-pair tables chosen by label informativeness (a star, "
+                    "not a dependence-selected MST tree): naive over-confidence rises in %d/%d cells (by up to %+.3f) "
+                    "because the split budget adds noise and the star recovers little correlation; the noise-aware PFN "
+                    "stays in %+.3f..%+.3f and lowers NLL in %d/%d cells. Open: a dependence-selected (MST-style) tree, "
+                    "real data, TabPFN scale." % (len(up), len(dl), max(up), min(aoc), max(aoc),
+                                                  sum(g > 0 for g in gain), len(gain)))
 
     experiments = [
         dict(id="X0-theory-audit", title="Numerical audit of all proposal constants; exact one-draw privacy loss",
@@ -77,6 +101,13 @@ def main() -> None:
                         "artifacts/E4b-lite-noise-aware-synthetic/evaluation.json",
                         "artifacts/E4b-lite-noise-aware-synthetic/summary.json"],
              summary=(e4b or {}).get("headline", "pending")),
+        dict(id="E4c-lite-mst-margins",
+             title="E4b's synthesizer plus 15 feature-pair tables at the same total budget (star tree, not MST selection)",
+             tests=["H4"], status="done" if e4c_path.exists() else "pending", code="experiments/E4c-lite-mst-margins/",
+             artifacts=["artifacts/E4c-lite-mst-margins/training_aware.json",
+                        "artifacts/E4c-lite-mst-margins/training_naive.json",
+                        "artifacts/E4c-lite-mst-margins/evaluation.json"],
+             summary=e4c_summary),
         dict(id="G3-rr-sbm-threshold", title="Spectral recovery on edge-RR SBMs vs threshold formulas",
              tests=[], status="done", code="experiments/G3-rr-sbm-threshold/",
              artifacts=["artifacts/G3-rr-sbm-threshold/results.json", "artifacts/G3-rr-sbm-threshold/threshold_eps2.png"],
@@ -93,7 +124,9 @@ def main() -> None:
                "n*eps, and C2 picks m within 2x. But C2 must be pointwise (bias floor 13-16% at m=2) and its n* is "
                "conservative by ~2-10x. Real PFN teachers and tuned/charged trained teachers still to test (E2/E3)."),
         "H4": ((e4b or {}).get("h4_status", old_h4.get("status", "partially-supported")),
-               (e4b or {}).get("h4_note", old_h4.get("evidence", ""))),
+               ((e4b or {}).get("h4_note", old_h4.get("evidence", "")).replace(
+                   " Open: richer-marginal generators (AIM/MST), real data, TabPFN scale.", "") + e4c_note)
+               if e4c_note else (e4b or {}).get("h4_note", old_h4.get("evidence", ""))),
     }
     for h in m["hypotheses"]:
         if h["id"] in status:
@@ -130,6 +163,10 @@ def main() -> None:
         m["loop"]["history"].append(dict(
             at="2026-11-05T14:00:00.000Z", iteration=1, kind="experiment", text="E4b-lite: " + e4b["headline"]))
         NOW_ = "2026-11-05T14:00:00.000Z"
+    if e4c_note:
+        m["loop"]["history"].append(dict(
+            at="2026-11-05T15:29:53.000Z", iteration=1, kind="experiment", text="E4c-lite: " + e4c_summary))
+        NOW_ = "2026-11-05T15:30:00.000Z"
     m["updatedAt"] = NOW_
     MANIFEST.write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
     print("updated", MANIFEST)
