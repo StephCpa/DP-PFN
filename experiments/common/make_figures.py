@@ -51,8 +51,9 @@ def fig_e1():
         ax.set_xlabel("training step")
         ax.set_title(f"η = {eta}, n = {n_show}, prior datasets")
         ax.set_ylabel("log-ratio")
-    axes[0].legend(loc="upper left", fontsize=8)
-    fig.tight_layout()
+    handles, labels = axes[0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", ncol=3, fontsize=8)
+    fig.tight_layout(rect=(0, 0.08, 1, 1))
     fig.savefig(ART / "E1-lite-amortization-gap" / "leakage_vs_training.png", dpi=200)
     plt.close(fig)
 

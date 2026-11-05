@@ -1,7 +1,5 @@
 # DP-PFN research plan: review and first-round research
 
-Status: **draft**; the pilot results section (§4) is filled in when the runs finish.
-
 Date: 5 Nov 2026. Reviews `DP-PFN Differentially Private Prior-Data Fitted Networks.pdf` (Karen Eze, 5 Nov 2026), as extracted to `dp-pfn-proposal.txt`.
 
 Companion files:
@@ -10,7 +8,18 @@ Companion files:
 - `experiments/*`: code for five pilots.
 - `artifacts/*`: results with provenance.
 
-<!-- SUMMARY -->
+## Summary
+
+**The plan is sound at its core, and most of its mathematics checks out.** Prop. 0, Thms. A2/A7/D1, Lemma B1, Mechanisms C1/C3 and the G2 sensitivity are correct, and every numerical constant reproduces. Six things need to change before the work proceeds:
+
+1. **Novelty has moved.** The proposal misses **PrivTab** (Oct 2026): a synthetic-prior tabular foundation model whose encoder is a Lean-certified Gaussian mechanism, pretrained noise-aware. It already occupies the "certified PFN" question (T3), part of Section 5, and the tabular analogue of G2. Together with TabPATE (C1 + C4) and **Private PoEtry** (LogPool with m = 1), it leaves two distinct contributions: noise-aware PFNs for *externally fixed* DP releases, and the graph work.
+2. **Theorem C2 must be stated pointwise, with a bias floor.** Its practical message survives in pilot E3-lite: PFN-like teachers beat trained teachers by 2–4 points under DP-Vote at small n·ε. Its n* is 2–10× conservative.
+3. **Prop. G3's threshold should use the dense-regime SNR.** Simulation confirms this. At NodePFN's graph size, ε = 2 edge RR erases structural signal, so edge-LDP gains must come from features.
+4. **NodePFN facts in Sections 6–7 need fixing.** The prior is always assortative, RR leaves its density range, and the released pipeline tunes preprocessing per dataset.
+5. **E1-lite supports the amortization caveat, moderately.** A PFN within 0.0006 nats of exact Bayes tracks the exact leakage on typical data, but leaks 1.2–2.5× the exact worst case under search. It stayed far below 2B_y.
+6. **D2-check confirms Prop. D2 strongly for label RR, weakly for DP synthetic data.** Gate 2's premise holds; E4 needs high-dimensional releases to test the synthetic-data half.
+
+Recommended plan changes are in §5. Hypothesis status is in §6.
 
 ## 1. What was done
 
@@ -84,12 +93,15 @@ Details: `literature/related-work-review.md`.
 4. **NodePFN, checked in code:**
    - Pretraining graphs have 1,024 nodes (as stated).
    - The SBM parameter h ∈ [0.1, 0.9] sets p_out = p_in(1−h), so every SBM draw is **assortative**; it is not edge homophily.
-   - Prior density ≤ 0.08 in our reconstruction. RR at ε = 2 gives density ≥ 0.119, **outside the prior**.
+   - Prior density ≤ 0.08 in our reconstruction. RR at ε = 2 gives density ≥ 0.119, **outside the prior**. The same holds for any ε ≤ 2.4, where ρ ≥ 0.08.
    - The released inference pipeline **tunes per dataset**: smoothing steps (0–4), TruncatedSVD rank (10–50, fit on all nodes), and ensemble size (1–32). It also normalises with test features. Under DP these are private choices; E5/E6 must fix one public configuration or charge the selection.
 5. **Citation fixes:**
    - "Panda et al. 2023" → Wu, Panda, Wang & Mittal, ICLR 2024 (same arXiv id).
    - AMIA's full title adds "…and Protection of High-Risk Queries".
    - Add the TREDBench caveat.
+6. **TabPFN, checked in code** (`tabpfn` 9.2.0 from PyPI):
+   - Preprocessing fits on training rows only, so shard-local preprocessing holds as Section 7 assumes.
+   - A **row-fingerprint feature is on by default** (`FINGERPRINT_FEATURE=True`), so a query identical to a context row is exactly recognisable. Wrapper guarantees are unaffected. But this is an engineered membership channel that Obs. B5's "leakage reflects Bayes-optimality" does not cover. E7 should audit with it on and off.
 
 ## 4. Pilot results
 
@@ -110,7 +122,25 @@ Theorem A2 is tight for the posterior draw. The clean-target release (A5) costs 
 
 ### 4.2 E1-lite: amortization gap (Prop. B2, Obs. B5, H2)
 
-<!-- E1 -->
+Floored 1-D logistic prior with η as an input. 4-layer PFN, 0.58M parameters, 6,000 steps. Final validation NLL is **0.0006 nats above the exact-Bayes PPD**. Label-DP leakage = max over flipped row, x* and y of the log-ratio. Exact PPD computed on a 241 × 81 grid. Figure: `artifacts/E1-lite-amortization-gap/leakage_vs_training.png`.
+
+| η (2B_y) | n | Typical: PFN / exact leakage (median) | Typical Λ (median) | In-support search: PFN worst / exact worst | Out-of-support search: PFN worst / exact worst / Λ worst |
+| --- | ---: | --- | ---: | --- | --- |
+| 0.1 (5.89) | 4 | 0.88 / 0.68 | 0.21 | **1.58 / 0.87** | 1.79 / 1.99 / 1.97 |
+| 0.1 | 16 | 0.58 / 0.52 | 0.14 | 1.14 / 0.98 | 1.64 / 2.03 / 2.24 |
+| 0.1 | 64 | 0.18 / 0.20 | 0.19 | — | — |
+| 0.5 (2.20) | 4 | 0.25 / 0.20 | 0.06 | **0.57 / 0.23** | **1.14 / 0.45** / 0.72 |
+| 0.5 | 16 | 0.26 / 0.18 | 0.09 | **0.56 / 0.24** | 0.91 / 0.46 / 0.75 |
+| 0.5 | 64 | 0.09 / 0.11 | 0.07 | — | — |
+
+The search uses 12 restarts × 80 Adam steps over all context features and the query. It gives lower bounds on each supremum.
+
+- **On prior-typical data, the trained PFN's privacy loss tracks the exact mechanism's.** Median ratio 0.84–1.42; gap Λ median ≤ 0.21. Average-case training does buy average-case faithfulness, *including* in leakage.
+- **The worst case is not inherited.** In support, the network leaks 1.2–2.5× the exact mechanism's worst case found. Out of support (prior-null data, Prop. B2's setting), Λ grows to 0.7–2.2. At η = 0.5 the network's worst case is 2.5× the exact one (1.14 vs 0.45). This is what H2 and Prop. B2 predict: an exact-PPD ε does not certify the network.
+- **Not observed: leakage "driven large".** No search found leakage near 2B_y. The worst was 1.79 against 5.89, and 1.14 against 2.20. A small LayerNorm network on bounded inputs appears to have implicit smoothness that the loss does not guarantee. Prop. B2 stays correct (it is about the objective), but its practical bite on small PFNs is moderate. E1 at TabPFN scale should check whether this persists.
+- **Obs. B5 confirmed.** At n ≥ 16 the under-trained step-100 network leaks 3–10× *less* than the exact PPD (η = 0.1, n = 64: 0.021 vs 0.203). Training raises leakage to the exact level, with an overshoot around step 1,000–3,000. The low-noise prior (η = 0.1) leaks 2–3× more than η = 0.5, for the network and the exact PPD alike.
+- **Thm. A2 is loose with features too.** The exact PPD's worst leakage found is ≤ 2.03 against 2B_y = 5.89 (η = 0.1), and ≤ 0.46 against 2.20 (η = 0.5).
+- **Gate 1a reading.** The gap is small and stable *on average* but 1.2–2.5× in the worst case. By the proposal's rule, the Section 2 one-draw mechanisms stay test beds. An "audited empirical role" would need a stated safety factor plus an E7-style audit, and is not a DP guarantee.
 
 ### 4.3 E3-lite: Theorem C2, PFN vs trained teachers, Vote vs LogPool (H3, T4, T6)
 
@@ -184,15 +214,39 @@ In priority order. Each item says what to change and why.
 
    n* is governed by the *lower tail* of γ_m(x*), not by the mean error e(m). Because the prior is an input dial (η, prior strength), a PFN teacher's bias can be traded against variance **data-independently, at no privacy cost**. This is a genuine PFN-specific angle for T6.
 
-   In E3-lite, C2′'s bound picks the observed best shard size in 18/20 configurations at n = 500. Its n* is still 3–10× larger than the n at which Vote is already near its best, so T6 should report the bound's slack, not only its argmin.
+   In E3-lite, C2′'s bound picks a shard size within a factor of 2 of the observed best in 42/45 configurations (exact in 31/45). Its n* is still 2–10× larger than the n at which Vote is already near its best, so T6 should report the bound's slack, not only its argmin.
 3. **Fix G1's utility claim.** C2 needs teachers that are independent given the data distribution. Graph teachers share G and X. State the result conditional on (G, X) with a random label partition. Concentration then comes from random-partition (sampling-without-replacement) arguments, not Hoeffding over independent shards.
 4. **Replace Prop. G3's heuristic** with the dense-regime signal-to-noise ratio (variance p′(1−p′), all terms kept). Build T7 on Deshpande et al. 2018 and Lu & Sen 2023. Edge RR places graphs in the large-degree regime where those thresholds are rigorous. Cite Hehir et al. 2022 as the closest prior work.
 5. **NodePFN pipeline under DP.**
    - Fix one public preprocessing and ensemble configuration for every dataset in E5/E6, or charge the selection (Papernot & Steinke).
    - Fit no SVD or normalisation on query or test features under node- or row-level DP.
    - Correct the homophily statement.
-   - Note that RR at ε ≤ 4 leaves the prior's density range, which strengthens the case for noise-aware retraining.
+   - Note that RR at ε ≤ 2.4 leaves the prior's density range, which strengthens the case for noise-aware retraining.
 6. **LogPool:** use the exact width log(1 + K(1−η)/η) and drop "Bayes-consistent". Also report Vote with Laplace on the margin (binary), which is free extra utility.
 7. **One-draw route (Sec. 2):** report exact constants. The clean-target release costs ≈ B_y here, and a noisy-PPD label decays like 1/n without features. Frame T2 around Foulds et al. And note that A6's m-independence holds only for exact conditionals.
-8. **Gate 1 is two gates.** Split it into (a) the E1 amortization gap and (b) Vote beating trained-teacher PATE. They test different routes: Section 2 and Section 4. Either can fail independently. E1-lite results bear on (a); E3-lite on (b).
+8. **Gate 1 is two gates.** Split it into (a) the E1 amortization gap and (b) Vote beating trained-teacher PATE. They test different routes: Section 2 and Section 4. Either can fail independently.
+   - Pilot reading for (a): small on average, 1.2–2.5× in the worst case, so Section 2 stays a test bed.
+   - Pilot reading for (b): positive at small n·ε.
+   - Also specify E1's adversarial search budget in advance. A gradient search with 12 restarts already finds 2× gaps.
 9. **Citations:** apply the fixes in §3.5 and add the missing work from `literature/related-work-review.md`.
+
+## 6. Hypothesis status after iteration 1
+
+| ID | Status | Evidence |
+| --- | --- | --- |
+| H1 | partially supported | Prop. 0 and the wrapper and post-processing guarantees are correct (X0). A third route must be added: certified-by-architecture PFNs (PrivTab). The TREDBench caveat limits "synthetic-only continued pretraining". |
+| H2 | partially supported | E1-lite. Λ is small on typical data and grows under search. The network leaks up to 2.5× the exact worst case, so exact-PPD privacy is not inherited. Better-trained PFNs leak more (B5). **Not observed:** leakage "driven large": stays below 2B_y for a small network. |
+| H3 | partially supported | E3-lite (idealised prior, exact-Bayes teachers). PFN-like teachers win at small n·ε, and C2 picks m within 2× in 42/45 configurations. But C2 needs a pointwise bias floor, and its n* is 2–10× conservative. Real PFN teachers, and trained teachers with charged tuning, are untested. |
+| H4 | partially supported | D2-check (target level, exact Bayes). Confirmed strongly for label RR; the synthetic-data effect is small in low dimension. A *trained* noise-aware PFN has not been tested yet (E4). |
+
+## 7. Limitations of this review and next steps
+
+- **No full texts.** arXiv, OpenReview and ICML pages were blocked by the container's network policy, so claims about other papers rest on search snippets. The exceptions are NodePFN, PrivTab and TabPFN, which were checked in code. Read the PrivTab, TabPATE and Private PoEtry PDFs before positioning the paper.
+- **No released checkpoints.** HuggingFace was blocked, so no TabPFN or NodePFN weights were run. Every pilot uses closed-form priors and small in-house networks or exact Bayes. They test the *mechanisms and targets*, not backbone-scale behaviour.
+- **Search budgets are small.** E1-lite's adversarial search is a lower bound with a modest budget. E3-lite's trained teacher is untuned logistic regression.
+- **Suggested next iteration**, in order:
+  1. E4 with a *trained* noise-aware PFN on label RR (the cheapest route to Gate 2).
+  2. Rerun E3-lite with the E1 network as the teacher, and with tuned plus charged trained teachers.
+  3. Write C2′ and the T4 calibration argument (soft scores waste sensitivity) as short theorems.
+  4. Read PrivTab and decide the paper's positioning.
+  5. Start the G2/G3 DP-NodePFN prototype using PrivTab's μ-curriculum recipe.
