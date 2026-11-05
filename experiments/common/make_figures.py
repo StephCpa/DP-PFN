@@ -88,16 +88,26 @@ def fig_g3(eps=2.0):
     rr = sorted([r for r in res["rows"] if r["eps"] == eps], key=lambda r: r["N"])
     fig, ax = plt.subplots(figsize=(5.6, 3.5))
     Ns = [r["N"] for r in rr]
-    ax.plot(Ns, [r["corr2_mean"] for r in rr], "-o", color=S1, label="simulated (spectral)")
-    ax.plot(Ns, [r["corr2_theory"] for r in rr], "--", color=S2, label="dense spiked-matrix theory")
+    import sys
+    import numpy as np
+    sys.path.insert(0, str(ROOT / "experiments" / "G3-rr-sbm-threshold"))
+    sys.path.insert(0, str(ROOT / "experiments"))
+    from rr_sbm import snr_dense  # noqa: E402
+
+    ax.plot(Ns, [r["corr2_mean"] for r in rr], "-o", color=S1, label="simulated (spectral, mean)")
+    grid = np.linspace(min(Ns), max(Ns), 400)
+    ax.plot(grid, [max(0.0, 1 - 1 / snr_dense(N, res["a"], res["b"], eps)) for N in grid], "--", color=S2,
+            label="dense spiked-matrix theory")
     top = max(r["corr2_mean"] for r in rr)
-    for key, lab in (("heuristic_N", "proposal heuristic"), ("ks_full_N", "sparse KS"), ("dense_bbp_N", "dense")):
+    marks = (("ks_full_N", "sparse KS", "right", 0.95), ("dense_bbp_N", "dense", "right", 0.80),
+             ("heuristic_N", "proposal heuristic", "left", 0.65))
+    for key, lab, ha, frac in marks:
         x = rr[0][key]
         ax.axvline(x, color=REF, lw=1, ls=":")
-        ax.text(x, top * 1.02, f"{lab}\n{x:.0f}", color=INK2, fontsize=7, ha="center", va="bottom")
+        ax.text(x + (6 if ha == "left" else -6), top * frac, f"{lab} {x:.0f}", color=INK2, fontsize=7, ha=ha, va="center")
     ax.set_xlabel("number of nodes N  (a = 20, b = 4 fixed)")
     ax.set_ylabel("eigenvector corr² with labels")
-    ax.set_title(f"Edge RR at ε = {eps:g}: community signal vs N", pad=26)
+    ax.set_title(f"Edge RR at ε = {eps:g}: community signal vs N")
     ax.legend(fontsize=8, loc="upper right")
     fig.tight_layout()
     fig.savefig(ART / "G3-rr-sbm-threshold" / f"threshold_eps{eps:g}.png", dpi=200)
