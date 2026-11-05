@@ -1,0 +1,8004 @@
+{
+  "provenance": {
+    "script": "experiments/E3-lite-vote-sample-complexity/vote_c2.py",
+    "git_commit": "5ab73f0221c33d4c6a6f700a1b8f8a92cb5c6251",
+    "git_dirty": false,
+    "utc_time": "2026-11-05T10:38:52+00:00",
+    "python": "3.13.18",
+    "platform": "Linux-6.18.44-fc-v236-x86_64-with-glibc2.39",
+    "libraries": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "torch": "2.15.0+cu132",
+      "sklearn": "1.9.1",
+      "networkx": "3.7"
+    },
+    "seed": 0,
+    "argv": [
+      "--n",
+      "1000",
+      "--ms",
+      "2",
+      "4",
+      "8",
+      "16",
+      "32",
+      "64",
+      "125",
+      "--epss",
+      "0.1",
+      "0.25",
+      "0.5",
+      "1",
+      "2",
+      "--tasks",
+      "16",
+      "--reps",
+      "40",
+      "--fresh",
+      "100",
+      "--tag",
+      "_n1000"
+    ]
+  },
+  "config": {
+    "d": 16,
+    "tau": 0.35,
+    "n": 1000,
+    "tag": "_n1000",
+    "ms": [
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      125
+    ],
+    "epss": [
+      0.1,
+      0.25,
+      0.5,
+      1.0,
+      2.0
+    ],
+    "tasks": 16,
+    "queries": 200,
+    "reps": 40,
+    "fresh": 100,
+    "seed": 0
+  },
+  "bayes_optimal_acc": 0.8409374999999999,
+  "table": [
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.6878203125,
+      "agree_bayes_label": 0.7260546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.68034375,
+      "agree_bayes_label": 0.7164062499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.659375,
+      "agree_bayes_label": 0.6903750000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.6271875,
+      "agree_bayes_label": 0.651234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.5927734375,
+      "agree_bayes_label": 0.6095859375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.552875,
+      "agree_bayes_label": 0.565078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5327734375,
+      "agree_bayes_label": 0.5392109374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7795390625,
+      "agree_bayes_label": 0.8524453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7733984375,
+      "agree_bayes_label": 0.8443828125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7615234375,
+      "agree_bayes_label": 0.8275703125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7361640625,
+      "agree_bayes_label": 0.7917734375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6931640625,
+      "agree_bayes_label": 0.7322890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6283671875,
+      "agree_bayes_label": 0.6528828125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.581796875,
+      "agree_bayes_label": 0.5991562500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8115625,
+      "agree_bayes_label": 0.905921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.81240625,
+      "agree_bayes_label": 0.90875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.807703125,
+      "agree_bayes_label": 0.900015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.796203125,
+      "agree_bayes_label": 0.8794374999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.769296875,
+      "agree_bayes_label": 0.8372031249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7120078125,
+      "agree_bayes_label": 0.7586640625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6480234375,
+      "agree_bayes_label": 0.6768046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8226640625,
+      "agree_bayes_label": 0.9282421875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8255234375,
+      "agree_bayes_label": 0.9334765625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8254921875000001,
+      "agree_bayes_label": 0.9361796875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8223125,
+      "agree_bayes_label": 0.92809375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.812734375,
+      "agree_bayes_label": 0.9099843750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7835234375,
+      "agree_bayes_label": 0.8602734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7315,
+      "agree_bayes_label": 0.785921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.827921875,
+      "agree_bayes_label": 0.93634375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8300234375,
+      "agree_bayes_label": 0.9436328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8312265625,
+      "agree_bayes_label": 0.9479453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.83203125,
+      "agree_bayes_label": 0.9498906250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8291484375,
+      "agree_bayes_label": 0.9461328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.819359375,
+      "agree_bayes_label": 0.9240937499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7945234375,
+      "agree_bayes_label": 0.8806015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7260234375,
+      "agree_bayes_label": 0.7769765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.71465625,
+      "agree_bayes_label": 0.7627812500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.6951640625,
+      "agree_bayes_label": 0.7354921875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.6620234375,
+      "agree_bayes_label": 0.6944296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6146484375,
+      "agree_bayes_label": 0.6387265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.572640625,
+      "agree_bayes_label": 0.586734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5375546874999999,
+      "agree_bayes_label": 0.5478203125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7975078124999999,
+      "agree_bayes_label": 0.8837578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7961640624999999,
+      "agree_bayes_label": 0.8783828124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.786328125,
+      "agree_bayes_label": 0.866046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7645546875,
+      "agree_bayes_label": 0.8334140624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7243359375,
+      "agree_bayes_label": 0.7750703125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.654484375,
+      "agree_bayes_label": 0.6890156249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5978359375,
+      "agree_bayes_label": 0.6188828124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.817890625,
+      "agree_bayes_label": 0.920265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.819734375,
+      "agree_bayes_label": 0.9218906250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8184453125,
+      "agree_bayes_label": 0.9200234374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8111484375,
+      "agree_bayes_label": 0.9061328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.79209375,
+      "agree_bayes_label": 0.8746875000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7428515625000001,
+      "agree_bayes_label": 0.8028984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.674828125,
+      "agree_bayes_label": 0.7138437500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.824796875,
+      "agree_bayes_label": 0.9328124999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.828375,
+      "agree_bayes_label": 0.9395156250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8291015625000001,
+      "agree_bayes_label": 0.9428359374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8273281250000001,
+      "agree_bayes_label": 0.9414218750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8221015625000001,
+      "agree_bayes_label": 0.9293359375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.802703125,
+      "agree_bayes_label": 0.892765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.76096875,
+      "agree_bayes_label": 0.82934375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8283046875,
+      "agree_bayes_label": 0.9376171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8309921874999999,
+      "agree_bayes_label": 0.9452421874999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.832171875,
+      "agree_bayes_label": 0.9499375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8320703125000001,
+      "agree_bayes_label": 0.9531796875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8315859375000001,
+      "agree_bayes_label": 0.9542578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8263359375,
+      "agree_bayes_label": 0.9413984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8116875,
+      "agree_bayes_label": 0.909734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7472265625000001,
+      "agree_bayes_label": 0.8070390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7394140625,
+      "agree_bayes_label": 0.7940703124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7187578125,
+      "agree_bayes_label": 0.7677421875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.683109375,
+      "agree_bayes_label": 0.721296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.63103125,
+      "agree_bayes_label": 0.657875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.5779609375000001,
+      "agree_bayes_label": 0.5946171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.54184375,
+      "agree_bayes_label": 0.554,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8071953125,
+      "agree_bayes_label": 0.8972890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8045625000000001,
+      "agree_bayes_label": 0.8955468750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.79878125,
+      "agree_bayes_label": 0.885671875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7836953124999999,
+      "agree_bayes_label": 0.8588984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.744328125,
+      "agree_bayes_label": 0.8029843750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6721484375,
+      "agree_bayes_label": 0.7133359375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6093906250000001,
+      "agree_bayes_label": 0.6362812499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8213671875,
+      "agree_bayes_label": 0.9251328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8229296875000001,
+      "agree_bayes_label": 0.9284921875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8230546875,
+      "agree_bayes_label": 0.9283515625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8176015624999999,
+      "agree_bayes_label": 0.9199296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8027265625,
+      "agree_bayes_label": 0.8941171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7611015624999999,
+      "agree_bayes_label": 0.8307109374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6901171875,
+      "agree_bayes_label": 0.7388359375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8268046875,
+      "agree_bayes_label": 0.9351171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8290234375,
+      "agree_bayes_label": 0.9414140624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8304765625,
+      "agree_bayes_label": 0.9460859374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8295859375,
+      "agree_bayes_label": 0.9463203124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8265390625000001,
+      "agree_bayes_label": 0.9388203125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8129296875,
+      "agree_bayes_label": 0.9105703125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.77809375,
+      "agree_bayes_label": 0.8562031250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8285078124999999,
+      "agree_bayes_label": 0.9376640625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.831359375,
+      "agree_bayes_label": 0.9463125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8325859375,
+      "agree_bayes_label": 0.9514765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.832828125,
+      "agree_bayes_label": 0.955875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8328984374999999,
+      "agree_bayes_label": 0.9568671875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.829890625,
+      "agree_bayes_label": 0.9508593750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.81778125,
+      "agree_bayes_label": 0.926953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.797859375,
+      "agree_bayes_label": 0.88365625,
+      "c2_bound": 0.43906736743670116
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.78990625,
+      "agree_bayes_label": 0.8730156250000001,
+      "c2_bound": 0.4147435864233955
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7780078125,
+      "agree_bayes_label": 0.8544296875,
+      "c2_bound": 0.36913640931775626
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7401171875000001,
+      "agree_bayes_label": 0.8080234374999999,
+      "c2_bound": 0.27288501203194826
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.677546875,
+      "agree_bayes_label": 0.725671875,
+      "c2_bound": 0.1549738120569743
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6036484375,
+      "agree_bayes_label": 0.6389765624999999,
+      "c2_bound": 0.006637243748819509
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.56221875,
+      "agree_bayes_label": 0.582046875,
+      "c2_bound": 0.0
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8183046875,
+      "agree_bayes_label": 0.9220234375,
+      "c2_bound": 0.574515734525621
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8198828125,
+      "agree_bayes_label": 0.9220703125,
+      "c2_bound": 0.5926202899217228
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8229140625,
+      "agree_bayes_label": 0.9242421875,
+      "c2_bound": 0.5861049547322621
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.813625,
+      "agree_bayes_label": 0.91409375,
+      "c2_bound": 0.5055097439951997
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7871874999999999,
+      "agree_bayes_label": 0.8769374999999999,
+      "c2_bound": 0.3542122871393515
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7176562499999999,
+      "agree_bayes_label": 0.7874687499999999,
+      "c2_bound": 0.12261710168767771
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6444531250000001,
+      "agree_bayes_label": 0.692609375,
+      "c2_bound": 0.0
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8220000000000001,
+      "agree_bayes_label": 0.92959375,
+      "c2_bound": 0.6157969218711734
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8267968750000001,
+      "agree_bayes_label": 0.934375,
+      "c2_bound": 0.6596314373850646
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.830265625,
+      "agree_bayes_label": 0.940546875,
+      "c2_bound": 0.6860446330549863
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.828359375,
+      "agree_bayes_label": 0.94075,
+      "c2_bound": 0.6568669404957741
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8237656250000001,
+      "agree_bayes_label": 0.9344375,
+      "c2_bound": 0.5418279398394998
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7980703125,
+      "agree_bayes_label": 0.8992734375,
+      "c2_bound": 0.2858815527518127
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.733859375,
+      "agree_bayes_label": 0.81490625,
+      "c2_bound": 0.013991169262501692
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.823390625,
+      "agree_bayes_label": 0.9322656250000001,
+      "c2_bound": 0.6291758540394568
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8281484375,
+      "agree_bayes_label": 0.9378515625,
+      "c2_bound": 0.6842056701861621
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8335078125,
+      "agree_bayes_label": 0.9461015625,
+      "c2_bound": 0.7250489797381588
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8307968750000001,
+      "agree_bayes_label": 0.948109375,
+      "c2_bound": 0.7305231709003174
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8311875,
+      "agree_bayes_label": 0.9505468749999999,
+      "c2_bound": 0.6777093994294503
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8259453125,
+      "agree_bayes_label": 0.9476328125,
+      "c2_bound": 0.47640383998824143
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.807125,
+      "agree_bayes_label": 0.920546875,
+      "c2_bound": 0.18060258611104127
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8234609374999999,
+      "agree_bayes_label": 0.9325390625000001,
+      "c2_bound": 0.6331430176898781
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.828453125,
+      "agree_bayes_label": 0.9396562500000001,
+      "c2_bound": 0.6912606854231507
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8335859375000001,
+      "agree_bayes_label": 0.9487734375000001,
+      "c2_bound": 0.7367030574881719
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8314140625,
+      "agree_bayes_label": 0.9501015625,
+      "c2_bound": 0.7539761281299772
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.832328125,
+      "agree_bayes_label": 0.95446875,
+      "c2_bound": 0.7300919531384192
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.829953125,
+      "agree_bayes_label": 0.9598437499999999,
+      "c2_bound": 0.6056201793999245
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8277421875,
+      "agree_bayes_label": 0.9566484375,
+      "c2_bound": 0.37046426451388276
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.81021875,
+      "agree_bayes_label": 0.90496875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8084140625,
+      "agree_bayes_label": 0.9004453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8018984375,
+      "agree_bayes_label": 0.8929453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7803984374999999,
+      "agree_bayes_label": 0.8640546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7356953125,
+      "agree_bayes_label": 0.8046328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6649140625000001,
+      "agree_bayes_label": 0.7158828125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6074921875,
+      "agree_bayes_label": 0.6424140625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8214765625,
+      "agree_bayes_label": 0.9268984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.824953125,
+      "agree_bayes_label": 0.9300468749999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.829109375,
+      "agree_bayes_label": 0.936046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.823671875,
+      "agree_bayes_label": 0.9319999999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.811375,
+      "agree_bayes_label": 0.9146875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7681171875,
+      "agree_bayes_label": 0.8578046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.70228125,
+      "agree_bayes_label": 0.7732656250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.823421875,
+      "agree_bayes_label": 0.93115625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8275625,
+      "agree_bayes_label": 0.936296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8321015625,
+      "agree_bayes_label": 0.9444765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8298046875,
+      "agree_bayes_label": 0.9456640625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.829296875,
+      "agree_bayes_label": 0.9452343750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8163906249999999,
+      "agree_bayes_label": 0.931421875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.779203125,
+      "agree_bayes_label": 0.88175,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8237578125,
+      "agree_bayes_label": 0.9325078124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8286093750000001,
+      "agree_bayes_label": 0.939484375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8333828125,
+      "agree_bayes_label": 0.9478359375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8312578125,
+      "agree_bayes_label": 0.9496328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8317734375,
+      "agree_bayes_label": 0.9536953125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.829484375,
+      "agree_bayes_label": 0.9553437499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8201015625,
+      "agree_bayes_label": 0.9437578124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.823515625,
+      "agree_bayes_label": 0.93228125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8281953125,
+      "agree_bayes_label": 0.9397890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8335078125000001,
+      "agree_bayes_label": 0.9493515625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8317734375,
+      "agree_bayes_label": 0.9502890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8320859375,
+      "agree_bayes_label": 0.9555390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8302812500000001,
+      "agree_bayes_label": 0.96165625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8283671875,
+      "agree_bayes_label": 0.9604609375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.753359375,
+      "agree_bayes_label": 0.81621875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7661093750000001,
+      "agree_bayes_label": 0.8329375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7420078125,
+      "agree_bayes_label": 0.8023359375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.6896328125,
+      "agree_bayes_label": 0.7315234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6185625,
+      "agree_bayes_label": 0.64459375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.5646249999999999,
+      "agree_bayes_label": 0.5762968749999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5359296875,
+      "agree_bayes_label": 0.5430703124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.79971875,
+      "agree_bayes_label": 0.887796875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.81478125,
+      "agree_bayes_label": 0.91365625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8102734374999999,
+      "agree_bayes_label": 0.9084765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7858281250000001,
+      "agree_bayes_label": 0.8656874999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.72965625,
+      "agree_bayes_label": 0.7848437500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6479999999999999,
+      "agree_bayes_label": 0.68015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5878359375,
+      "agree_bayes_label": 0.6049765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8082734375,
+      "agree_bayes_label": 0.9050859375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.827,
+      "agree_bayes_label": 0.937078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8279140625,
+      "agree_bayes_label": 0.9436015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.821625,
+      "agree_bayes_label": 0.9273125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.79434375,
+      "agree_bayes_label": 0.8802343749999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7336484375000001,
+      "agree_bayes_label": 0.7891796875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6594140625,
+      "agree_bayes_label": 0.6928984374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.80940625,
+      "agree_bayes_label": 0.9097656249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8287265625000001,
+      "agree_bayes_label": 0.9423046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.831234375,
+      "agree_bayes_label": 0.9569062500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.831671875,
+      "agree_bayes_label": 0.9533281250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.82334375,
+      "agree_bayes_label": 0.93415625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.796796875,
+      "agree_bayes_label": 0.88253125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.744890625,
+      "agree_bayes_label": 0.8038750000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8100546875000001,
+      "agree_bayes_label": 0.9104609375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8286796875,
+      "agree_bayes_label": 0.9446015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.831765625,
+      "agree_bayes_label": 0.96084375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8333671874999999,
+      "agree_bayes_label": 0.9633203124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8312265625,
+      "agree_bayes_label": 0.9575078124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.824453125,
+      "agree_bayes_label": 0.9375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.80146875,
+      "agree_bayes_label": 0.891453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.764734375,
+      "agree_bayes_label": 0.834546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7721171875,
+      "agree_bayes_label": 0.8432265624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7554062500000001,
+      "agree_bayes_label": 0.822234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.70859375,
+      "agree_bayes_label": 0.758609375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.639796875,
+      "agree_bayes_label": 0.671765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.5789609375,
+      "agree_bayes_label": 0.5942578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5448203125,
+      "agree_bayes_label": 0.5547578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.80625,
+      "agree_bayes_label": 0.89834375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8186796875,
+      "agree_bayes_label": 0.9190234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8157109375,
+      "agree_bayes_label": 0.9183203125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.800359375,
+      "agree_bayes_label": 0.8884687499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7541015624999999,
+      "agree_bayes_label": 0.8189765625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6726796875000001,
+      "agree_bayes_label": 0.7135703125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6055468749999999,
+      "agree_bayes_label": 0.62775,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8140000000000001,
+      "agree_bayes_label": 0.9136093750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8281171875,
+      "agree_bayes_label": 0.9375546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8297890625,
+      "agree_bayes_label": 0.9486953124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8258125000000001,
+      "agree_bayes_label": 0.9375781249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8092734375,
+      "agree_bayes_label": 0.9054453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7577890625,
+      "agree_bayes_label": 0.8257421875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.683625,
+      "agree_bayes_label": 0.725171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.814078125,
+      "agree_bayes_label": 0.9169687500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.829046875,
+      "agree_bayes_label": 0.942890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8326640624999999,
+      "agree_bayes_label": 0.9583203124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.832734375,
+      "agree_bayes_label": 0.958015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8280000000000001,
+      "agree_bayes_label": 0.9457500000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8120234375000001,
+      "agree_bayes_label": 0.9107734375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7718046875,
+      "agree_bayes_label": 0.8430390624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8145859375,
+      "agree_bayes_label": 0.9176953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8295546874999999,
+      "agree_bayes_label": 0.9436328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8318125000000001,
+      "agree_bayes_label": 0.9605,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8333203124999999,
+      "agree_bayes_label": 0.9646328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8329765625,
+      "agree_bayes_label": 0.9621796874999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8292421875,
+      "agree_bayes_label": 0.9499765625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.815765625,
+      "agree_bayes_label": 0.919484375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7709531249999999,
+      "agree_bayes_label": 0.8431875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7786718749999999,
+      "agree_bayes_label": 0.850171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7623515624999999,
+      "agree_bayes_label": 0.8321484375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7192109375,
+      "agree_bayes_label": 0.7734921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6501171875,
+      "agree_bayes_label": 0.6851953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.5861015625,
+      "agree_bayes_label": 0.6033984374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5473203125,
+      "agree_bayes_label": 0.5587890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8079687499999999,
+      "agree_bayes_label": 0.902890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.81965625,
+      "agree_bayes_label": 0.919328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8184609375,
+      "agree_bayes_label": 0.9221796875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8063437499999999,
+      "agree_bayes_label": 0.8991093749999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.76615625,
+      "agree_bayes_label": 0.8384375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6858359375,
+      "agree_bayes_label": 0.7324296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.617015625,
+      "agree_bayes_label": 0.64440625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8143359375,
+      "agree_bayes_label": 0.9168515625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8287968750000001,
+      "agree_bayes_label": 0.93834375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8301328125,
+      "agree_bayes_label": 0.9490390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8275703125,
+      "agree_bayes_label": 0.9417265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8140937500000001,
+      "agree_bayes_label": 0.917140625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7745234375000001,
+      "agree_bayes_label": 0.8491953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7004453125000001,
+      "agree_bayes_label": 0.7511953124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.816078125,
+      "agree_bayes_label": 0.920734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8296171875,
+      "agree_bayes_label": 0.9426015624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8321171875,
+      "agree_bayes_label": 0.9584609374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8328828125,
+      "agree_bayes_label": 0.9595390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.83103125,
+      "agree_bayes_label": 0.9514374999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8192734374999999,
+      "agree_bayes_label": 0.9242890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7843671875,
+      "agree_bayes_label": 0.8680859375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8161406250000001,
+      "agree_bayes_label": 0.9210156249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.82978125,
+      "agree_bayes_label": 0.943921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.832671875,
+      "agree_bayes_label": 0.96009375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8329375000000001,
+      "agree_bayes_label": 0.96428125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8338515625,
+      "agree_bayes_label": 0.9639296875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8321796875,
+      "agree_bayes_label": 0.9566484375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8222265625,
+      "agree_bayes_label": 0.9339140625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7761796875,
+      "agree_bayes_label": 0.8525546875,
+      "c2_bound": 0.3077310403674049
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7788671875,
+      "agree_bayes_label": 0.8507421875,
+      "c2_bound": 0.322717912033823
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.77059375,
+      "agree_bayes_label": 0.843921875,
+      "c2_bound": 0.3302891112560242
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.74003125,
+      "agree_bayes_label": 0.8039375,
+      "c2_bound": 0.2590623616832731
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6780859375,
+      "agree_bayes_label": 0.7262578125,
+      "c2_bound": 0.15159820798835877
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6044140625000001,
+      "agree_bayes_label": 0.6362265625,
+      "c2_bound": 0.006453308716822485
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5614375,
+      "agree_bayes_label": 0.5830625,
+      "c2_bound": 0.0
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.809890625,
+      "agree_bayes_label": 0.9082343749999999,
+      "c2_bound": 0.4477546828448471
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8200390625,
+      "agree_bayes_label": 0.9163359375,
+      "c2_bound": 0.4955915850626892
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8194609374999999,
+      "agree_bayes_label": 0.9256171875000001,
+      "c2_bound": 0.5421077862942436
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8131796874999999,
+      "agree_bayes_label": 0.9131484375000001,
+      "c2_bound": 0.4852295606756068
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7862734375,
+      "agree_bayes_label": 0.8773046874999999,
+      "c2_bound": 0.34735492064670515
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7194375,
+      "agree_bayes_label": 0.787703125,
+      "c2_bound": 0.12077211497742729
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6443671875,
+      "agree_bayes_label": 0.6916328125,
+      "c2_bound": 0.0
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.815765625,
+      "agree_bayes_label": 0.9211562499999999,
+      "c2_bound": 0.4990781815012006
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8283046875,
+      "agree_bayes_label": 0.9347578125,
+      "c2_bound": 0.5726161635679553
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8294453125000001,
+      "agree_bayes_label": 0.9473671875,
+      "c2_bound": 0.6486108652539236
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.829640625,
+      "agree_bayes_label": 0.9459218749999999,
+      "c2_bound": 0.6356828178760415
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.825,
+      "agree_bayes_label": 0.9379531249999999,
+      "c2_bound": 0.5328257633026339
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.79803125,
+      "agree_bayes_label": 0.898640625,
+      "c2_bound": 0.2828957307502855
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7334453125,
+      "agree_bayes_label": 0.8154140625,
+      "c2_bound": 0.013833372088482378
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.81746875,
+      "agree_bayes_label": 0.925203125,
+      "c2_bound": 0.5163512245700086
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8321953125,
+      "agree_bayes_label": 0.9395390625,
+      "c2_bound": 0.6044547509330251
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.831609375,
+      "agree_bayes_label": 0.9536875,
+      "c2_bound": 0.695355853232932
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8323906249999999,
+      "agree_bayes_label": 0.9564531249999999,
+      "c2_bound": 0.7113978625671982
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.832875,
+      "agree_bayes_label": 0.958109375,
+      "c2_bound": 0.6678739185917153
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8288125,
+      "agree_bayes_label": 0.948515625,
+      "c2_bound": 0.47179315266366717
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.80696875,
+      "agree_bayes_label": 0.9200937499999999,
+      "c2_bound": 0.17964042406973324
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8192109375,
+      "agree_bayes_label": 0.9269921875,
+      "c2_bound": 0.5216718757483062
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8331328124999999,
+      "agree_bayes_label": 0.9408046875,
+      "c2_bound": 0.6137245033094169
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8320625,
+      "agree_bayes_label": 0.9551562499999999,
+      "c2_bound": 0.7094999574327554
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8335234375,
+      "agree_bayes_label": 0.9608046875,
+      "c2_bound": 0.7372111914218944
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.834609375,
+      "agree_bayes_label": 0.964015625,
+      "c2_bound": 0.7202885958122034
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.831984375,
+      "agree_bayes_label": 0.960515625,
+      "c2_bound": 0.6006315246365165
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.828171875,
+      "agree_bayes_label": 0.955953125,
+      "c2_bound": 0.36881172361396913
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.795015625,
+      "agree_bayes_label": 0.88353125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8013203125,
+      "agree_bayes_label": 0.8856328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7975000000000001,
+      "agree_bayes_label": 0.8889374999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7790390625,
+      "agree_bayes_label": 0.8624140625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7341328125000001,
+      "agree_bayes_label": 0.8042265624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.663140625,
+      "agree_bayes_label": 0.713421875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6059921875000001,
+      "agree_bayes_label": 0.6415859374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.813609375,
+      "agree_bayes_label": 0.917125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.825390625,
+      "agree_bayes_label": 0.928203125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.825578125,
+      "agree_bayes_label": 0.939828125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8233359375,
+      "agree_bayes_label": 0.9340703125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8115859375,
+      "agree_bayes_label": 0.9174140625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7682890625,
+      "agree_bayes_label": 0.8580234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.70178125,
+      "agree_bayes_label": 0.7725625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.817328125,
+      "agree_bayes_label": 0.92378125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.831796875,
+      "agree_bayes_label": 0.938796875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8305234375,
+      "agree_bayes_label": 0.9513203125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8318203125000001,
+      "agree_bayes_label": 0.9534140625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.830421875,
+      "agree_bayes_label": 0.9510937500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8172890625,
+      "agree_bayes_label": 0.9309453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7787421875,
+      "agree_bayes_label": 0.8795859374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8185546875,
+      "agree_bayes_label": 0.9264609374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8325859375,
+      "agree_bayes_label": 0.9401015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8317109375,
+      "agree_bayes_label": 0.9546328125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8329921874999999,
+      "agree_bayes_label": 0.9588515625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8341875,
+      "agree_bayes_label": 0.96228125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8310546875,
+      "agree_bayes_label": 0.9568046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8221171875,
+      "agree_bayes_label": 0.9445390625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8191015625,
+      "agree_bayes_label": 0.9274296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8335781250000001,
+      "agree_bayes_label": 0.940640625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.83196875,
+      "agree_bayes_label": 0.95525,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.832640625,
+      "agree_bayes_label": 0.960921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.834359375,
+      "agree_bayes_label": 0.96471875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8324843749999999,
+      "agree_bayes_label": 0.962765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_flat",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.829578125,
+      "agree_bayes_label": 0.959859375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7793515625,
+      "agree_bayes_label": 0.8529921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.772,
+      "agree_bayes_label": 0.84434375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7562500000000001,
+      "agree_bayes_label": 0.8206562500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.71996875,
+      "agree_bayes_label": 0.77225,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.661671875,
+      "agree_bayes_label": 0.69846875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.5970781249999999,
+      "agree_bayes_label": 0.6201249999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.55615625,
+      "agree_bayes_label": 0.570234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8151484375,
+      "agree_bayes_label": 0.9163203125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8171484375,
+      "agree_bayes_label": 0.9165390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.81484375,
+      "agree_bayes_label": 0.91378125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.80459375,
+      "agree_bayes_label": 0.8968125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7781328125,
+      "agree_bayes_label": 0.8537578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7069062500000001,
+      "agree_bayes_label": 0.758625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6302890625,
+      "agree_bayes_label": 0.6669453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8246640625000001,
+      "agree_bayes_label": 0.9311328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8262734375,
+      "agree_bayes_label": 0.9367890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8284453125,
+      "agree_bayes_label": 0.9405078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8262890625,
+      "agree_bayes_label": 0.9374609374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8199375,
+      "agree_bayes_label": 0.9236875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.788875,
+      "agree_bayes_label": 0.87453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7251328125000001,
+      "agree_bayes_label": 0.7886953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8269921875000001,
+      "agree_bayes_label": 0.9360546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.829859375,
+      "agree_bayes_label": 0.944,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.83184375,
+      "agree_bayes_label": 0.950078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.832078125,
+      "agree_bayes_label": 0.95265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8306015625000001,
+      "agree_bayes_label": 0.9511953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8255703125,
+      "agree_bayes_label": 0.9364453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8023125,
+      "agree_bayes_label": 0.89846875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.828453125,
+      "agree_bayes_label": 0.93803125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8310078125,
+      "agree_bayes_label": 0.9460234375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8333828125,
+      "agree_bayes_label": 0.9517265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.83315625,
+      "agree_bayes_label": 0.957328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8334999999999999,
+      "agree_bayes_label": 0.960375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8330234375,
+      "agree_bayes_label": 0.9594609375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8279140624999999,
+      "agree_bayes_label": 0.9480234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7887734375,
+      "agree_bayes_label": 0.8680390625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7839921875,
+      "agree_bayes_label": 0.8599921875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7705859374999999,
+      "agree_bayes_label": 0.8395234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7315859375,
+      "agree_bayes_label": 0.7884296875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6718984375,
+      "agree_bayes_label": 0.7136328125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6044296874999999,
+      "agree_bayes_label": 0.6301015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5558984375,
+      "agree_bayes_label": 0.5734609375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.81840625,
+      "agree_bayes_label": 0.9201874999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8211171875,
+      "agree_bayes_label": 0.9233203125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.81859375,
+      "agree_bayes_label": 0.921140625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8102499999999999,
+      "agree_bayes_label": 0.9053125000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7838281250000001,
+      "agree_bayes_label": 0.8676875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.715578125,
+      "agree_bayes_label": 0.774828125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.635390625,
+      "agree_bayes_label": 0.67521875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.824359375,
+      "agree_bayes_label": 0.932078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8282734375,
+      "agree_bayes_label": 0.9379765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.82984375,
+      "agree_bayes_label": 0.94234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8276718750000001,
+      "agree_bayes_label": 0.9405312499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.822359375,
+      "agree_bayes_label": 0.9311875000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7972109375,
+      "agree_bayes_label": 0.8905078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7321171875000001,
+      "agree_bayes_label": 0.8032734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8271718750000001,
+      "agree_bayes_label": 0.9360781250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8301171875,
+      "agree_bayes_label": 0.9441171874999998,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8323906249999999,
+      "agree_bayes_label": 0.94934375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8325234374999999,
+      "agree_bayes_label": 0.9536953125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8320390625,
+      "agree_bayes_label": 0.9532265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8275234375,
+      "agree_bayes_label": 0.9450390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8084609375,
+      "agree_bayes_label": 0.9123359375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8281796875,
+      "agree_bayes_label": 0.9367578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.83028125,
+      "agree_bayes_label": 0.944984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.833609375,
+      "agree_bayes_label": 0.9515781249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8334609374999999,
+      "agree_bayes_label": 0.9568046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.833546875,
+      "agree_bayes_label": 0.96078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8335781250000001,
+      "agree_bayes_label": 0.962328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.830328125,
+      "agree_bayes_label": 0.954109375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.793515625,
+      "agree_bayes_label": 0.8752187499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.787546875,
+      "agree_bayes_label": 0.8660312499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7747734374999999,
+      "agree_bayes_label": 0.8462734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.73790625,
+      "agree_bayes_label": 0.7983281249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6759062499999999,
+      "agree_bayes_label": 0.720140625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6043203125,
+      "agree_bayes_label": 0.6315859375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.56096875,
+      "agree_bayes_label": 0.5776718750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8195078125,
+      "agree_bayes_label": 0.9220390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8218046875,
+      "agree_bayes_label": 0.9249921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.82059375,
+      "agree_bayes_label": 0.923828125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.813078125,
+      "agree_bayes_label": 0.910125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7897500000000001,
+      "agree_bayes_label": 0.874390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7157265625,
+      "agree_bayes_label": 0.7784921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6421328125,
+      "agree_bayes_label": 0.6842421875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8238203125,
+      "agree_bayes_label": 0.9324140624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8273984375,
+      "agree_bayes_label": 0.9384140624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8301015625,
+      "agree_bayes_label": 0.9431953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8294374999999999,
+      "agree_bayes_label": 0.94328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8248046875,
+      "agree_bayes_label": 0.9349921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8001171874999999,
+      "agree_bayes_label": 0.8954609375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.734875,
+      "agree_bayes_label": 0.8108125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.826640625,
+      "agree_bayes_label": 0.9355781249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8293515625000001,
+      "agree_bayes_label": 0.9430390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8325625,
+      "agree_bayes_label": 0.9483124999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8324843749999999,
+      "agree_bayes_label": 0.9534218750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.832046875,
+      "agree_bayes_label": 0.9549062500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8291640625,
+      "agree_bayes_label": 0.9476015625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8101796875,
+      "agree_bayes_label": 0.9188828125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8271406250000001,
+      "agree_bayes_label": 0.93659375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8301875,
+      "agree_bayes_label": 0.9441562499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8336484375,
+      "agree_bayes_label": 0.9508828125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8331328124999999,
+      "agree_bayes_label": 0.9564140624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8334921874999999,
+      "agree_bayes_label": 0.9605703125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8326875,
+      "agree_bayes_label": 0.9619687499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.830890625,
+      "agree_bayes_label": 0.9574687500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7966718749999999,
+      "agree_bayes_label": 0.883484375,
+      "c2_bound": 0.43906736743670116
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.79034375,
+      "agree_bayes_label": 0.87309375,
+      "c2_bound": 0.4147435864233955
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.779296875,
+      "agree_bayes_label": 0.85528125,
+      "c2_bound": 0.36913640931775626
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7429296875,
+      "agree_bayes_label": 0.8082734375,
+      "c2_bound": 0.27288501203194826
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6778203125,
+      "agree_bayes_label": 0.7262890625,
+      "c2_bound": 0.1549738120569743
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.607671875,
+      "agree_bayes_label": 0.64159375,
+      "c2_bound": 0.006637243748819509
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5621484375,
+      "agree_bayes_label": 0.5823984375,
+      "c2_bound": 0.0
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.817703125,
+      "agree_bayes_label": 0.92178125,
+      "c2_bound": 0.574515734525621
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8205625000000001,
+      "agree_bayes_label": 0.923015625,
+      "c2_bound": 0.5926202899217228
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8221015625,
+      "agree_bayes_label": 0.9232578124999999,
+      "c2_bound": 0.5861049547322621
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8137343749999999,
+      "agree_bayes_label": 0.912109375,
+      "c2_bound": 0.5055097439951997
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.788328125,
+      "agree_bayes_label": 0.87653125,
+      "c2_bound": 0.3542122871393515
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7196796875,
+      "agree_bayes_label": 0.7892421875,
+      "c2_bound": 0.12261710168767771
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.64375,
+      "agree_bayes_label": 0.69209375,
+      "c2_bound": 0.0
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8225234375000001,
+      "agree_bayes_label": 0.9298671875,
+      "c2_bound": 0.6157969218711734
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8269375,
+      "agree_bayes_label": 0.93384375,
+      "c2_bound": 0.6596314373850646
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.831015625,
+      "agree_bayes_label": 0.9410625,
+      "c2_bound": 0.6860446330549863
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.827265625,
+      "agree_bayes_label": 0.9404843749999999,
+      "c2_bound": 0.6568669404957741
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8242890625,
+      "agree_bayes_label": 0.9351484375,
+      "c2_bound": 0.5418279398394998
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7973515625,
+      "agree_bayes_label": 0.8992890625000001,
+      "c2_bound": 0.2858815527518127
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7346328124999999,
+      "agree_bayes_label": 0.8162578125,
+      "c2_bound": 0.013991169262501692
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.823109375,
+      "agree_bayes_label": 0.9322187500000001,
+      "c2_bound": 0.6291758540394568
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8274765625,
+      "agree_bayes_label": 0.9376796875,
+      "c2_bound": 0.6842056701861621
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8327265625,
+      "agree_bayes_label": 0.9464296875,
+      "c2_bound": 0.7250489797381588
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.831078125,
+      "agree_bayes_label": 0.948390625,
+      "c2_bound": 0.7305231709003174
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8316640625,
+      "agree_bayes_label": 0.9511484375,
+      "c2_bound": 0.6777093994294503
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8261875000000001,
+      "agree_bayes_label": 0.947828125,
+      "c2_bound": 0.47640383998824143
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8066875,
+      "agree_bayes_label": 0.920203125,
+      "c2_bound": 0.18060258611104127
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8234609375,
+      "agree_bayes_label": 0.9326171875,
+      "c2_bound": 0.6331430176898781
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8284140625,
+      "agree_bayes_label": 0.9395703124999999,
+      "c2_bound": 0.6912606854231507
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8338359375000001,
+      "agree_bayes_label": 0.9489921875,
+      "c2_bound": 0.7367030574881719
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.831578125,
+      "agree_bayes_label": 0.9499062500000001,
+      "c2_bound": 0.7539761281299772
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.832015625,
+      "agree_bayes_label": 0.95403125,
+      "c2_bound": 0.7300919531384192
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.829859375,
+      "agree_bayes_label": 0.95965625,
+      "c2_bound": 0.6056201793999245
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.82721875,
+      "agree_bayes_label": 0.9560937500000001,
+      "c2_bound": 0.37046426451388276
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8100390625,
+      "agree_bayes_label": 0.9049765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.807421875,
+      "agree_bayes_label": 0.900046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8030390625,
+      "agree_bayes_label": 0.8932265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7799609375000001,
+      "agree_bayes_label": 0.8633515625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7364921875,
+      "agree_bayes_label": 0.8056171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6644921875,
+      "agree_bayes_label": 0.7156015625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.604265625,
+      "agree_bayes_label": 0.6402343749999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8208515625,
+      "agree_bayes_label": 0.9268671875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8246171875,
+      "agree_bayes_label": 0.9304921875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8286171875,
+      "agree_bayes_label": 0.9352578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.822640625,
+      "agree_bayes_label": 0.931125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8119062499999999,
+      "agree_bayes_label": 0.914203125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7689296875,
+      "agree_bayes_label": 0.8591953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7032812500000001,
+      "agree_bayes_label": 0.773515625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8230078125,
+      "agree_bayes_label": 0.9308984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8272578125,
+      "agree_bayes_label": 0.9364296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.831921875,
+      "agree_bayes_label": 0.944609375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8301328125,
+      "agree_bayes_label": 0.9462578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8295546874999999,
+      "agree_bayes_label": 0.9455234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8157578125,
+      "agree_bayes_label": 0.9316171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7797890625,
+      "agree_bayes_label": 0.8819296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8232578125000001,
+      "agree_bayes_label": 0.9320859374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8280000000000001,
+      "agree_bayes_label": 0.9390468750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8335625,
+      "agree_bayes_label": 0.94825,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.83159375,
+      "agree_bayes_label": 0.9498125000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.832390625,
+      "agree_bayes_label": 0.953546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.82821875,
+      "agree_bayes_label": 0.955640625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8206953125,
+      "agree_bayes_label": 0.9451796875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8235234375,
+      "agree_bayes_label": 0.9321328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8283671875,
+      "agree_bayes_label": 0.9401484375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.833796875,
+      "agree_bayes_label": 0.94959375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.83140625,
+      "agree_bayes_label": 0.9502656249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8323203125,
+      "agree_bayes_label": 0.9548671875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.829828125,
+      "agree_bayes_label": 0.96209375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "bayes_hot",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8280859374999999,
+      "agree_bayes_label": 0.9600390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.6159374999999999,
+      "agree_bayes_label": 0.640046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.6677578125,
+      "agree_bayes_label": 0.7010390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.6676171875,
+      "agree_bayes_label": 0.7027421875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.6427499999999999,
+      "agree_bayes_label": 0.6748281249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6101640625,
+      "agree_bayes_label": 0.6305390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.5662578125,
+      "agree_bayes_label": 0.5780390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5359765625,
+      "agree_bayes_label": 0.5439453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.687421875,
+      "agree_bayes_label": 0.7308281249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7625390624999999,
+      "agree_bayes_label": 0.8285546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.768140625,
+      "agree_bayes_label": 0.8380000000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.75309375,
+      "agree_bayes_label": 0.81584375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7118046875,
+      "agree_bayes_label": 0.7611484375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6439453125000001,
+      "agree_bayes_label": 0.6763046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5910234375,
+      "agree_bayes_label": 0.6094453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.71671875,
+      "agree_bayes_label": 0.77009375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8035937500000001,
+      "agree_bayes_label": 0.8915,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8113203125,
+      "agree_bayes_label": 0.9077578125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8042031249999999,
+      "agree_bayes_label": 0.89721875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7840703125,
+      "agree_bayes_label": 0.8615234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.732140625,
+      "agree_bayes_label": 0.78859375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6617500000000001,
+      "agree_bayes_label": 0.69665625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.72828125,
+      "agree_bayes_label": 0.787390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8168124999999999,
+      "agree_bayes_label": 0.917734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8265078125,
+      "agree_bayes_label": 0.9408671874999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8264609375,
+      "agree_bayes_label": 0.9389296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8166484375,
+      "agree_bayes_label": 0.9205546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7943046874999999,
+      "agree_bayes_label": 0.8803984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7464531249999999,
+      "agree_bayes_label": 0.808890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.731578125,
+      "agree_bayes_label": 0.7930312500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8213515625000001,
+      "agree_bayes_label": 0.9268828124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8310312500000001,
+      "agree_bayes_label": 0.951796875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8317734375,
+      "agree_bayes_label": 0.9567265625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8287187500000001,
+      "agree_bayes_label": 0.9472499999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.82290625,
+      "agree_bayes_label": 0.9318125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.02",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8024296874999999,
+      "agree_bayes_label": 0.8927265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.64965625,
+      "agree_bayes_label": 0.6833125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.6966015624999999,
+      "agree_bayes_label": 0.7402265625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.6974374999999999,
+      "agree_bayes_label": 0.74228125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.6725546875,
+      "agree_bayes_label": 0.7107890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6256875,
+      "agree_bayes_label": 0.6526562499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.575390625,
+      "agree_bayes_label": 0.590703125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.543078125,
+      "agree_bayes_label": 0.5527187499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7217812499999999,
+      "agree_bayes_label": 0.77425,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.78440625,
+      "agree_bayes_label": 0.86084375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7893125,
+      "agree_bayes_label": 0.869859375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7755390624999999,
+      "agree_bayes_label": 0.8502421874999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7382968750000001,
+      "agree_bayes_label": 0.796234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.66853125,
+      "agree_bayes_label": 0.707078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6046015625,
+      "agree_bayes_label": 0.6265390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7455468749999999,
+      "agree_bayes_label": 0.80928125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8121640625,
+      "agree_bayes_label": 0.9071640624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8182890625,
+      "agree_bayes_label": 0.9243515625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8156953125,
+      "agree_bayes_label": 0.9168046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7988515625,
+      "agree_bayes_label": 0.8876328124999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7562734375,
+      "agree_bayes_label": 0.8225703125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6857421875,
+      "agree_bayes_label": 0.7304140625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7514140625000001,
+      "agree_bayes_label": 0.8210703125000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8212499999999999,
+      "agree_bayes_label": 0.926375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8292265624999999,
+      "agree_bayes_label": 0.9467109375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8305703124999999,
+      "agree_bayes_label": 0.9485234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8228046875,
+      "agree_bayes_label": 0.9325859375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8078671875,
+      "agree_bayes_label": 0.9035234375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.77090625,
+      "agree_bayes_label": 0.844546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7524140625,
+      "agree_bayes_label": 0.8247734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8237812499999999,
+      "agree_bayes_label": 0.9315,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8304921875000001,
+      "agree_bayes_label": 0.9532578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8335,
+      "agree_bayes_label": 0.960359375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8305078125,
+      "agree_bayes_label": 0.9510078125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8281015625,
+      "agree_bayes_label": 0.9412734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.1",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8133359375,
+      "agree_bayes_label": 0.9133984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.6792109375,
+      "agree_bayes_label": 0.7187890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7147265625,
+      "agree_bayes_label": 0.7643359375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7154921875,
+      "agree_bayes_label": 0.7669453125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.6871015625000001,
+      "agree_bayes_label": 0.7298203125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6365234375,
+      "agree_bayes_label": 0.6660390625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.5824296875,
+      "agree_bayes_label": 0.5992890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5491171875,
+      "agree_bayes_label": 0.5612734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7453359374999999,
+      "agree_bayes_label": 0.8092109375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7931250000000001,
+      "agree_bayes_label": 0.87615625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.799203125,
+      "agree_bayes_label": 0.88665625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.786484375,
+      "agree_bayes_label": 0.867515625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7488984375,
+      "agree_bayes_label": 0.8137265625000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.6788125,
+      "agree_bayes_label": 0.7224375000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.61346875,
+      "agree_bayes_label": 0.64090625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7636875,
+      "agree_bayes_label": 0.8386875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.816421875,
+      "agree_bayes_label": 0.9136562500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8230234375000001,
+      "agree_bayes_label": 0.9312734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.81996875,
+      "agree_bayes_label": 0.92625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8043046875,
+      "agree_bayes_label": 0.8987890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7662265625,
+      "agree_bayes_label": 0.8401328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6971640625,
+      "agree_bayes_label": 0.7471015624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7696093749999999,
+      "agree_bayes_label": 0.8492031250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8227578125,
+      "agree_bayes_label": 0.9288359374999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8297578125,
+      "agree_bayes_label": 0.9490234375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.830546875,
+      "agree_bayes_label": 0.9526718750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8260234375,
+      "agree_bayes_label": 0.9386640625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8134609374999999,
+      "agree_bayes_label": 0.9141171874999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7809843750000001,
+      "agree_bayes_label": 0.8616406249999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7706640625000001,
+      "agree_bayes_label": 0.8520546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.824640625,
+      "agree_bayes_label": 0.9332812500000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8304453125,
+      "agree_bayes_label": 0.9534140624999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8336874999999999,
+      "agree_bayes_label": 0.9609531250000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8311953125,
+      "agree_bayes_label": 0.9532734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8288203125,
+      "agree_bayes_label": 0.9443046875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "logpool_eta0.3",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.81909375,
+      "agree_bayes_label": 0.92578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7744921874999999,
+      "agree_bayes_label": 0.8503203125000001,
+      "c2_bound": 0.30553046943843787
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7559140625,
+      "agree_bayes_label": 0.8183203125,
+      "c2_bound": 0.23808449249903313
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.757203125,
+      "agree_bayes_label": 0.8259531250000001,
+      "c2_bound": 0.2821128789841013
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.7248359375,
+      "agree_bayes_label": 0.7830546875,
+      "c2_bound": 0.21879856528962
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.6629921875,
+      "agree_bayes_label": 0.7038984374999999,
+      "c2_bound": 0.11624991796395323
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.5985,
+      "agree_bayes_label": 0.6270156250000001,
+      "c2_bound": 0.0032208086903668435
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.5576328125,
+      "agree_bayes_label": 0.5755234375,
+      "c2_bound": 0.0
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8094296875,
+      "agree_bayes_label": 0.9082265625000001,
+      "c2_bound": 0.44550996037837426
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8071953125,
+      "agree_bayes_label": 0.8941640625,
+      "c2_bound": 0.4010382098422684
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8141093749999999,
+      "agree_bayes_label": 0.91528125,
+      "c2_bound": 0.4848864890343608
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8043828125,
+      "agree_bayes_label": 0.9001171875,
+      "c2_bound": 0.42714701518708365
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7725546875,
+      "agree_bayes_label": 0.8485546875,
+      "c2_bound": 0.28347915290700315
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7058046874999999,
+      "agree_bayes_label": 0.7617421875,
+      "c2_bound": 0.08605825634625772
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6349296875,
+      "agree_bayes_label": 0.6769765624999999,
+      "c2_bound": 0.0
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.815765625,
+      "agree_bayes_label": 0.921078125,
+      "c2_bound": 0.49712512701672434
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8215078124999999,
+      "agree_bayes_label": 0.9148359374999999,
+      "c2_bound": 0.48394128317439533
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.82725,
+      "agree_bayes_label": 0.940234375,
+      "c2_bound": 0.5976622768218635
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.824046875,
+      "agree_bayes_label": 0.9377656249999999,
+      "c2_bound": 0.5785431454732073
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8142421875,
+      "agree_bayes_label": 0.9167734375,
+      "c2_bound": 0.45349094578907434
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7853515624999999,
+      "agree_bayes_label": 0.8702265625000001,
+      "c2_bound": 0.21963942514389312
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7238359375,
+      "agree_bayes_label": 0.7924453124999999,
+      "c2_bound": 0.009189907664049719
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8178828125000001,
+      "agree_bayes_label": 0.9241015625000001,
+      "c2_bound": 0.514422359291555
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8238125000000001,
+      "agree_bayes_label": 0.92040625,
+      "c2_bound": 0.5196465484964257
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.830296875,
+      "agree_bayes_label": 0.948796875,
+      "c2_bound": 0.6494616337480079
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.829328125,
+      "agree_bayes_label": 0.9492499999999999,
+      "c2_bound": 0.6629829322524728
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8259218749999999,
+      "agree_bayes_label": 0.939078125,
+      "c2_bound": 0.5903375855377457
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8214375,
+      "agree_bayes_label": 0.926328125,
+      "c2_bound": 0.3883427072358349
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7992109375,
+      "agree_bayes_label": 0.8969140624999999,
+      "c2_bound": 0.1427072684166888
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8184140625,
+      "agree_bayes_label": 0.9253828125,
+      "c2_bound": 0.5196866175706782
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8243671875,
+      "agree_bayes_label": 0.9218046874999999,
+      "c2_bound": 0.5310849788470916
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8318359375,
+      "agree_bayes_label": 0.9504921875,
+      "c2_bound": 0.6662112068272834
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8309531250000001,
+      "agree_bayes_label": 0.9518125,
+      "c2_bound": 0.6933301557477445
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8285,
+      "agree_bayes_label": 0.94615625,
+      "c2_bound": 0.6515880603879716
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8304453125,
+      "agree_bayes_label": 0.9420078125,
+      "c2_bound": 0.5153534558764268
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8257656250000001,
+      "agree_bayes_label": 0.938078125,
+      "c2_bound": 0.31309816425126374
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 2,
+      "T": 500,
+      "acc": 0.7941796875,
+      "agree_bayes_label": 0.8828984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 4,
+      "T": 250,
+      "acc": 0.7831718750000001,
+      "agree_bayes_label": 0.8600625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 8,
+      "T": 125,
+      "acc": 0.7884140625,
+      "agree_bayes_label": 0.8737890625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 16,
+      "T": 62,
+      "acc": 0.768546875,
+      "agree_bayes_label": 0.8446093750000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 32,
+      "T": 31,
+      "acc": 0.7171328125,
+      "agree_bayes_label": 0.7775859375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 64,
+      "T": 15,
+      "acc": 0.65209375,
+      "agree_bayes_label": 0.6934374999999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.1,
+      "m": 125,
+      "T": 8,
+      "acc": 0.60009375,
+      "agree_bayes_label": 0.6299375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8138515625,
+      "agree_bayes_label": 0.9161953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8163437499999999,
+      "agree_bayes_label": 0.908546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8213046875000001,
+      "agree_bayes_label": 0.9305703125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8168359374999999,
+      "agree_bayes_label": 0.9236328125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8003203125,
+      "agree_bayes_label": 0.8909765625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 64,
+      "T": 15,
+      "acc": 0.7573671875,
+      "agree_bayes_label": 0.8326953125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.25,
+      "m": 125,
+      "T": 8,
+      "acc": 0.6934921875,
+      "agree_bayes_label": 0.7546796875000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8166328125,
+      "agree_bayes_label": 0.9231640625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8228046875,
+      "agree_bayes_label": 0.9188515625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8290546875,
+      "agree_bayes_label": 0.9457734375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 16,
+      "T": 62,
+      "acc": 0.82775,
+      "agree_bayes_label": 0.94465625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 32,
+      "T": 31,
+      "acc": 0.822515625,
+      "agree_bayes_label": 0.9311875000000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 64,
+      "T": 15,
+      "acc": 0.81040625,
+      "agree_bayes_label": 0.9075,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 0.5,
+      "m": 125,
+      "T": 8,
+      "acc": 0.7734687499999999,
+      "agree_bayes_label": 0.860625,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.817984375,
+      "agree_bayes_label": 0.92471875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8237578125,
+      "agree_bayes_label": 0.9212109375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8308828125,
+      "agree_bayes_label": 0.9505546874999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8307890625,
+      "agree_bayes_label": 0.9507578125,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8277187500000001,
+      "agree_bayes_label": 0.943546875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.8277109375,
+      "agree_bayes_label": 0.9371171875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 1.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.8172499999999999,
+      "agree_bayes_label": 0.9242812499999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 2,
+      "T": 500,
+      "acc": 0.8181484375,
+      "agree_bayes_label": 0.9249296874999999,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 4,
+      "T": 250,
+      "acc": 0.8244765625,
+      "agree_bayes_label": 0.9218046875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 8,
+      "T": 125,
+      "acc": 0.8318203125,
+      "agree_bayes_label": 0.9515859375000001,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 16,
+      "T": 62,
+      "acc": 0.8314843749999999,
+      "agree_bayes_label": 0.952296875,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 32,
+      "T": 31,
+      "acc": 0.8290859375,
+      "agree_bayes_label": 0.9468984375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 64,
+      "T": 15,
+      "acc": 0.832671875,
+      "agree_bayes_label": 0.9449375,
+      "c2_bound": null
+    },
+    {
+      "teacher": "logreg",
+      "agg": "vote_margin",
+      "eps": 2.0,
+      "m": 125,
+      "T": 8,
+      "acc": 0.828875,
+      "agree_bayes_label": 0.9440000000000001,
+      "c2_bound": null
+    }
+  ],
+  "teacher_curves": [
+    {
+      "teacher": "bayes",
+      "m": 2,
+      "mean_error": 0.41417187499999997,
+      "median_gamma": 0.175625,
+      "infinite_T_floor": 0.163125,
+      "nonprivate_majority_acc": 0.8225
+    },
+    {
+      "teacher": "bayes",
+      "m": 4,
+      "mean_error": 0.358221875,
+      "median_gamma": 0.28437500000000004,
+      "infinite_T_floor": 0.1009375,
+      "nonprivate_majority_acc": 0.82875
+    },
+    {
+      "teacher": "bayes",
+      "m": 8,
+      "mean_error": 0.28510625,
+      "median_gamma": 0.44437499999999996,
+      "infinite_T_floor": 0.071875,
+      "nonprivate_majority_acc": 0.8334375
+    },
+    {
+      "teacher": "bayes",
+      "m": 16,
+      "mean_error": 0.21109375,
+      "median_gamma": 0.63375,
+      "infinite_T_floor": 0.0490625,
+      "nonprivate_majority_acc": 0.8315625
+    },
+    {
+      "teacher": "bayes",
+      "m": 32,
+      "mean_error": 0.149934375,
+      "median_gamma": 0.8093750000000001,
+      "infinite_T_floor": 0.034375,
+      "nonprivate_majority_acc": 0.8321875
+    },
+    {
+      "teacher": "bayes",
+      "m": 64,
+      "mean_error": 0.10699375,
+      "median_gamma": 0.9324999999999999,
+      "infinite_T_floor": 0.0225,
+      "nonprivate_majority_acc": 0.8303125
+    },
+    {
+      "teacher": "bayes",
+      "m": 125,
+      "mean_error": 0.076403125,
+      "median_gamma": 0.9893749999999999,
+      "infinite_T_floor": 0.0146875,
+      "nonprivate_majority_acc": 0.8290625
+    },
+    {
+      "teacher": "bayes_flat",
+      "m": 2,
+      "mean_error": 0.4405875,
+      "median_gamma": 0.12062500000000001,
+      "infinite_T_floor": 0.204375,
+      "nonprivate_majority_acc": 0.81875
+    },
+    {
+      "teacher": "bayes_flat",
+      "m": 4,
+      "mean_error": 0.3855375,
+      "median_gamma": 0.21687499999999998,
+      "infinite_T_floor": 0.1171875,
+      "nonprivate_majority_acc": 0.834375
+    },
+    {
+      "teacher": "bayes_flat",
+      "m": 8,
+      "mean_error": 0.3007375,
+      "median_gamma": 0.39999999999999997,
+      "infinite_T_floor": 0.060000000000000005,
+      "nonprivate_majority_acc": 0.8309374999999999
+    },
+    {
+      "teacher": "bayes_flat",
+      "m": 16,
+      "mean_error": 0.218146875,
+      "median_gamma": 0.609375,
+      "infinite_T_floor": 0.036250000000000004,
+      "nonprivate_majority_acc": 0.8325
+    },
+    {
+      "teacher": "bayes_flat",
+      "m": 32,
+      "mean_error": 0.15305625,
+      "median_gamma": 0.80375,
+      "infinite_T_floor": 0.0240625,
+      "nonprivate_majority_acc": 0.835
+    },
+    {
+      "teacher": "bayes_flat",
+      "m": 64,
+      "mean_error": 0.10823125,
+      "median_gamma": 0.92625,
+      "infinite_T_floor": 0.0153125,
+      "nonprivate_majority_acc": 0.83375
+    },
+    {
+      "teacher": "bayes_flat",
+      "m": 125,
+      "mean_error": 0.0767,
+      "median_gamma": 0.9874999999999999,
+      "infinite_T_floor": 0.010624999999999999,
+      "nonprivate_majority_acc": 0.8303125
+    },
+    {
+      "teacher": "bayes_hot",
+      "m": 2,
+      "mean_error": 0.41417187499999997,
+      "median_gamma": 0.175625,
+      "infinite_T_floor": 0.163125,
+      "nonprivate_majority_acc": 0.8225
+    },
+    {
+      "teacher": "bayes_hot",
+      "m": 4,
+      "mean_error": 0.358221875,
+      "median_gamma": 0.28437500000000004,
+      "infinite_T_floor": 0.1009375,
+      "nonprivate_majority_acc": 0.82875
+    },
+    {
+      "teacher": "bayes_hot",
+      "m": 8,
+      "mean_error": 0.28510625,
+      "median_gamma": 0.44437499999999996,
+      "infinite_T_floor": 0.071875,
+      "nonprivate_majority_acc": 0.8334375
+    },
+    {
+      "teacher": "bayes_hot",
+      "m": 16,
+      "mean_error": 0.21109375,
+      "median_gamma": 0.63375,
+      "infinite_T_floor": 0.0490625,
+      "nonprivate_majority_acc": 0.8315625
+    },
+    {
+      "teacher": "bayes_hot",
+      "m": 32,
+      "mean_error": 0.149934375,
+      "median_gamma": 0.8093750000000001,
+      "infinite_T_floor": 0.034375,
+      "nonprivate_majority_acc": 0.8321875
+    },
+    {
+      "teacher": "bayes_hot",
+      "m": 64,
+      "mean_error": 0.10699375,
+      "median_gamma": 0.9324999999999999,
+      "infinite_T_floor": 0.0225,
+      "nonprivate_majority_acc": 0.8303125
+    },
+    {
+      "teacher": "bayes_hot",
+      "m": 125,
+      "mean_error": 0.076403125,
+      "median_gamma": 0.9893749999999999,
+      "infinite_T_floor": 0.0146875,
+      "nonprivate_majority_acc": 0.8290625
+    },
+    {
+      "teacher": "logreg",
+      "m": 2,
+      "mean_error": 0.440846875,
+      "median_gamma": 0.12000000000000001,
+      "infinite_T_floor": 0.2040625,
+      "nonprivate_majority_acc": 0.8178125
+    },
+    {
+      "teacher": "logreg",
+      "m": 4,
+      "mean_error": 0.41113125,
+      "median_gamma": 0.17000000000000004,
+      "infinite_T_floor": 0.1459375,
+      "nonprivate_majority_acc": 0.8259375
+    },
+    {
+      "teacher": "logreg",
+      "m": 8,
+      "mean_error": 0.32423124999999997,
+      "median_gamma": 0.351875,
+      "infinite_T_floor": 0.0690625,
+      "nonprivate_majority_acc": 0.8325
+    },
+    {
+      "teacher": "logreg",
+      "m": 16,
+      "mean_error": 0.24731562499999998,
+      "median_gamma": 0.53,
+      "infinite_T_floor": 0.045625,
+      "nonprivate_majority_acc": 0.833125
+    },
+    {
+      "teacher": "logreg",
+      "m": 32,
+      "mean_error": 0.19023125000000002,
+      "median_gamma": 0.690625,
+      "infinite_T_floor": 0.0225,
+      "nonprivate_majority_acc": 0.8303125
+    },
+    {
+      "teacher": "logreg",
+      "m": 64,
+      "mean_error": 0.149571875,
+      "median_gamma": 0.8043750000000001,
+      "infinite_T_floor": 0.02375,
+      "nonprivate_majority_acc": 0.835
+    },
+    {
+      "teacher": "logreg",
+      "m": 125,
+      "mean_error": 0.109896875,
+      "median_gamma": 0.924375,
+      "infinite_T_floor": 0.015000000000000001,
+      "nonprivate_majority_acc": 0.8309375
+    }
+  ],
+  "best_m": [
+    {
+      "teacher": "bayes",
+      "eps": 0.1,
+      "observed_best_m": 2,
+      "c2_best_m": 2,
+      "n_star_best_m": 2,
+      "n_star_min": 3360.6873318618063,
+      "observed": {
+        "2": 0.88365625,
+        "4": 0.8730156250000001,
+        "8": 0.8544296875,
+        "16": 0.8080234374999999,
+        "32": 0.725671875,
+        "64": 0.6389765624999999,
+        "125": 0.582046875
+      },
+      "c2": {
+        "2": 0.43906736743670116,
+        "4": 0.4147435864233955,
+        "8": 0.36913640931775626,
+        "16": 0.27288501203194826,
+        "32": 0.1549738120569743,
+        "64": 0.006637243748819509,
+        "125": 0.0
+      }
+    },
+    {
+      "teacher": "bayes",
+      "eps": 0.25,
+      "observed_best_m": 8,
+      "c2_best_m": 4,
+      "n_star_best_m": 4,
+      "n_star_min": 1660.401125719855,
+      "observed": {
+        "2": 0.9220234375,
+        "4": 0.9220703125,
+        "8": 0.9242421875,
+        "16": 0.91409375,
+        "32": 0.8769374999999999,
+        "64": 0.7874687499999999,
+        "125": 0.692609375
+      },
+      "c2": {
+        "2": 0.574515734525621,
+        "4": 0.5926202899217228,
+        "8": 0.5861049547322621,
+        "16": 0.5055097439951997,
+        "32": 0.3542122871393515,
+        "64": 0.12261710168767771,
+        "125": 0.0
+      }
+    },
+    {
+      "teacher": "bayes",
+      "eps": 0.5,
+      "observed_best_m": 16,
+      "c2_best_m": 8,
+      "n_star_best_m": 8,
+      "n_star_min": 1195.5705297347242,
+      "observed": {
+        "2": 0.92959375,
+        "4": 0.934375,
+        "8": 0.940546875,
+        "16": 0.94075,
+        "32": 0.9344375,
+        "64": 0.8992734375,
+        "125": 0.81490625
+      },
+      "c2": {
+        "2": 0.6157969218711734,
+        "4": 0.6596314373850646,
+        "8": 0.6860446330549863,
+        "16": 0.6568669404957741,
+        "32": 0.5418279398394998,
+        "64": 0.2858815527518127,
+        "125": 0.013991169262501692
+      }
+    },
+    {
+      "teacher": "bayes",
+      "eps": 1.0,
+      "observed_best_m": 32,
+      "c2_best_m": 16,
+      "n_star_best_m": 16,
+      "n_star_min": 1175.6241217861716,
+      "observed": {
+        "2": 0.9322656250000001,
+        "4": 0.9378515625,
+        "8": 0.9461015625,
+        "16": 0.948109375,
+        "32": 0.9505468749999999,
+        "64": 0.9476328125,
+        "125": 0.920546875
+      },
+      "c2": {
+        "2": 0.6291758540394568,
+        "4": 0.6842056701861621,
+        "8": 0.7250489797381588,
+        "16": 0.7305231709003174,
+        "32": 0.6777093994294503,
+        "64": 0.47640383998824143,
+        "125": 0.18060258611104127
+      }
+    },
+    {
+      "teacher": "bayes",
+      "eps": 2.0,
+      "observed_best_m": 64,
+      "c2_best_m": 16,
+      "n_star_best_m": 16,
+      "n_star_min": 1175.6241217861716,
+      "observed": {
+        "2": 0.9325390625000001,
+        "4": 0.9396562500000001,
+        "8": 0.9487734375000001,
+        "16": 0.9501015625,
+        "32": 0.95446875,
+        "64": 0.9598437499999999,
+        "125": 0.9566484375
+      },
+      "c2": {
+        "2": 0.6331430176898781,
+        "4": 0.6912606854231507,
+        "8": 0.7367030574881719,
+        "16": 0.7539761281299772,
+        "32": 0.7300919531384192,
+        "64": 0.6056201793999245,
+        "125": 0.37046426451388276
+      }
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 0.1,
+      "observed_best_m": 2,
+      "c2_best_m": 2,
+      "n_star_best_m": 2,
+      "n_star_min": 3360.6873318618063,
+      "observed": {
+        "2": 0.883484375,
+        "4": 0.87309375,
+        "8": 0.85528125,
+        "16": 0.8082734375,
+        "32": 0.7262890625,
+        "64": 0.64159375,
+        "125": 0.5823984375
+      },
+      "c2": {
+        "2": 0.43906736743670116,
+        "4": 0.4147435864233955,
+        "8": 0.36913640931775626,
+        "16": 0.27288501203194826,
+        "32": 0.1549738120569743,
+        "64": 0.006637243748819509,
+        "125": 0.0
+      }
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 0.25,
+      "observed_best_m": 8,
+      "c2_best_m": 4,
+      "n_star_best_m": 4,
+      "n_star_min": 1660.401125719855,
+      "observed": {
+        "2": 0.92178125,
+        "4": 0.923015625,
+        "8": 0.9232578124999999,
+        "16": 0.912109375,
+        "32": 0.87653125,
+        "64": 0.7892421875,
+        "125": 0.69209375
+      },
+      "c2": {
+        "2": 0.574515734525621,
+        "4": 0.5926202899217228,
+        "8": 0.5861049547322621,
+        "16": 0.5055097439951997,
+        "32": 0.3542122871393515,
+        "64": 0.12261710168767771,
+        "125": 0.0
+      }
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 0.5,
+      "observed_best_m": 8,
+      "c2_best_m": 8,
+      "n_star_best_m": 8,
+      "n_star_min": 1195.5705297347242,
+      "observed": {
+        "2": 0.9298671875,
+        "4": 0.93384375,
+        "8": 0.9410625,
+        "16": 0.9404843749999999,
+        "32": 0.9351484375,
+        "64": 0.8992890625000001,
+        "125": 0.8162578125
+      },
+      "c2": {
+        "2": 0.6157969218711734,
+        "4": 0.6596314373850646,
+        "8": 0.6860446330549863,
+        "16": 0.6568669404957741,
+        "32": 0.5418279398394998,
+        "64": 0.2858815527518127,
+        "125": 0.013991169262501692
+      }
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 1.0,
+      "observed_best_m": 32,
+      "c2_best_m": 16,
+      "n_star_best_m": 16,
+      "n_star_min": 1175.6241217861716,
+      "observed": {
+        "2": 0.9322187500000001,
+        "4": 0.9376796875,
+        "8": 0.9464296875,
+        "16": 0.948390625,
+        "32": 0.9511484375,
+        "64": 0.947828125,
+        "125": 0.920203125
+      },
+      "c2": {
+        "2": 0.6291758540394568,
+        "4": 0.6842056701861621,
+        "8": 0.7250489797381588,
+        "16": 0.7305231709003174,
+        "32": 0.6777093994294503,
+        "64": 0.47640383998824143,
+        "125": 0.18060258611104127
+      }
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 2.0,
+      "observed_best_m": 64,
+      "c2_best_m": 16,
+      "n_star_best_m": 16,
+      "n_star_min": 1175.6241217861716,
+      "observed": {
+        "2": 0.9326171875,
+        "4": 0.9395703124999999,
+        "8": 0.9489921875,
+        "16": 0.9499062500000001,
+        "32": 0.95403125,
+        "64": 0.95965625,
+        "125": 0.9560937500000001
+      },
+      "c2": {
+        "2": 0.6331430176898781,
+        "4": 0.6912606854231507,
+        "8": 0.7367030574881719,
+        "16": 0.7539761281299772,
+        "32": 0.7300919531384192,
+        "64": 0.6056201793999245,
+        "125": 0.37046426451388276
+      }
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 0.1,
+      "observed_best_m": 2,
+      "c2_best_m": 8,
+      "n_star_best_m": 2,
+      "n_star_min": 4893.02145208895,
+      "observed": {
+        "2": 0.8525546875,
+        "4": 0.8507421875,
+        "8": 0.843921875,
+        "16": 0.8039375,
+        "32": 0.7262578125,
+        "64": 0.6362265625,
+        "125": 0.5830625
+      },
+      "c2": {
+        "2": 0.3077310403674049,
+        "4": 0.322717912033823,
+        "8": 0.3302891112560242,
+        "16": 0.2590623616832731,
+        "32": 0.15159820798835877,
+        "64": 0.006453308716822485,
+        "125": 0.0
+      }
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 0.25,
+      "observed_best_m": 8,
+      "c2_best_m": 8,
+      "n_star_best_m": 8,
+      "n_star_min": 2360.882850632919,
+      "observed": {
+        "2": 0.9082343749999999,
+        "4": 0.9163359375,
+        "8": 0.9256171875000001,
+        "16": 0.9131484375000001,
+        "32": 0.8773046874999999,
+        "64": 0.787703125,
+        "125": 0.6916328125
+      },
+      "c2": {
+        "2": 0.4477546828448471,
+        "4": 0.4955915850626892,
+        "8": 0.5421077862942436,
+        "16": 0.4852295606756068,
+        "32": 0.34735492064670515,
+        "64": 0.12077211497742729,
+        "125": 0.0
+      }
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 0.5,
+      "observed_best_m": 8,
+      "c2_best_m": 8,
+      "n_star_best_m": 8,
+      "n_star_min": 1475.5517816455747,
+      "observed": {
+        "2": 0.9211562499999999,
+        "4": 0.9347578125,
+        "8": 0.9473671875,
+        "16": 0.9459218749999999,
+        "32": 0.9379531249999999,
+        "64": 0.898640625,
+        "125": 0.8154140625
+      },
+      "c2": {
+        "2": 0.4990781815012006,
+        "4": 0.5726161635679553,
+        "8": 0.6486108652539236,
+        "16": 0.6356828178760415,
+        "32": 0.5328257633026339,
+        "64": 0.2828957307502855,
+        "125": 0.013833372088482378
+      }
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 1.0,
+      "observed_best_m": 32,
+      "c2_best_m": 16,
+      "n_star_best_m": 16,
+      "n_star_min": 1271.5550501239234,
+      "observed": {
+        "2": 0.925203125,
+        "4": 0.9395390625,
+        "8": 0.9536875,
+        "16": 0.9564531249999999,
+        "32": 0.958109375,
+        "64": 0.948515625,
+        "125": 0.9200937499999999
+      },
+      "c2": {
+        "2": 0.5163512245700086,
+        "4": 0.6044547509330251,
+        "8": 0.695355853232932,
+        "16": 0.7113978625671982,
+        "32": 0.6678739185917153,
+        "64": 0.47179315266366717,
+        "125": 0.17964042406973324
+      }
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 2.0,
+      "observed_best_m": 32,
+      "c2_best_m": 16,
+      "n_star_best_m": 16,
+      "n_star_min": 1271.5550501239234,
+      "observed": {
+        "2": 0.9269921875,
+        "4": 0.9408046875,
+        "8": 0.9551562499999999,
+        "16": 0.9608046875,
+        "32": 0.964015625,
+        "64": 0.960515625,
+        "125": 0.955953125
+      },
+      "c2": {
+        "2": 0.5216718757483062,
+        "4": 0.6137245033094169,
+        "8": 0.7094999574327554,
+        "16": 0.7372111914218944,
+        "32": 0.7202885958122034,
+        "64": 0.6006315246365165,
+        "125": 0.36881172361396913
+      }
+    },
+    {
+      "teacher": "logreg",
+      "eps": 0.1,
+      "observed_best_m": 2,
+      "c2_best_m": 2,
+      "n_star_best_m": 2,
+      "n_star_min": 4918.505938818581,
+      "observed": {
+        "2": 0.8503203125000001,
+        "4": 0.8183203125,
+        "8": 0.8259531250000001,
+        "16": 0.7830546875,
+        "32": 0.7038984374999999,
+        "64": 0.6270156250000001,
+        "125": 0.5755234375
+      },
+      "c2": {
+        "2": 0.30553046943843787,
+        "4": 0.23808449249903313,
+        "8": 0.2821128789841013,
+        "16": 0.21879856528962,
+        "32": 0.11624991796395323,
+        "64": 0.0032208086903668435,
+        "125": 0.0
+      }
+    },
+    {
+      "teacher": "logreg",
+      "eps": 0.25,
+      "observed_best_m": 8,
+      "c2_best_m": 8,
+      "n_star_best_m": 8,
+      "n_star_min": 2683.774466083603,
+      "observed": {
+        "2": 0.9082265625000001,
+        "4": 0.8941640625,
+        "8": 0.91528125,
+        "16": 0.9001171875,
+        "32": 0.8485546875,
+        "64": 0.7617421875,
+        "125": 0.6769765624999999
+      },
+      "c2": {
+        "2": 0.44550996037837426,
+        "4": 0.4010382098422684,
+        "8": 0.4848864890343608,
+        "16": 0.42714701518708365,
+        "32": 0.28347915290700315,
+        "64": 0.08605825634625772,
+        "125": 0.0
+      }
+    },
+    {
+      "teacher": "logreg",
+      "eps": 0.5,
+      "observed_best_m": 8,
+      "c2_best_m": 8,
+      "n_star_best_m": 16,
+      "n_star_min": 1781.7983778361652,
+      "observed": {
+        "2": 0.921078125,
+        "4": 0.9148359374999999,
+        "8": 0.940234375,
+        "16": 0.9377656249999999,
+        "32": 0.9167734375,
+        "64": 0.8702265625000001,
+        "125": 0.7924453124999999
+      },
+      "c2": {
+        "2": 0.49712512701672434,
+        "4": 0.48394128317439533,
+        "8": 0.5976622768218635,
+        "16": 0.5785431454732073,
+        "32": 0.45349094578907434,
+        "64": 0.21963942514389312,
+        "125": 0.009189907664049719
+      }
+    },
+    {
+      "teacher": "logreg",
+      "eps": 1.0,
+      "observed_best_m": 16,
+      "c2_best_m": 16,
+      "n_star_best_m": 16,
+      "n_star_min": 1680.9418658831746,
+      "observed": {
+        "2": 0.9241015625000001,
+        "4": 0.92040625,
+        "8": 0.948796875,
+        "16": 0.9492499999999999,
+        "32": 0.939078125,
+        "64": 0.926328125,
+        "125": 0.8969140624999999
+      },
+      "c2": {
+        "2": 0.514422359291555,
+        "4": 0.5196465484964257,
+        "8": 0.6494616337480079,
+        "16": 0.6629829322524728,
+        "32": 0.5903375855377457,
+        "64": 0.3883427072358349,
+        "125": 0.1427072684166888
+      }
+    },
+    {
+      "teacher": "logreg",
+      "eps": 2.0,
+      "observed_best_m": 16,
+      "c2_best_m": 16,
+      "n_star_best_m": 16,
+      "n_star_min": 1680.9418658831746,
+      "observed": {
+        "2": 0.9253828125,
+        "4": 0.9218046874999999,
+        "8": 0.9504921875,
+        "16": 0.9518125,
+        "32": 0.94615625,
+        "64": 0.9420078125,
+        "125": 0.938078125
+      },
+      "c2": {
+        "2": 0.5196866175706782,
+        "4": 0.5310849788470916,
+        "8": 0.6662112068272834,
+        "16": 0.6933301557477445,
+        "32": 0.6515880603879716,
+        "64": 0.5153534558764268,
+        "125": 0.31309816425126374
+      }
+    }
+  ],
+  "vote_vs_logpool": [
+    {
+      "teacher": "bayes",
+      "eps": 0.1,
+      "best_vote": 0.797859375,
+      "best_vote_margin": 0.81021875,
+      "best_logpool_eta0.02": 0.6878203125,
+      "best_logpool_eta0.1": 0.7260234375,
+      "best_logpool_eta0.3": 0.7472265625000001
+    },
+    {
+      "teacher": "bayes",
+      "eps": 0.25,
+      "best_vote": 0.8229140625,
+      "best_vote_margin": 0.829109375,
+      "best_logpool_eta0.02": 0.7795390625,
+      "best_logpool_eta0.1": 0.7975078124999999,
+      "best_logpool_eta0.3": 0.8071953125
+    },
+    {
+      "teacher": "bayes",
+      "eps": 0.5,
+      "best_vote": 0.830265625,
+      "best_vote_margin": 0.8321015625,
+      "best_logpool_eta0.02": 0.81240625,
+      "best_logpool_eta0.1": 0.819734375,
+      "best_logpool_eta0.3": 0.8230546875
+    },
+    {
+      "teacher": "bayes",
+      "eps": 1.0,
+      "best_vote": 0.8335078125,
+      "best_vote_margin": 0.8333828125,
+      "best_logpool_eta0.02": 0.8255234375,
+      "best_logpool_eta0.1": 0.8291015625000001,
+      "best_logpool_eta0.3": 0.8304765625
+    },
+    {
+      "teacher": "bayes",
+      "eps": 2.0,
+      "best_vote": 0.8335859375000001,
+      "best_vote_margin": 0.8335078125000001,
+      "best_logpool_eta0.02": 0.83203125,
+      "best_logpool_eta0.1": 0.832171875,
+      "best_logpool_eta0.3": 0.8328984374999999
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 0.1,
+      "best_vote": 0.7966718749999999,
+      "best_vote_margin": 0.8100390625,
+      "best_logpool_eta0.02": 0.7793515625,
+      "best_logpool_eta0.1": 0.7887734375,
+      "best_logpool_eta0.3": 0.793515625
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 0.25,
+      "best_vote": 0.8221015625,
+      "best_vote_margin": 0.8286171875,
+      "best_logpool_eta0.02": 0.8171484375,
+      "best_logpool_eta0.1": 0.8211171875,
+      "best_logpool_eta0.3": 0.8218046875
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 0.5,
+      "best_vote": 0.831015625,
+      "best_vote_margin": 0.831921875,
+      "best_logpool_eta0.02": 0.8284453125,
+      "best_logpool_eta0.1": 0.82984375,
+      "best_logpool_eta0.3": 0.8301015625
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 1.0,
+      "best_vote": 0.8327265625,
+      "best_vote_margin": 0.8335625,
+      "best_logpool_eta0.02": 0.832078125,
+      "best_logpool_eta0.1": 0.8325234374999999,
+      "best_logpool_eta0.3": 0.8325625
+    },
+    {
+      "teacher": "bayes_hot",
+      "eps": 2.0,
+      "best_vote": 0.8338359375000001,
+      "best_vote_margin": 0.833796875,
+      "best_logpool_eta0.02": 0.8334999999999999,
+      "best_logpool_eta0.1": 0.833609375,
+      "best_logpool_eta0.3": 0.8336484375
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 0.1,
+      "best_vote": 0.7788671875,
+      "best_vote_margin": 0.8013203125,
+      "best_logpool_eta0.02": 0.7661093750000001,
+      "best_logpool_eta0.1": 0.7721171875,
+      "best_logpool_eta0.3": 0.7786718749999999
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 0.25,
+      "best_vote": 0.8200390625,
+      "best_vote_margin": 0.825578125,
+      "best_logpool_eta0.02": 0.81478125,
+      "best_logpool_eta0.1": 0.8186796875,
+      "best_logpool_eta0.3": 0.81965625
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 0.5,
+      "best_vote": 0.829640625,
+      "best_vote_margin": 0.8318203125000001,
+      "best_logpool_eta0.02": 0.8279140625,
+      "best_logpool_eta0.1": 0.8297890625,
+      "best_logpool_eta0.3": 0.8301328125
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 1.0,
+      "best_vote": 0.832875,
+      "best_vote_margin": 0.8341875,
+      "best_logpool_eta0.02": 0.831671875,
+      "best_logpool_eta0.1": 0.832734375,
+      "best_logpool_eta0.3": 0.8328828125
+    },
+    {
+      "teacher": "bayes_flat",
+      "eps": 2.0,
+      "best_vote": 0.834609375,
+      "best_vote_margin": 0.834359375,
+      "best_logpool_eta0.02": 0.8333671874999999,
+      "best_logpool_eta0.1": 0.8333203124999999,
+      "best_logpool_eta0.3": 0.8338515625
+    },
+    {
+      "teacher": "logreg",
+      "eps": 0.1,
+      "best_vote": 0.7744921874999999,
+      "best_vote_margin": 0.7941796875,
+      "best_logpool_eta0.02": 0.6677578125,
+      "best_logpool_eta0.1": 0.6974374999999999,
+      "best_logpool_eta0.3": 0.7154921875
+    },
+    {
+      "teacher": "logreg",
+      "eps": 0.25,
+      "best_vote": 0.8141093749999999,
+      "best_vote_margin": 0.8213046875000001,
+      "best_logpool_eta0.02": 0.768140625,
+      "best_logpool_eta0.1": 0.7893125,
+      "best_logpool_eta0.3": 0.799203125
+    },
+    {
+      "teacher": "logreg",
+      "eps": 0.5,
+      "best_vote": 0.82725,
+      "best_vote_margin": 0.8290546875,
+      "best_logpool_eta0.02": 0.8113203125,
+      "best_logpool_eta0.1": 0.8182890625,
+      "best_logpool_eta0.3": 0.8230234375000001
+    },
+    {
+      "teacher": "logreg",
+      "eps": 1.0,
+      "best_vote": 0.830296875,
+      "best_vote_margin": 0.8308828125,
+      "best_logpool_eta0.02": 0.8265078125,
+      "best_logpool_eta0.1": 0.8305703124999999,
+      "best_logpool_eta0.3": 0.830546875
+    },
+    {
+      "teacher": "logreg",
+      "eps": 2.0,
+      "best_vote": 0.8318359375,
+      "best_vote_margin": 0.832671875,
+      "best_logpool_eta0.02": 0.8317734375,
+      "best_logpool_eta0.1": 0.8335,
+      "best_logpool_eta0.3": 0.8336874999999999
+    }
+  ]
+}
