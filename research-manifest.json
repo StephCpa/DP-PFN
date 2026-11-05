@@ -9,16 +9,51 @@
   },
   "question": {
     "text": "How can prior-data fitted networks (TabPFN, NodePFN) be used for differentially private tabular and graph prediction so that weights cost no privacy budget, while certificates come from black-box wrappers or noise-aware post-processing rather than from training loss?",
-    "updatedAt": "2026-11-05T09:00:58.169Z"
+    "updatedAt": "2026-11-05T09:20:00.000Z"
   },
-  "hypotheses": [],
+  "hypotheses": [
+    {
+      "id": "H1",
+      "text": "If PFN weights are trained only on synthetic prior data and preprocessing is shard-local or public, privacy accounting reduces to the context release. A black-box Vote/LogPool/Student wrapper, or a noise-aware reader of an already-private summary S=M(D), is (ε,δ)-DP regardless of approximation error (Prop. 0, Cor. B4, Thm. D1).",
+      "status": "proposed",
+      "experiments": [],
+      "source": "proposal Sections 1, 4, 5"
+    },
+    {
+      "id": "H2",
+      "text": "No bound on PFN training loss certifies worst-case DP (Prop. B2). On closed-form floored priors, the log-gap Λ(D) and row-sensitivity s(θ,n) stay small on prior-typical datasets but can be driven large on adversarial neighbouring pairs; a more accurate PFN leaks more unless the training target itself is private (Obs. B5).",
+      "status": "proposed",
+      "experiments": [],
+      "source": "proposal Section 3; tested by E1"
+    },
+    {
+      "id": "H3",
+      "text": "At fixed ε, DP-PFN-Vote sample size n* is set by teacher error e(m) at small shard size m (Thm. C2). A PFN teacher therefore attains a smaller n* than per-shard trained PATE teachers, and the minimizing m matches the C2 prediction.",
+      "status": "proposed",
+      "experiments": [],
+      "source": "proposal Section 4; tested by E2, E3"
+    },
+    {
+      "id": "H4",
+      "text": "A PFN trained with the release mechanism inside the prior matches the private-data posterior predictive. Versus naive TabPFN on the same release, it reduces under-confidence on label randomized response and over-confidence on bulk DP synthetic rows, lowering NLL and ECE at the same ε (Thm. D1, Prop. D2).",
+      "status": "proposed",
+      "experiments": [],
+      "source": "proposal Section 5; tested by E4, Gate 2"
+    }
+  ],
   "loop": {
-    "phase": "literature",
+    "phase": "hypothesis",
     "iteration": 0,
-    "history": []
+    "history": [
+      {
+        "at": "2026-11-05T09:20:00.000Z",
+        "kind": "note",
+        "text": "Proposal read end-to-end (25 pages). Hypotheses H1–H4 registered from Sections 1–5. No experiment has been run; E1–E8 remain planned. Background citations in the PDF were not re-checked by the authors."
+      }
+    ]
   },
   "experiments": [],
   "artifacts": [],
   "reviews": [],
-  "updatedAt": "2026-11-05T09:00:58.178Z"
+  "updatedAt": "2026-11-05T09:20:00.000Z"
 }
