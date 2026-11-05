@@ -23,6 +23,9 @@ def main() -> None:
         if (ROOT / "artifacts/E1-lite-amortization-gap/summary.json").exists() else None
     e4 = json.loads((ROOT / "artifacts/E4-lite-noise-aware-rr/summary.json").read_text()) \
         if (ROOT / "artifacts/E4-lite-noise-aware-rr/summary.json").exists() else None
+    e4b = json.loads((ROOT / "artifacts/E4b-lite-noise-aware-synthetic/summary.json").read_text()) \
+        if (ROOT / "artifacts/E4b-lite-noise-aware-synthetic/summary.json").exists() else None
+    old_h4 = next((h for h in m["hypotheses"] if h["id"] == "H4"), {})
 
     experiments = [
         dict(id="X0-theory-audit", title="Numerical audit of all proposal constants; exact one-draw privacy loss",
@@ -60,6 +63,20 @@ def main() -> None:
                         "artifacts/E4-lite-noise-aware-rr/evaluation.json",
                         "artifacts/E4-lite-noise-aware-rr/summary.json"],
              summary=(e4 or {}).get("headline", "pending")),
+        dict(id="D2-sparse-synthetic", title="Naive vs noise-aware use of a sparse 512-cell DP histogram (exact Bayes)",
+             tests=["H4"], status="done", code="experiments/D2-sparse-synthetic/",
+             artifacts=["artifacts/D2-sparse-synthetic/results.json"],
+             summary="Full-histogram release (Laplace(2/eps), 512 cells, 5n rows): naive use is under-confident in 8 of 9 "
+                     "cells (down to -0.188 at n=200, eps=1), over-confident only at n=50, eps=0.5. The noise-aware "
+                     "target lowers NLL in every cell (by up to 0.098). Run on gpu-gfkd by the project author."),
+        dict(id="E4b-lite-noise-aware-synthetic",
+             title="Trained noise-aware PFN vs naive PFN on high-dimensional, marginal-based DP synthetic data",
+             tests=["H4"], status="done" if e4b else "running", code="experiments/E4b-lite-noise-aware-synthetic/",
+             artifacts=["artifacts/E4b-lite-noise-aware-synthetic/training_aware.json",
+                        "artifacts/E4b-lite-noise-aware-synthetic/training_naive.json",
+                        "artifacts/E4b-lite-noise-aware-synthetic/evaluation.json",
+                        "artifacts/E4b-lite-noise-aware-synthetic/summary.json"],
+             summary=(e4b or {}).get("headline", "pending")),
         dict(id="G3-rr-sbm-threshold", title="Spectral recovery on edge-RR SBMs vs threshold formulas",
              tests=[], status="done", code="experiments/G3-rr-sbm-threshold/",
              artifacts=["artifacts/G3-rr-sbm-threshold/results.json", "artifacts/G3-rr-sbm-threshold/threshold_eps2.png"],
@@ -74,10 +91,9 @@ def main() -> None:
         "H3": ("partially-supported",
                "E3-lite (idealised Gaussian prior, exact-Bayes teacher): PFN-like teachers lower DP-Vote error at small "
                "n*eps, and C2 picks m within 2x. But C2 must be pointwise (bias floor 13-16% at m=2) and its n* is "
-               "conservative by ~3-10x. Real PFN teachers and tuned/charged trained teachers still to test (E2/E3)."),
-        "H4": ((e4 or {}).get("h4_status", "partially-supported"),
-               (e4 or {}).get("h4_note", "Target-level (exact Bayes) D2-check: confirmed strongly for label RR; "
-                                         "synthetic-data over-confidence is small in low-dimensional settings.")),
+               "conservative by ~2-10x. Real PFN teachers and tuned/charged trained teachers still to test (E2/E3)."),
+        "H4": ((e4b or {}).get("h4_status", old_h4.get("status", "partially-supported")),
+               (e4b or {}).get("h4_note", old_h4.get("evidence", ""))),
     }
     for h in m["hypotheses"]:
         if h["id"] in status:
@@ -106,6 +122,14 @@ def main() -> None:
         NOW_ = "2026-11-05T12:30:00.000Z"
     else:
         NOW_ = NOW
+    m["loop"]["history"].append(dict(
+        at="2026-11-05T12:53:59.000Z", iteration=1, kind="experiment",
+        text="D2-sparse (project author, gpu-gfkd): with a sparse full-histogram release, naive synthetic-data use is "
+             "under-confident, not over-confident; the noise-aware target still lowers NLL in every cell."))
+    if e4b:
+        m["loop"]["history"].append(dict(
+            at="2026-11-05T14:00:00.000Z", iteration=1, kind="experiment", text="E4b-lite: " + e4b["headline"]))
+        NOW_ = "2026-11-05T14:00:00.000Z"
     m["updatedAt"] = NOW_
     MANIFEST.write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
     print("updated", MANIFEST)
