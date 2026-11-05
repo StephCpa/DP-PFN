@@ -35,6 +35,13 @@ Internal typo: Section 9 "Order of work" refers to "Proposition E3"; it means **
 - **"~12,700 real edges": about right.** Reconstructing the prior with balanced classes gives a mean of about 14,600 and a median of about 13,800.
 - **Data-dependent, per-dataset-tuned preprocessing** (`run.sh`, `node_classification.py`). Feature smoothing over edges uses `gcn_norm` with self-loops, 0–4 steps. TruncatedSVD is fit on **all** nodes' features, with 10–50 components. Normalisation uses test features (`normalize_with_test=True`). Ensemble size is 1–32. **All four are set per dataset.** Under DP these are tuning choices on private data. The proposal's "no privacy spent on tuning" claim only holds if E5/E6 fix one public configuration, or charge the selection.
 
+### 1.2 TabPFN facts the proposal relies on, checked against code
+
+Checked in the `tabpfn` 9.2.0 package from PyPI:
+
+- **Preprocessing is fit on training rows only.** Torch preprocessing steps (quantile transform, scaler, SVD) fit on `x[:num_train_rows]`. Within a teacher, shard-local preprocessing therefore holds as the proposal assumes, *provided the teacher's context is exactly its shard*.
+- **A row-fingerprint feature is on by default** (`FINGERPRINT_FEATURE=True`). It hashes each row and adds the hash as a feature; training rows get collision-resolved hashes. A query identical to a context row is therefore *exactly* recognisable. This does not affect DP wrapper guarantees, which hold for any network. But it is an engineered membership channel, separate from Bayes-optimality. Observation B5 attributes TFM leakage to faithfulness, so E7 audits should be run with this feature on and off to separate the two causes.
+
 ## 2. Closest prior and concurrent work missing from the proposal
 
 ### 2.1 Direct overlap — must be cited and compared against
@@ -56,7 +63,7 @@ Internal typo: Section 9 "Order of work" refers to "Proposition E3"; it means **
    - PrivTab must be a baseline in E2 and E4.
    - The novelty claims of Sections 3 and 5 must be restated relative to it.
 2. **TabPATE** (cited). It covers C1+C4 for tabular ICL, with synthetic queries from the schema.
-3. **Private PoEtry** (arXiv 2602.05012, 2026). Private ICL by **product of experts**: clipped log-probabilities summed in log space, (ε, δ)-DP per in-context example. This is the same aggregator family as **LogPool (C3)**. C3's novelty reduces to the PFN-specific parts: the prior-correction term, floors set from the PFN's calibration, and the T4 analysis.
+3. **Private PoEtry** (arXiv 2602.05012, Feb 2026). Private ICL by **product of experts**: one LLM call per in-context example, clipped log-probabilities summed as the utility, (ε, δ)-DP per example. It reports over 30 points of accuracy gain over earlier DP-ICL methods (abstract-level). This is **LogPool (C3) with shard size m = 1**, and it is direct evidence that soft log-pooling can beat hard voting, which bears on T4. C3's novelty reduces to the PFN-specific parts: shards of size m > 1, the prior-correction term, floors set from the PFN's calibration, and the T4 analysis.
 
 ### 2.2 Prior work that answers or sharpens an open question
 
