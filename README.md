@@ -17,7 +17,8 @@ How can TabPFN and NodePFN support differentially private tabular and graph pred
 | Path | Role |
 | --- | --- |
 | `research-manifest.json` | Research loop state (hypotheses, experiments, phase) |
-| `literature/` | Notes and `references.bib` |
+| `literature/` | Notes, `references.bib`, `related-work-review.md` |
+| `reviews/` | Plan reviews (iteration 1: `2026-11-05-plan-review.md`) |
 | `experiments/` | One directory per experiment (design, code, results) |
 | `artifacts/` | Versioned outputs with provenance |
 | `data/` | Local data only; not committed |
@@ -31,4 +32,14 @@ How can TabPFN and NodePFN support differentially private tabular and graph pred
 
 ## Status of the plan
 
-This repository currently holds the research proposal and the project scaffold. Theory items T1–T9 and experiments E1–E8 are planned, not yet executed. Three go/no-go gates (E1, E4, E6) decide whether later phases proceed.
+Iteration 1 (5 Nov 2026) is done: a plan review plus first-round research. Start with **`reviews/2026-11-05-plan-review.md`**.
+
+- **Theory audit** (`experiments/X0-theory-audit`): all constants reproduce. Fixes are needed to Thm. C2 (pointwise restatement with a bias floor), Prop. G3 (dense-regime threshold), G1 (teacher independence), and the LogPool width. Thm. A5's ε is 2× loose.
+- **Literature** (`literature/`): verified bibliography. Closest concurrent work: **PrivTab** (a certified, noise-aware tabular foundation model), TabPATE and Private PoEtry. NodePFN and TabPFN facts were checked against their code.
+- **Pilots** (CPU, closed-form priors), results in `artifacts/`:
+  - E1-lite: amortization gap.
+  - E3-lite: C2, PFN vs trained teachers, Vote vs LogPool.
+  - D2-check: noise-aware calibration.
+  - G3-check: edge-RR threshold.
+
+T1–T9 and the full E1–E8 (TabPFN/NodePFN scale, real data) remain to do. Three go/no-go gates (E1, E4, E6) decide whether later phases proceed; the review recommends splitting Gate 1 in two.

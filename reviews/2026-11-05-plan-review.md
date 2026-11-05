@@ -43,7 +43,7 @@ Verdicts: **OK** correct as stated · **OK, loose** correct but not tight · **G
 | Prop. B2 | OK | Correct about the *objective*. It says nothing about a particular trained network, which is what E1 must measure. The second paragraph (ν log 1/κ) is the version that matters for continuous networks. |
 | Prop. B3 | OK | The attention bound (weights ≤ e^{2R}/n) is right for one readout. **PrivTab** (§3) certifies by a different route: bounded *sums* plus Gaussian noise, with sensitivity O(1). That is simpler than proving O(C/n) for mean attention and is already Lean-verified. |
 | Mech. C1 | OK | Report-noisy-max with Lap(2/ε) is ε-DP under replace-one. For binary labels, one Lap(2/ε) on the count margin is also ε-DP with half the noise variance. |
-| Thm. C2 | **Gap** | The algebra is right; the Laplace tail even has 2× slack (X0). But: (i) the proof needs a *pointwise* error e(m; x*) relative to a fixed reference label, while the text and T6 use a mean error e(m); (ii) at fixed m, Vote converges to the reference label only where γ_m(x*) > 0, a bias floor C2 does not show; (iii) a Bayes-optimal, PFN-like teacher at small m is shrunk to its prior, so its errors are systematic. Lower mean error therefore does **not** imply smaller n*. See E3-lite and the corrected statement in §5. Binary only, per query. |
+| Thm. C2 | **Gap** | The algebra is right; the Laplace tail even has 2× slack (X0). But the proof needs a *pointwise* error e(m; x*) relative to a fixed reference label, while the text and T6 use a mean error e(m). At fixed m, Vote converges to the reference label only where γ_m(x*) > 0. That leaves a bias floor C2 does not show: in E3-lite it is 13% of queries at m = 2 and 8% at m = 8, even for the exact-Bayes teacher. Corrected statement in §5. The C2 conclusion (better small-m teachers lower n*) does hold in E3-lite, because the Bayes teacher also has the lower floor. But that is an empirical fact about the prior, not a consequence of lower mean error. Binary only, per query. |
 | Mech. C3 (LogPool) | OK, loose; overclaim | Privacy is right. The stated width log(K/η) is a valid bound, but the exact width is log(1 + K(1−η)/η), which needs less noise: at K = 2, η = 0.5 it is log 3 vs log 4 (26% less). "Bayes-consistent" overclaims: the committee-machine identity is exact for parameter posteriors, not for predictives, and the floor breaks it further. |
 | Mech. C4 | OK | Same design as TabPATE. |
 | Thm. D1 (1)–(3) | OK | The conditional-mutual-information identity re-derived. "The PFN attains this price" holds for the loss minimiser only; the network's own gap adds to it. |
@@ -91,7 +91,80 @@ Details: `literature/related-work-review.md`.
    - AMIA's full title adds "…and Protection of High-Risk Queries".
    - Add the TREDBench caveat.
 
-<!-- RESULTS -->
+## 4. Pilot results
+
+All numbers come from `artifacts/<id>/*.json`, each with a provenance block (commit, seed, library versions, argv). Provenance is stamped when the file is written. The experiment scripts have not changed since commit `75cb31d` (E1: `32a76df`).
+
+### 4.1 X0: constants and exact one-draw privacy (Sections 2, 4–6)
+
+All proposal constants reproduce: Table A, T2 flip rates, the 60,922 fake edges, ρ = 0.1192. Exact label-DP loss in the floored Beta–Bernoulli model (2B_y = 2.197 at η = 0.5):
+
+| n | posterior draw | clean-target label (A5) | noisy-PPD label |
+| ---: | ---: | ---: | ---: |
+| 1 | 1.099 | 0.511 | 0.167 |
+| 10 | 1.861 | 0.944 | 0.123 |
+| 100 | 2.158 | 1.079 | 0.026 |
+| 1000 | 2.193 | 1.097 | 0.0034 |
+
+Theorem A2 is tight for the posterior draw. The clean-target release (A5) costs ≈ B_y, half the stated bound. A single noisy-PPD label decays like 1/n when there are no features.
+
+### 4.2 E1-lite: amortization gap (Prop. B2, Obs. B5, H2)
+
+<!-- E1 -->
+
+### 4.3 E3-lite: Theorem C2, PFN vs trained teachers, Vote vs LogPool (H3, T4, T6)
+
+Gaussian class-conditional prior, d = 16. Bayes-optimal accuracy with the task known is 0.82–0.84. 16 tasks × 200 queries × 40 noise draws per cell. Figure: `artifacts/E3-lite-vote-sample-complexity/vote_vs_m_n500.png`.
+
+| | n = 250 | n = 500 | n = 1000 |
+| --- | --- | --- | --- |
+| Best DP-Vote accuracy, Bayes (ideal PFN) vs trained log. reg., ε = 0.1 | 0.664 vs 0.624 (**+4.1**) | 0.728 vs 0.691 (**+3.7**) | 0.798 vs 0.774 (**+2.3**) |
+| same, ε = 0.5 | 0.781 vs 0.751 (+3.0) | 0.799 vs 0.792 (+0.7) | 0.830 vs 0.827 (+0.3) |
+| same, ε = 2 | +0.8 | −0.2 | +0.2 |
+| Vote floor P(γ_m ≤ 0) at m = 2, Bayes vs log. reg. | 0.14 vs 0.18 | 0.13 vs 0.18 | 0.16 vs 0.20 |
+| C2′ argmax m = observed best m (all teachers, 5 ε) | 10/15 | 13/15 | 8/15 |
+| C2 n* at β = 0.05 (min over m) | 1,314–4,818 | 1,380–5,077 | 1,176–4,919 |
+| LogPool − Vote, calibrated Bayes teachers, ε = 0.1 / 0.5 | −7.5 / −3.3 | −7.3 / −1.0 | −5.1 / −0.7 |
+| LogPool − Vote, over-confident teachers, ε = 0.1 / 0.5 | −1.7 / −0.2 | −1.0 / +0.3 | −0.3 / −0.1 |
+| Vote with Laplace on the margin − report-noisy-max, ε = 0.1 | +4.2 | +2.9 | +1.2 |
+
+Findings:
+
+- **H3 / Gate 1b direction holds in the idealised setting.** Exact-Bayes (PFN-like) teachers beat trained teachers exactly where DP hurts most: small n·ε. The advantage vanishes once n·ε is large. The trained teacher here uses default C = 1 and is not charged for tuning; tuning would cost budget, and E2 must charge it.
+- **C2 needs its pointwise restatement (C2′).** Even exact-Bayes teachers leave a 13–16% floor of queries at m = 2 where Vote converges to the wrong label for any T. The PFN advantage shows up as a *lower floor* at small m, which C2's mean-error form cannot express.
+- **C2 is useful for choosing m, not for sizing n.** Its argmax is within a factor of 2 of the observed best m in 42 of 45 configurations, exact in 31. But its n* is 1,176–5,077 at β = 0.05, while Vote is within 1–2 points of its best at n = 250–1,000.
+- **T4, first answer.** With *calibrated* small-shard teachers, LogPool loses to Vote at every ε (by up to 7.5 points). The exponential mechanism's noise is scaled to the worst-case log-odds log(1 + K(1−η)/η), and calibrated small-m teachers report small log-odds, so they waste the sensitivity budget. A hard vote always uses its full ±1. Over-confident teachers bring LogPool level with Vote. Calibration, the property the proposal says should favour LogPool, works against it under DP noise. That is the opposite of the proposal's intuition and needs theory (T4). Private PoEtry's reported gains are on LLMs and against different baselines, so they do not contradict this.
+- **Free improvement:** for binary labels, Laplace noise on the single vote margin beats report-noisy-max by 1–4 points at ε = 0.1.
+
+### 4.4 D2-check: naive vs noise-aware use of a DP release (Prop. D2, H4, Gate 2)
+
+Exact grid-Bayes, 1-D logistic prior, 200 tasks per cell, clean test labels. "Over-conf." = mean confidence − accuracy.
+
+| Release | n | ε | Naive NLL / ECE / over-conf. | Noise-aware NLL / ECE / over-conf. | Clean oracle NLL |
+| --- | ---: | ---: | --- | --- | ---: |
+| label RR | 50 | 1 | 0.613 / 0.120 / −0.064 | 0.600 / 0.102 / −0.002 | 0.553 |
+| label RR | 200 | 0.5 | 0.631 / 0.148 / **−0.127** | 0.583 / 0.099 / −0.007 | 0.528 |
+| label RR | 1000 | 0.5 | 0.636 / 0.165 / **−0.159** | 0.559 / 0.068 / −0.001 | 0.541 |
+| label RR | 1000 | 2 | 0.545 / 0.071 / −0.057 | 0.530 / 0.046 / −0.000 | 0.529 |
+| DP synthetic (5n rows) | 50 | 0.5 | 0.636 / 0.130 / **+0.032** | 0.625 / 0.124 / −0.022 | 0.540 |
+| DP synthetic | 50 | 1 | 0.598 / 0.099 / +0.015 | 0.593 / 0.102 / +0.002 | 0.553 |
+| DP synthetic | 1000 | 0.5 | 0.542 / 0.046 / −0.003 | 0.542 / 0.046 / −0.002 | 0.541 |
+
+- **Label RR: Prop. D2 confirmed, strongly.** Naive use is under-confident, and the effect *grows* with n, since bias does not average out. The noise-aware target removes it at equal accuracy and cuts NLL by up to 0.077 nats. Gate 2 should pass for RR, provided the network approximates the noise-aware target.
+- **DP synthetic data: direction confirmed, but small here.** Naive use is over-confident only at n = 50, and the effect vanishes by n = 200 in a 2-parameter model with 10 bins. E4 must use settings where it bites: high-dimensional marginals, sparse cells, and many synthetic rows per real row. Otherwise Gate 2 can "fail" for the wrong reason.
+
+### 4.5 G3-check: edge RR and community detectability (Prop. G3, T7)
+
+Spectral recovery on edge-RR SBMs, a = 20, b = 4. Figure: `artifacts/G3-rr-sbm-threshold/threshold_eps2.png`.
+
+| ε | Proposal heuristic | Sparse KS (all terms) | **Dense SNR** | Simulated corr² (N): near / at / past dense threshold |
+| ---: | ---: | ---: | ---: | --- |
+| 1 | 51 | 30 | **59** | 0.40 (40) / 0.23 (60) / 0.09 (100) |
+| 2 | 311 | 235 | **290** | 0.30 (200) / 0.12 (300) / 0.03 (500) |
+| 4 | 3,307 | 2,664 | **2,739** | 0.23 (2000) / 0.10 (2500) / 0.01 (3500) |
+
+- **The dense-regime SNR fits.** Simulated corr² tracks 1 − 1/SNR_dense (ε = 2, N = 100: 0.552 vs 0.552), up to finite-size smoothing near the threshold. The sparse KS form is too pessimistic at small ε. The proposal's heuristic is close only by cancellation of dropped terms.
+- **Consequence for E6.** At NodePFN's training size (N = 1024) and ε = 2, structure-only signal is essentially gone (overlap 0.04). Edge-LDP DP-NodePFN can only win through node features. The "learned denoising beats Blink" hypothesis must be tested where structure survives: ε ≥ 4, small or dense graphs.
 
 ## 5. Recommended changes to the plan
 
@@ -109,7 +182,9 @@ In priority order. Each item says what to change and why.
    > Averaging over x*, the excess error of Vote over the reference is at most
    > P_x[γ_m(x) ≤ 0] (bias floor, independent of T and ε) + E_x[exp(−Tγ_m²/8) + exp(−εTγ_m/8); γ_m > 0] (finite-T and noise term).
 
-   n* is governed by the *lower tail* of γ_m(x*), not by the mean error e(m). Because the prior is an input dial (η, prior strength), a PFN teacher's bias can be traded against variance **data-independently, at no privacy cost**. This is a genuine PFN-specific angle for T6. E3-lite shows how much it matters (§4).
+   n* is governed by the *lower tail* of γ_m(x*), not by the mean error e(m). Because the prior is an input dial (η, prior strength), a PFN teacher's bias can be traded against variance **data-independently, at no privacy cost**. This is a genuine PFN-specific angle for T6.
+
+   In E3-lite, C2′'s bound picks the observed best shard size in 18/20 configurations at n = 500. Its n* is still 3–10× larger than the n at which Vote is already near its best, so T6 should report the bound's slack, not only its argmin.
 3. **Fix G1's utility claim.** C2 needs teachers that are independent given the data distribution. Graph teachers share G and X. State the result conditional on (G, X) with a random label partition. Concentration then comes from random-partition (sampling-without-replacement) arguments, not Hoeffding over independent shards.
 4. **Replace Prop. G3's heuristic** with the dense-regime signal-to-noise ratio (variance p′(1−p′), all terms kept). Build T7 on Deshpande et al. 2018 and Lu & Sen 2023. Edge RR places graphs in the large-degree regime where those thresholds are rigorous. Cite Hehir et al. 2022 as the closest prior work.
 5. **NodePFN pipeline under DP.**
