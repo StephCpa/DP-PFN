@@ -17,7 +17,8 @@ Observed correlation squared against the dense spiked-Wigner curve 1 - 1/SNR:
 
 | eps | N | overlap | corr2 observed | corr2 theory | SNR |
 | --- | --- | --- | --- | --- | --- |
-| 2 | 200 | 0.414 (at N=2000; see file for the curve) | — | — | — |
+| 2 | 200 | 0.466 | 0.304 | 0.258 | 1.35 |
+| 2 | 300 | 0.256 | 0.118 | 0.000 | 0.97 |
 | 4 | 1000 | 0.687 | 0.493 | 0.518 | 2.07 |
 | 4 | 1500 | 0.524 | 0.341 | 0.369 | 1.58 |
 | 4 | 2000 | 0.414 | 0.230 | 0.220 | 1.28 |
@@ -27,7 +28,7 @@ Observed correlation squared against the dense spiked-Wigner curve 1 - 1/SNR:
 
 At eps = 4 the observed overlap collapses between N = 2500 and N = 3000. The dense threshold (2739) sits in that interval. The proposal's heuristic (3307) is late: at N = 3000 the measured corr2 is already 0.033. The sparse KS value (2664) is close but uses the wrong variance, since RR makes the graph dense (degree about N rho).
 
-At eps = 2 the same pattern holds qualitatively: overlap falls from 0.159 at N = 400 to 0.038 at N = 1000, i.e. the signal is already gone well before the heuristic threshold would suggest, and the dense curve tracks it.
+At eps = 2 the dense curve also tracks the simulation: corr2 is 0.304 at N = 200 (theory 0.258) and still 0.118 at N = 300, just past the dense threshold of 290. The signal is not gone before the heuristic threshold of 311. The overlaps 0.159 and 0.038 are at N = 400 and N = 1000, which are past that threshold. The heuristic gets the shape wrong; it does not mark an early collapse.
 
 ## Reading
 

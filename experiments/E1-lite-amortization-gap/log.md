@@ -43,7 +43,7 @@ Adversarial search, step 6000, max found (6 restarts x 40 Adam steps; a lower bo
 
 1. Nothing found exceeds 2 B_y. The floor certificate still holds for this network, on these searches.
 2. The exact PPD is far inside that certificate (max about 0.22 at eta 0.5). The trained network's own sensitivity is larger than the exact mechanism's on the same typical datasets: at eta 0.5, n = 16, step 6000, median 0.265 against 0.181.
-3. Training tighter does not uniformly reduce leakage. At eta 0.1, n = 4 the max sensitivity on typical data rose from 1.097 at step 300 to 1.527 at step 6000, while median Lambda fell from 0.346 to 0.236. This is the direction of Observation B5, in one cell only.
+3. This reduced run kept only checkpoints 300 and 6000, so it cannot test Observation B5. The committed full evaluation does: at step 100 the under-trained network leaks 3-10x less than the exact PPD in every cell with n at least 16 (eta 0.1, n 64: 0.021 vs 0.203), and further training raises leakage to the exact level. See reviews/2026-11-05-plan-review.md, section 4.2.
 4. Out-of-support datasets (the case Proposition B2 is about) raise both Lambda and sensitivity. At eta 0.1, n = 16, Lambda reached 2.19 against a typical max of 0.285.
 
 Not measured: n = 64, the other checkpoints, clean-target training (A5), continuous-feature row-DP.
