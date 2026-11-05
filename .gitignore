@@ -1,0 +1,20 @@
+# Raw and large data stay local (see data-inventory)
+data/**
+!data/.gitkeep
+
+# Experiment outputs and caches
+experiments/**/results/**
+!experiments/**/results/.gitkeep
+**/.cache/
+**/__pycache__/
+**/*.pyc
+.ipynb_checkpoints/
+
+# Environments and secrets
+envs/**/*.lock
+.env
+*.token
+
+# OS / editor
+.DS_Store
+Thumbs.db

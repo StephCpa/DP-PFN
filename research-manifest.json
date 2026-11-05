@@ -1,0 +1,24 @@
+{
+  "schema": 2,
+  "project": {
+    "id": "dp-pfn-differentially-private-prior-data",
+    "title": "DP-PFN: Differentially Private Prior-Data Fitted Networks",
+    "domain": "differential privacy / prior-data fitted networks / machine learning",
+    "created": "2026-11-05T09:00:58.169Z",
+    "status": "active"
+  },
+  "question": {
+    "text": "How can prior-data fitted networks (TabPFN, NodePFN) be used for differentially private tabular and graph prediction so that weights cost no privacy budget, while certificates come from black-box wrappers or noise-aware post-processing rather than from training loss?",
+    "updatedAt": "2026-11-05T09:00:58.169Z"
+  },
+  "hypotheses": [],
+  "loop": {
+    "phase": "literature",
+    "iteration": 0,
+    "history": []
+  },
+  "experiments": [],
+  "artifacts": [],
+  "reviews": [],
+  "updatedAt": "2026-11-05T09:00:58.178Z"
+}
