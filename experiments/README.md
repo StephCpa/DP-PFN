@@ -11,6 +11,7 @@ These are **"-lite" pilots**. Each tests one claim of the proposal in the cheape
 | `E3-lite-vote-sample-complexity` | Thm. C2 prediction of n* and best shard size; Vote vs LogPool | Thm. C2, T4, T6, H3 | ~30 min |
 | `D2-noise-aware-calibration` | naive vs noise-aware use of label-RR and DP synthetic data | Thm. D1, Prop. D2, H4, Gate 2 | ~10 min |
 | `G3-rr-sbm-threshold` | where edge RR destroys community signal | Prop. G3, T7 | ~10 min |
+| `E4-lite-noise-aware-rr` | does a *trained* noise-aware PFN reach the calibrated target on label-RR data? | Thm. D1, Prop. D2, H4, Gate 2 | ~30 min train + ~5 min eval |
 
 Environment: `python -m venv venv && pip install numpy scipy scikit-learn torch networkx matplotlib`. Run `OMP_NUM_THREADS=1` for the numpy jobs when they share a machine with training.
 
@@ -23,4 +24,7 @@ python experiments/E1-lite-amortization-gap/evaluate.py
 python experiments/E3-lite-vote-sample-complexity/vote_c2.py --n 500 --tag _n500
 python experiments/D2-noise-aware-calibration/d2_calibration.py
 python experiments/G3-rr-sbm-threshold/rr_sbm.py
+python experiments/E4-lite-noise-aware-rr/e4_rr.py train --mode aware
+python experiments/E4-lite-noise-aware-rr/e4_rr.py train --mode naive
+python experiments/E4-lite-noise-aware-rr/e4_rr.py eval
 ```
