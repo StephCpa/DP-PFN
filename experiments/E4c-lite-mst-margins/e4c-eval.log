@@ -1,0 +1,60 @@
+n=  32 eps=1    k=1
+   oracle_pfn  acc 0.688  NLL 0.5871  ECE 0.0693  overconf +0.0234
+   naive_pfn   acc 0.494  NLL 0.9007  ECE 0.2272  overconf +0.2179
+   aware_pfn   acc 0.498  NLL 0.6953  ECE 0.0872  overconf +0.0247
+   nb_clean    acc 0.683  NLL 0.7851  ECE 0.1663  overconf +0.1572
+n=  32 eps=1    k=4
+   oracle_pfn  acc 0.699  NLL 0.5759  ECE 0.0697  overconf +0.0197
+   naive_pfn   acc 0.517  NLL 0.8697  ECE 0.2124  overconf +0.2010
+   aware_pfn   acc 0.523  NLL 0.6915  ECE 0.0829  overconf -0.0029
+   nb_clean    acc 0.690  NLL 0.7912  ECE 0.1677  overconf +0.1579
+n=  32 eps=4    k=1
+   oracle_pfn  acc 0.694  NLL 0.5795  ECE 0.0677  overconf +0.0220
+   naive_pfn   acc 0.532  NLL 0.8083  ECE 0.1847  overconf +0.1742
+   aware_pfn   acc 0.544  NLL 0.6874  ECE 0.0957  overconf +0.0184
+   nb_clean    acc 0.686  NLL 0.7933  ECE 0.1673  overconf +0.1572
+n=  32 eps=4    k=4
+   oracle_pfn  acc 0.701  NLL 0.5736  ECE 0.0701  overconf +0.0147
+   naive_pfn   acc 0.540  NLL 0.8078  ECE 0.1794  overconf +0.1672
+   aware_pfn   acc 0.555  NLL 0.6838  ECE 0.0864  overconf +0.0005
+   nb_clean    acc 0.693  NLL 0.7687  ECE 0.1609  overconf +0.1497
+n=  32 eps=16   k=1
+   oracle_pfn  acc 0.699  NLL 0.5787  ECE 0.0693  overconf +0.0181
+   naive_pfn   acc 0.607  NLL 0.7033  ECE 0.1208  overconf +0.0984
+   aware_pfn   acc 0.612  NLL 0.6575  ECE 0.0761  overconf +0.0094
+   nb_clean    acc 0.693  NLL 0.7841  ECE 0.1633  overconf +0.1524
+n=  32 eps=16   k=4
+   oracle_pfn  acc 0.692  NLL 0.5848  ECE 0.0695  overconf +0.0252
+   naive_pfn   acc 0.609  NLL 0.7177  ECE 0.1338  overconf +0.1146
+   aware_pfn   acc 0.611  NLL 0.6558  ECE 0.0789  overconf +0.0132
+   nb_clean    acc 0.680  NLL 0.8182  ECE 0.1729  overconf +0.1650
+n= 128 eps=1    k=1
+   oracle_pfn  acc 0.754  NLL 0.4970  ECE 0.0562  overconf +0.0041
+   naive_pfn   acc 0.533  NLL 0.8442  ECE 0.1939  overconf +0.1826
+   aware_pfn   acc 0.552  NLL 0.6839  ECE 0.0761  overconf -0.0001
+   nb_clean    acc 0.723  NLL 0.6200  ECE 0.1130  overconf +0.0975
+n= 128 eps=1    k=4
+   oracle_pfn  acc 0.749  NLL 0.5081  ECE 0.0575  overconf +0.0077
+   naive_pfn   acc 0.537  NLL 0.8213  ECE 0.1832  overconf +0.1729
+   aware_pfn   acc 0.552  NLL 0.6848  ECE 0.0741  overconf +0.0023
+   nb_clean    acc 0.720  NLL 0.6463  ECE 0.1207  overconf +0.1017
+n= 128 eps=4    k=1
+   oracle_pfn  acc 0.751  NLL 0.5026  ECE 0.0554  overconf +0.0094
+   naive_pfn   acc 0.621  NLL 0.7023  ECE 0.1234  overconf +0.1028
+   aware_pfn   acc 0.630  NLL 0.6452  ECE 0.0761  overconf -0.0076
+   nb_clean    acc 0.727  NLL 0.6297  ECE 0.1164  overconf +0.0988
+n= 128 eps=4    k=4
+   oracle_pfn  acc 0.759  NLL 0.4918  ECE 0.0560  overconf +0.0035
+   naive_pfn   acc 0.635  NLL 0.6870  ECE 0.1153  overconf +0.0935
+   aware_pfn   acc 0.639  NLL 0.6370  ECE 0.0756  overconf -0.0041
+   nb_clean    acc 0.726  NLL 0.6389  ECE 0.1259  overconf +0.1110
+n= 128 eps=16   k=1
+   oracle_pfn  acc 0.749  NLL 0.5045  ECE 0.0552  overconf +0.0083
+   naive_pfn   acc 0.690  NLL 0.6155  ECE 0.1008  overconf +0.0787
+   aware_pfn   acc 0.684  NLL 0.5899  ECE 0.0652  overconf -0.0055
+   nb_clean    acc 0.718  NLL 0.6376  ECE 0.1197  overconf +0.1034
+n= 128 eps=16   k=4
+   oracle_pfn  acc 0.758  NLL 0.4935  ECE 0.0556  overconf +0.0042
+   naive_pfn   acc 0.701  NLL 0.6151  ECE 0.1068  overconf +0.0896
+   aware_pfn   acc 0.696  NLL 0.5753  ECE 0.0650  overconf -0.0011
+   nb_clean    acc 0.726  NLL 0.6248  ECE 0.1162  overconf +0.0994

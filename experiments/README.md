@@ -14,6 +14,7 @@ These are **"-lite" pilots**. Each tests one claim of the proposal in the cheape
 | `E4-lite-noise-aware-rr` | does a *trained* noise-aware PFN reach the calibrated target on label-RR data? | Thm. D1, Prop. D2, H4, Gate 2 | ~30 min train + ~5 min eval |
 | `D2-sparse-synthetic` | does naive over-confidence survive in a 512-cell DP histogram? | Prop. D2, H4 | ~15 min |
 | `E4b-lite-noise-aware-synthetic` | trained noise-aware vs naive PFN on high-dimensional, marginal-based DP synthetic data | Prop. D2, H4, Gate 2 | ~30 min train + ~10 min eval |
+| `E4c-lite-mst-margins` | does a tree of feature pairs, at the same total budget, shrink that over-confidence? | Prop. D2, H4 | ~35 min train + ~15 min eval |
 
 Environment: `python -m venv venv && pip install numpy scipy scikit-learn torch networkx matplotlib`. Run `OMP_NUM_THREADS=1` for the numpy jobs when they share a machine with training.
 

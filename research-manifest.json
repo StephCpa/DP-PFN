@@ -50,10 +50,11 @@
         "D2-noise-aware-calibration",
         "E4-lite-noise-aware-rr",
         "D2-sparse-synthetic",
-        "E4b-lite-noise-aware-synthetic"
+        "E4b-lite-noise-aware-synthetic",
+        "E4c-lite-mst-margins"
       ],
       "source": "proposal Section 5; tested by E4, Gate 2",
-      "evidence": "Label RR: a trained noise-aware PFN recovers 71-86% of the exact NLL gain over naive plug-in (E4-lite). Synthetic data: the sign of naive mis-calibration depends on the generator. It is under-confident for a noisy full histogram (D2-sparse, exact targets) and over-confident in 12/12 cells for a marginal-based, naive-Bayes-structured synthesizer (E4b-lite, trained networks: +0.081 to +0.186), where non-private naive Bayes is already over-confident (+0.098 to +0.165) and extra synthetic rows add little (+0.003 to +0.040). In E4b-lite the trained noise-aware PFN is calibrated (|over-confidence| <= 0.014) and lowers NLL in 12/12 cells. Open: richer-marginal generators (AIM/MST), real data, TabPFN scale."
+      "evidence": "Label RR: a trained noise-aware PFN recovers 71-86% of the exact NLL gain over naive plug-in (E4-lite). Synthetic data: the sign of naive mis-calibration depends on the generator. It is under-confident for a noisy full histogram (D2-sparse, exact targets) and over-confident in 12/12 cells for a marginal-based, naive-Bayes-structured synthesizer (E4b-lite, trained networks: +0.081 to +0.186), where non-private naive Bayes is already over-confident (+0.098 to +0.165) and extra synthetic rows add little (+0.003 to +0.040). In E4b-lite the trained noise-aware PFN is calibrated (|over-confidence| <= 0.014) and lowers NLL in 12/12 cells. E4c-lite adds an MST of feature pairs at the same total budget: naive over-confidence rises in all 12 cells (+0.009 to +0.061), most at low eps, because the split budget adds more noise than the tree recovers. The retrained noise-aware PFN stays within +/-0.025 and lowers NLL in every cell. Open: a generator that selects which pairs to release rather than spending a fixed half budget, real data, TabPFN scale."
     }
   ],
   "loop": {

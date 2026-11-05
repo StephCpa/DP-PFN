@@ -265,7 +265,25 @@ All 12 cells are in the artifact; the 5 omitted rows follow the same pattern.
 - **Here the predicted over-confidence does appear, in 12 of 12 cells** (+0.08 to +0.19), the opposite of D2-sparse. The two results are consistent once the mechanism is named. A noisy full histogram flattens toward uniform, which acts like randomized response and gives under-confidence. A marginal-based synthesizer instead emits features that are conditionally independent given y, so a downstream learner counts correlated evidence as independent, which gives over-confidence. Non-private naive Bayes on the real records is already over-confident by +0.10 to +0.17 in this prior.
 - **Bulk rows are not the main driver.** Quadrupling the synthetic rows (k = 1 → 4) changes the naive PFN's over-confidence by only +0.003 to +0.040. Prop. D2's stated reason ("every synthetic row is counted as real evidence") should be replaced by "the release's structure is treated as the data's structure". The sign of the error depends on M.
 - **The noise-aware PFN fixes it.** It is calibrated in every cell (|over-confidence| ≤ 0.014; 10/12 within ±0.01). It lowers NLL in 12/12 cells by 0.03–0.15 nats and cuts ECE from 0.10–0.20 to 0.07–0.08. Accuracy moves by −0.003 to +0.016. It also uses extra synthetic rows sensibly: its NLL at k = 4 is never more than 0.002 worse than at k = 1, and up to 0.019 better. At n = 32 its NLL even beats *non-private* naive Bayes on the real records (0.62–0.69 vs 0.77–0.82).
-- **Scope.** One star-structured synthesizer with no feature–feature margins. AIM and MST select some feature–feature margins, which would shrink the conditional-independence error, so the size (perhaps the sign) of naive over-confidence for them is still open. Networks are small and the prior is synthetic.
+- **Scope.** One star-structured synthesizer with no feature–feature margins. E4c-lite (§4.9) adds a tree of them at the same total budget. Networks are small and the prior is synthetic.
+
+### 4.9 E4c-lite: the same budget, plus a tree of feature pairs (H4)
+
+*Added after E4b-lite.* The generator now also releases a maximum spanning tree of feature pairs, the structure MST uses, with the total ε unchanged. Half the budget pays for the 16 feature–label tables and half for the 15 tree edges, so each table is noisier than in E4b. The tree is chosen from the released margins, which is post-processing. Both networks were retrained for 4,000 steps, because the E4b checkpoints were not on this machine; the naive network again trains on clean data only. Same 12 cells, same seeds, 200 tasks. Artifact: `artifacts/E4c-lite-mst-margins/evaluation.json`.
+
+| n | ε | k | Over-confidence naive: E4b → **E4c** | NLL naive / **aware** (E4c) | Aware over-confidence |
+| ---: | ---: | ---: | --- | --- | ---: |
+| 32 | 1 | 1 | +0.181 → **+0.218** | 0.901 / **0.695** | +0.025 |
+| 32 | 4 | 1 | +0.113 → **+0.174** | 0.808 / **0.687** | +0.018 |
+| 32 | 16 | 1 | +0.081 → **+0.098** | 0.703 / **0.658** | +0.009 |
+| 128 | 1 | 1 | +0.128 → **+0.183** | 0.844 / **0.684** | −0.000 |
+| 128 | 4 | 1 | +0.094 → **+0.103** | 0.702 / **0.645** | −0.008 |
+| 128 | 16 | 4 | +0.089 → **+0.090** | 0.615 / **0.575** | −0.001 |
+
+- **The over-confidence does not shrink.** It rises in every cell, by +0.009 to +0.061. The largest increases are at ε = 1, where splitting the budget doubles the noise on the feature–label tables and the pair tables are too noisy to put the correlation back. At ε = 16 and n = 128 the change is about +0.01, within noise of E4b.
+- **The tree does carry correlation.** With the privacy noise removed, the first tree edge recovers the real feature correlation (0.143 against 0.154 in a check run). At the ε used for evaluation that signal does not reach the naive network.
+- **The noise-aware network still corrects it.** Its over-confidence stays within ±0.025 in all 12 cells and within ±0.01 in 8 of them. It lowers NLL in every cell, by 0.026 to 0.205. Accuracy is essentially unchanged (−0.006 to +0.015).
+- **What this says about MST.** Releasing a tree of pairs is not free. At a fixed budget it costs noise on the margins that actually predict the label, and at these ε the trade is not worth it for a naive downstream model. A generator that spends budget on feature pairs only when they are strong, which is what MST's selection does, remains untested. So is whether a larger budget, rather than a split one, would let the tree help.
 
 ## 5. Recommended changes to the plan
 

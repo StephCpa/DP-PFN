@@ -1,0 +1,119 @@
+{
+  "provenance": {
+    "script": "experiments/E4c-lite-mst-margins/e4c_mst.py",
+    "git_commit": "f7ea51f2ef2742a8917597982f62a44f370ffb1c",
+    "git_dirty": true,
+    "utc_time": "2026-11-05T15:23:00+00:00",
+    "python": "3.12.4",
+    "platform": "Linux-6.8.0-138-generic-x86_64-with-glibc2.35",
+    "libraries": {
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "torch": "2.4.0+cu121",
+      "sklearn": "1.5.2",
+      "networkx": "3.6.1"
+    },
+    "seed": 0,
+    "argv": [
+      "train",
+      "--mode",
+      "naive",
+      "--steps",
+      "4000",
+      "--threads",
+      "4"
+    ]
+  },
+  "config": {
+    "cmd": "train",
+    "mode": "naive",
+    "steps": 4000,
+    "batch": 32,
+    "n_qry": 32,
+    "lr": 0.001,
+    "threads": 4,
+    "seed": 0
+  },
+  "curve": [
+    {
+      "step": 250,
+      "train_loss": 0.661813497543335,
+      "seconds": 126.33605718612671
+    },
+    {
+      "step": 500,
+      "train_loss": 0.543504536151886,
+      "seconds": 237.05567979812622
+    },
+    {
+      "step": 750,
+      "train_loss": 0.5335910320281982,
+      "seconds": 371.9953010082245
+    },
+    {
+      "step": 1000,
+      "train_loss": 0.5099406242370605,
+      "seconds": 504.6397728919983
+    },
+    {
+      "step": 1250,
+      "train_loss": 0.5500578880310059,
+      "seconds": 618.8563477993011
+    },
+    {
+      "step": 1500,
+      "train_loss": 0.5126131176948547,
+      "seconds": 734.0491971969604
+    },
+    {
+      "step": 1750,
+      "train_loss": 0.5105543732643127,
+      "seconds": 873.5284903049469
+    },
+    {
+      "step": 2000,
+      "train_loss": 0.48840340971946716,
+      "seconds": 999.8629846572876
+    },
+    {
+      "step": 2250,
+      "train_loss": 0.4766029119491577,
+      "seconds": 1140.094729423523
+    },
+    {
+      "step": 2500,
+      "train_loss": 0.47834113240242004,
+      "seconds": 1283.2256245613098
+    },
+    {
+      "step": 2750,
+      "train_loss": 0.4868958592414856,
+      "seconds": 1407.1066682338715
+    },
+    {
+      "step": 3000,
+      "train_loss": 0.4999004900455475,
+      "seconds": 1516.0690476894379
+    },
+    {
+      "step": 3250,
+      "train_loss": 0.4687623083591461,
+      "seconds": 1624.9755642414093
+    },
+    {
+      "step": 3500,
+      "train_loss": 0.4402252435684204,
+      "seconds": 1741.6259741783142
+    },
+    {
+      "step": 3750,
+      "train_loss": 0.45421648025512695,
+      "seconds": 1895.943158864975
+    },
+    {
+      "step": 4000,
+      "train_loss": 0.5687690377235413,
+      "seconds": 2024.300066947937
+    }
+  ]
+}
