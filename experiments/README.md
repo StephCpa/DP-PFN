@@ -19,7 +19,7 @@ Run order:
 
 ```bash
 python experiments/X0-theory-audit/audit_constants.py
-python experiments/E1-lite-amortization-gap/train.py --steps 8000
+python experiments/E1-lite-amortization-gap/train.py --steps 6000 --threads 3
 python experiments/E1-lite-amortization-gap/evaluate.py
 python experiments/E3-lite-vote-sample-complexity/vote_c2.py --n 500 --tag _n500
 python experiments/D2-noise-aware-calibration/d2_calibration.py
