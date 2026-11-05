@@ -181,7 +181,7 @@ Exact grid-Bayes, 1-D logistic prior, 200 tasks per cell, clean test labels. "Ov
 | DP synthetic | 1000 | 0.5 | 0.542 / 0.046 / −0.003 | 0.542 / 0.046 / −0.002 | 0.541 |
 
 - **Label RR: Prop. D2 confirmed, strongly.** Naive use is under-confident, and the effect *grows* with n, since bias does not average out. The noise-aware target removes it at equal accuracy and cuts NLL by up to 0.077 nats. Gate 2 should pass for RR, provided the network approximates the noise-aware target.
-- **DP synthetic data: direction confirmed, but small here.** Naive use is over-confident only at n = 50, and the effect vanishes by n = 200 in a 2-parameter model with 10 bins. E4 must use settings where it bites: high-dimensional marginals, sparse cells, and many synthetic rows per real row. Otherwise Gate 2 can "fail" for the wrong reason.
+- **DP synthetic data: direction confirmed, but small here.** Naive use is over-confident only at n = 50, and the effect vanishes by n = 200 in a 2-parameter model with 10 bins. E4 must use settings where it bites: high-dimensional marginals, sparse cells, and many synthetic rows per real row. Otherwise Gate 2 can "fail" for the wrong reason. D2-sparse (§4.7) then tried that setting, and the over-confidence did not survive there either.
 
 ### 4.5 G3-check: edge RR and community detectability (Prop. G3, T7)
 
@@ -220,6 +220,24 @@ Gap recovered = (NLL naive PFN − NLL aware PFN) / (NLL naive PFN − NLL exact
 - **The noise-aware PFN realises most of Thm. D1's gain.** At n = 128 it recovers 71–86% of the achievable NLL improvement, cuts ECE by 0.014–0.036, moves over-confidence from −0.06…−0.10 to −0.01…−0.04, and sits 3.5–8× closer to the exact target. Accuracy is unchanged in every cell. On clean data it costs nothing (NLL 0.5357 vs 0.5358).
 - **Where it falls short.** In the noisiest cell (n = 128, ε = 0.5) it stays under-confident (−0.039 vs the target's +0.005). At n = 32 the naive and aware targets nearly coincide, so amortization error dominates and the network overshoots slightly (+0.016). More training or capacity is the obvious first fix; 4,000 steps is short.
 - **Gate 2 reading: pass for label RR, in pilot form.** It remains open for DP synthetic data and marginals, and at backbone scale with real tables.
+
+### 4.7 D2-sparse: a 512-cell DP histogram (Prop. D2, synthetic half)
+
+*Added after E4-lite.* The review asked whether naive over-confidence would survive if the histogram were sparse. This run uses 512 cells (one binary label, eight binary covariates, four of them active), Laplace(2/ε) noise, and 5n synthetic rows. Predictors are exact grid Bayes, 61 × 41 points. Tasks per cell: 80 at n = 50, 60 at n = 200, 40 at n = 1000. Artifact: `artifacts/D2-sparse-synthetic/results.json`.
+
+| n | ε | cells occupied | NLL naive / **noise-aware** / oracle | Over-confidence naive / **noise-aware** / oracle |
+| ---: | ---: | ---: | --- | --- |
+| 50 | 0.5 | 9% | 0.695 / 0.679 / 0.480 | **+0.040** / +0.008 / −0.001 |
+| 50 | 1 | 9% | 0.671 / **0.629** / 0.477 | −0.061 / −0.042 / −0.006 |
+| 200 | 0.5 | 30% | 0.655 / **0.591** / 0.443 | −0.120 / +0.027 / +0.001 |
+| 200 | 1 | 30% | 0.626 / **0.528** / 0.464 | −0.188 / +0.026 / −0.002 |
+| 1000 | 0.5 | 72% | 0.558 / **0.475** / 0.454 | −0.153 / +0.014 / +0.006 |
+| 1000 | 2 | 72% | 0.481 / **0.462** / 0.459 | −0.050 / +0.008 / +0.003 |
+
+- **The predicted direction does not hold.** Naive use is over-confident in only one of the nine cells (n = 50, ε = 0.5, +0.040). Everywhere else it is under-confident, and the bias grows with n, reaching −0.188 at n = 200, ε = 1. Sparsity did not restore the over-confidence seen in the 20-cell model.
+- **The useful claim survives.** Conditioning on the noisy histogram instead of the synthetic rows cuts NLL in every cell, by up to 0.098 at n = 200, ε = 1, and its over-confidence stays within 0.04 of zero. Accuracy is close between the two (within 0.03). So the reason to be noise-aware is likelihood, not the sign of the bias.
+- **Why the sign flips.** A histogram release with Laplace noise biases every cell probability toward uniform, because empty cells get positive noise and are clipped. Resampling 5n rows from that flattened histogram is a stronger version of label randomized response, not a source of false precision. The over-confidence in the 20-cell model was a small-n effect, not the general behaviour of synthetic data.
+- **Scope.** One sparse logistic family, exact targets, no trained network. A generator that preserves margins exactly (AIM, MST) could still produce over-confident naive use. That is untested.
 
 ## 5. Recommended changes to the plan
 
@@ -262,7 +280,7 @@ In priority order. Each item says what to change and why.
 | H1 | partially supported | Prop. 0 and the wrapper and post-processing guarantees are correct (X0). A third route must be added: certified-by-architecture PFNs (PrivTab). The TREDBench caveat limits "synthetic-only continued pretraining". |
 | H2 | partially supported | E1-lite. Λ is small on typical data and grows under search. The network leaks up to 2.5× the exact worst case, so exact-PPD privacy is not inherited. Better-trained PFNs leak more (B5). **Not observed:** leakage "driven large": stays below 2B_y for a small network. |
 | H3 | partially supported | E3-lite (idealised prior, exact-Bayes teachers). PFN-like teachers win at small n·ε, and C2 picks m within 2× in 42/45 configurations. But C2 needs a pointwise bias floor, and its n* is 2–10× conservative. Real PFN teachers, and trained teachers with charged tuning, are untested. |
-| H4 | partially supported (label RR: supported in pilot) | D2-check shows the targets differ as predicted. E4-lite shows a *trained* noise-aware PFN recovers 71–86% of the exact NLL gain over naive plug-in at n = 128, at equal accuracy and free on clean data. Open: the synthetic-data half (effect small in low dimension), real data and TabPFN scale. |
+| H4 | partially supported (label RR: supported in pilot) | D2-check shows the targets differ as predicted. E4-lite shows a *trained* noise-aware PFN recovers 71–86% of the exact NLL gain over naive plug-in at n = 128, at equal accuracy and free on clean data. The synthetic-data half is not supported as stated: naive use is under-confident, not over-confident, once the histogram is sparse (D2-sparse, §4.7). Open: real data and TabPFN scale. |
 
 ## 7. Limitations of this review and next steps
 
@@ -270,7 +288,7 @@ In priority order. Each item says what to change and why.
 - **No released checkpoints.** HuggingFace was blocked, so no TabPFN or NodePFN weights were run. Every pilot uses closed-form priors and small in-house networks or exact Bayes. They test the *mechanisms and targets*, not backbone-scale behaviour.
 - **Search budgets are small.** E1-lite's adversarial search is a lower bound with a modest budget. E3-lite's trained teacher is untuned logistic regression.
 - **Suggested next iteration**, in order:
-  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). Next for E4: high-dimensional DP synthetic data and noisy marginals, and longer training for the noisiest cell.
+  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7); the predicted over-confidence does not appear. Still open: longer training for the noisiest RR cell, and a trained network on synthetic data.
   2. Rerun E3-lite with the E1 network as the teacher, and with tuned plus charged trained teachers.
   3. Write C2′ and the T4 calibration argument (soft scores waste sensitivity) as short theorems.
   4. Read PrivTab and decide the paper's positioning.

@@ -48,10 +48,11 @@
       "status": "partially-supported",
       "experiments": [
         "D2-noise-aware-calibration",
-        "E4-lite-noise-aware-rr"
+        "E4-lite-noise-aware-rr",
+        "D2-sparse-synthetic"
       ],
       "source": "proposal Section 5; tested by E4, Gate 2",
-      "evidence": "D2-check (exact targets) plus E4-lite (trained network): for label RR, a trained noise-aware PFN recovers most of the calibration gain at equal accuracy and costs nothing on clean data. Open: the synthetic-data half of D2, real-data/backbone scale (TabPFN), and the noisiest cell (n=128, eps=0.5), where the network remains under-confident."
+      "evidence": "Label RR: D2-check (exact targets) plus E4-lite (trained network) recover most of the calibration gain at equal accuracy. Synthetic half: D2-sparse (512 cells, exact targets) finds naive use under-confident in 8 of 9 cells, growing with n, so the predicted over-confidence does not survive sparsity. The noise-aware target still lowers NLL in every cell. Open: real data and TabPFN scale, and generators that preserve margins exactly."
     }
   ],
   "loop": {

@@ -1,0 +1,37 @@
+n=  50 eps=0.5 occupied=0.091
+   oracle       acc 0.762  NLL 0.4801  ECE 0.0549  overconf -0.0013
+   naive        acc 0.514  NLL 0.6954  ECE 0.2138  overconf +0.0396
+   noise_aware  acc 0.560  NLL 0.6794  ECE 0.2423  overconf +0.0081
+n=  50 eps=1.0 occupied=0.092
+   oracle       acc 0.768  NLL 0.4765  ECE 0.0566  overconf -0.0058
+   naive        acc 0.615  NLL 0.6707  ECE 0.1926  overconf -0.0612
+   noise_aware  acc 0.667  NLL 0.6293  ECE 0.2066  overconf -0.0420
+n=  50 eps=2.0 occupied=0.091
+   oracle       acc 0.786  NLL 0.4427  ECE 0.0514  overconf +0.0069
+   naive        acc 0.635  NLL 0.6512  ECE 0.1897  overconf -0.0748
+   noise_aware  acc 0.688  NLL 0.5800  ECE 0.1828  overconf +0.0209
+n= 200 eps=0.5 occupied=0.300
+   oracle       acc 0.791  NLL 0.4429  ECE 0.0371  overconf +0.0011
+   naive        acc 0.673  NLL 0.6548  ECE 0.2120  overconf -0.1202
+   noise_aware  acc 0.662  NLL 0.5915  ECE 0.1911  overconf +0.0267
+n= 200 eps=1.0 occupied=0.303
+   oracle       acc 0.784  NLL 0.4636  ECE 0.0414  overconf -0.0016
+   naive        acc 0.752  NLL 0.6259  ECE 0.2127  overconf -0.1877
+   noise_aware  acc 0.735  NLL 0.5278  ECE 0.1144  overconf +0.0258
+n= 200 eps=2.0 occupied=0.301
+   oracle       acc 0.778  NLL 0.4496  ECE 0.0376  overconf +0.0032
+   naive        acc 0.769  NLL 0.5674  ECE 0.1747  overconf -0.1567
+   noise_aware  acc 0.770  NLL 0.4753  ECE 0.0740  overconf +0.0032
+n=1000 eps=0.5 occupied=0.721
+   oracle       acc 0.778  NLL 0.4535  ECE 0.0255  overconf +0.0065
+   naive        acc 0.772  NLL 0.5580  ECE 0.1629  overconf -0.1525
+   noise_aware  acc 0.774  NLL 0.4755  ECE 0.0601  overconf +0.0137
+n=1000 eps=1.0 occupied=0.717
+   oracle       acc 0.797  NLL 0.4354  ECE 0.0294  overconf -0.0025
+   naive        acc 0.793  NLL 0.5012  ECE 0.1246  overconf -0.1147
+   noise_aware  acc 0.794  NLL 0.4425  ECE 0.0441  overconf -0.0075
+n=1000 eps=2.0 occupied=0.724
+   oracle       acc 0.775  NLL 0.4587  ECE 0.0321  overconf +0.0029
+   naive        acc 0.774  NLL 0.4815  ECE 0.0693  overconf -0.0496
+   noise_aware  acc 0.776  NLL 0.4617  ECE 0.0358  overconf +0.0078
+wrote /tmp/dp-pfn/artifacts/D2-sparse-synthetic/results.json
