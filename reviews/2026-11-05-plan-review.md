@@ -17,7 +17,7 @@ Companion files:
 3. **Prop. G3's threshold should use the dense-regime SNR.** Simulation confirms this. At NodePFN's graph size, ε = 2 edge RR erases structural signal, so edge-LDP gains must come from features.
 4. **NodePFN facts in Sections 6–7 need fixing.** The prior is always assortative, RR leaves its density range, and the released pipeline tunes preprocessing per dataset.
 5. **E1-lite supports the amortization caveat, moderately.** A PFN within 0.0006 nats of exact Bayes tracks the exact leakage on typical data, but leaks 1.2–2.5× the exact worst case under search. It stayed far below 2B_y.
-6. **Gate 2 passes in pilot form for label RR.** D2-check confirms Prop. D2 strongly for label RR, weakly for DP synthetic data. E4-lite then trained an actual noise-aware PFN: it recovers 71–86% of the exact noise-aware NLL gain over naive plug-in at n = 128, with unchanged accuracy and no cost on clean data. The synthetic-data half needs high-dimensional releases.
+6. **Gate 2 passes in pilot form for label RR and for marginal-based DP synthetic data.** For label RR, a trained noise-aware PFN recovers 71–86% of the exact noise-aware NLL gain over naive plug-in (E4-lite). For synthetic data, the *sign* of naive mis-calibration depends on the generator: under-confident for a noisy full histogram (D2-sparse), over-confident in 12/12 cells for a marginal-based synthesizer (E4b-lite). A trained noise-aware PFN is calibrated and lowers NLL in every E4b cell.
 
 Recommended plan changes are in §5. Hypothesis status is in §6.
 
@@ -239,9 +239,39 @@ Gap recovered = (NLL naive PFN − NLL aware PFN) / (NLL naive PFN − NLL exact
 - **Why the sign flips.** A histogram release with Laplace noise biases every cell probability toward uniform, because empty cells get positive noise and are clipped. Resampling 5n rows from that flattened histogram is a stronger version of label randomized response, not a source of false precision. The over-confidence in the 20-cell model was a small-n effect, not the general behaviour of synthetic data.
 - **Scope.** One sparse logistic family, exact targets, no trained network. A generator that preserves margins exactly (AIM, MST) could still produce over-confident naive use. That is untested.
 
+### 4.8 E4b-lite: trained noise-aware PFN on marginal-based, high-dimensional DP synthetic data (H4, Gate 2)
+
+*Added after D2-sparse, to test the case it left open.*
+
+- **Task.** d = 16 correlated binary features (2-factor latent model, mean |corr| ≈ 0.17) and a logistic label. 2¹⁷ joint cells, far beyond n.
+- **Release (ε-DP).** Laplace(2d/ε) on every cell of the 16 two-way (x_j, y) tables, then k·n rows sampled from the resulting naive-Bayes model. This is the PrivBayes/MST family with a star structure: it keeps (feature, label) margins and drops feature–feature dependence.
+- **Networks.** Vector-input E1 architecture, 4,000 steps each. `naive` is trained on clean data and fed the synthetic rows. `aware` is trained with the synthesizer in the prior, with (ε, k, n) tokens and clean targets.
+- **Evaluation.** 200 tasks × 400 clean test labels per cell. No exact target exists here, so the comparison is between predictors.
+
+Artifacts: `artifacts/E4b-lite-noise-aware-synthetic/{evaluation,summary}.json`.
+
+| n | ε | k | Over-confidence: naive PFN / **aware PFN** / non-private NB / oracle PFN | NLL: naive / **aware** / oracle | ECE: naive / **aware** | Accuracy: naive / **aware** / oracle |
+| ---: | ---: | ---: | --- | --- | --- | --- |
+| 32 | 1 | 1 | +0.181 / **+0.014** / +0.157 / +0.025 | 0.826 / **0.692** / 0.586 | 0.192 / **0.079** | 0.522 / 0.529 / 0.689 |
+| 32 | 1 | 4 | +0.186 / **+0.003** / +0.158 / +0.020 | 0.835 / **0.690** / 0.576 | 0.197 / **0.082** | 0.521 / 0.537 / 0.700 |
+| 32 | 16 | 4 | +0.121 / **+0.014** / +0.165 / +0.028 | 0.698 / **0.624** / 0.586 | 0.135 / **0.078** | 0.646 / 0.651 / 0.690 |
+| 128 | 1 | 1 | +0.128 / **−0.002** / +0.098 / +0.004 | 0.746 / **0.661** / 0.497 | 0.145 / **0.072** | 0.589 / 0.602 / 0.754 |
+| 128 | 4 | 4 | +0.106 / **−0.000** / +0.111 / +0.003 | 0.657 / **0.584** / 0.492 | 0.123 / **0.071** | 0.687 / 0.693 / 0.759 |
+| 128 | 16 | 1 | +0.086 / **−0.001** / +0.103 / +0.007 | 0.614 / **0.572** / 0.505 | 0.104 / **0.068** | 0.701 / 0.702 / 0.750 |
+| 128 | 16 | 4 | +0.089 / **+0.000** / +0.099 / +0.005 | 0.599 / **0.553** / 0.494 | 0.106 / **0.067** | 0.718 / 0.715 / 0.757 |
+
+All 12 cells are in the artifact; the 5 omitted rows follow the same pattern.
+
+- **Here the predicted over-confidence does appear, in 12 of 12 cells** (+0.08 to +0.19), the opposite of D2-sparse. The two results are consistent once the mechanism is named. A noisy full histogram flattens toward uniform, which acts like randomized response and gives under-confidence. A marginal-based synthesizer instead emits features that are conditionally independent given y, so a downstream learner counts correlated evidence as independent, which gives over-confidence. Non-private naive Bayes on the real records is already over-confident by +0.10 to +0.17 in this prior.
+- **Bulk rows are not the main driver.** Quadrupling the synthetic rows (k = 1 → 4) changes the naive PFN's over-confidence by only +0.003 to +0.040. Prop. D2's stated reason ("every synthetic row is counted as real evidence") should be replaced by "the release's structure is treated as the data's structure". The sign of the error depends on M.
+- **The noise-aware PFN fixes it.** It is calibrated in every cell (|over-confidence| ≤ 0.014; 10/12 within ±0.01). It lowers NLL in 12/12 cells by 0.03–0.15 nats and cuts ECE from 0.10–0.20 to 0.07–0.08. Accuracy moves by −0.003 to +0.016. It also uses extra synthetic rows sensibly: its NLL at k = 4 is never more than 0.002 worse than at k = 1, and up to 0.019 better. At n = 32 its NLL even beats *non-private* naive Bayes on the real records (0.62–0.69 vs 0.77–0.82).
+- **Scope.** One star-structured synthesizer with no feature–feature margins. AIM and MST select some feature–feature margins, which would shrink the conditional-independence error, so the size (perhaps the sign) of naive over-confidence for them is still open. Networks are small and the prior is synthetic.
+
 ## 5. Recommended changes to the plan
 
 In priority order. Each item says what to change and why.
+
+*(Added after D2-sparse and E4b-lite.)* **Restate Prop. D2's synthetic-data half.** The direction of naive mis-calibration depends on the release mechanism. It is under-confident for flattening releases (label RR, noisy full histograms) and over-confident for releases whose structure is poorer than the data's (marginal-based synthesizers that drop dependence). Bulk resampling contributes little. The noise-aware target fixes both directions, which is the claim Gate 2 should test.
 
 1. **Reposition the tabular paper against PrivTab, TabPATE and Private PoEtry.**
    - Prop. 0, C1, C3 and C4 are now shared ground.
@@ -280,7 +310,7 @@ In priority order. Each item says what to change and why.
 | H1 | partially supported | Prop. 0 and the wrapper and post-processing guarantees are correct (X0). A third route must be added: certified-by-architecture PFNs (PrivTab). The TREDBench caveat limits "synthetic-only continued pretraining". |
 | H2 | partially supported | E1-lite. Λ is small on typical data and grows under search. The network leaks up to 2.5× the exact worst case, so exact-PPD privacy is not inherited. Better-trained PFNs leak more (B5). **Not observed:** leakage "driven large": stays below 2B_y for a small network. |
 | H3 | partially supported | E3-lite (idealised prior, exact-Bayes teachers). PFN-like teachers win at small n·ε, and C2 picks m within 2× in 42/45 configurations. But C2 needs a pointwise bias floor, and its n* is 2–10× conservative. Real PFN teachers, and trained teachers with charged tuning, are untested. |
-| H4 | partially supported (label RR: supported in pilot) | D2-check shows the targets differ as predicted. E4-lite shows a *trained* noise-aware PFN recovers 71–86% of the exact NLL gain over naive plug-in at n = 128, at equal accuracy and free on clean data. The synthetic-data half is not supported as stated: naive use is under-confident, not over-confident, once the histogram is sparse (D2-sparse, §4.7). Open: real data and TabPFN scale. |
+| H4 | partially supported (core claim supported in pilot) | Label RR: E4-lite's trained noise-aware PFN recovers 71–86% of the exact NLL gain. Synthetic data: the *direction* in H4 is generator-dependent. It is under-confident for a noisy full histogram (D2-sparse) and over-confident for a marginal-based synthesizer (E4b-lite, 12/12 cells), where the trained noise-aware PFN is calibrated and lowers NLL in 12/12 cells. Open: AIM/MST-style generators, real data, TabPFN scale. |
 
 ## 7. Limitations of this review and next steps
 
@@ -288,7 +318,7 @@ In priority order. Each item says what to change and why.
 - **No released checkpoints.** HuggingFace was blocked, so no TabPFN or NodePFN weights were run. Every pilot uses closed-form priors and small in-house networks or exact Bayes. They test the *mechanisms and targets*, not backbone-scale behaviour.
 - **Search budgets are small.** E1-lite's adversarial search is a lower bound with a modest budget. E3-lite's trained teacher is untuned logistic regression.
 - **Suggested next iteration**, in order:
-  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7); the predicted over-confidence does not appear. Still open: longer training for the noisiest RR cell, and a trained network on synthetic data.
+  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7) and with trained networks on a marginal-based synthesizer as E4b-lite (§4.8). Still open: AIM/MST-style generators with feature–feature margins, longer training for the noisiest RR cell, and real tables.
   2. Rerun E3-lite with the E1 network as the teacher, and with tuned plus charged trained teachers.
   3. Write C2′ and the T4 calibration argument (soft scores waste sensitivity) as short theorems.
   4. Read PrivTab and decide the paper's positioning.

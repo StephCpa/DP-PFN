@@ -1,0 +1,487 @@
+{
+  "provenance": {
+    "script": "experiments/E4b-lite-noise-aware-synthetic/summarize.py",
+    "git_commit": "4e5d83c614e0539d8e5239a5bd94cef9627e7b1b",
+    "git_dirty": true,
+    "utc_time": "2026-11-05T13:43:26+00:00",
+    "python": "3.13.18",
+    "platform": "Linux-6.18.44-fc-v236-x86_64-with-glibc2.39",
+    "libraries": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "torch": "2.15.0+cu132",
+      "sklearn": "1.9.1",
+      "networkx": "3.7"
+    },
+    "seed": null,
+    "argv": []
+  },
+  "rows": [
+    {
+      "n": 32,
+      "eps": 1.0,
+      "k": 1,
+      "nll": {
+        "oracle_pfn": 0.5864092375839255,
+        "naive_pfn": 0.826089654671974,
+        "aware_pfn": 0.6915791989846998,
+        "nb_plugin": 3.37334579192886,
+        "nb_clean": 0.7850504353981403
+      },
+      "ece": {
+        "oracle_pfn": 0.06934904416432837,
+        "naive_pfn": 0.19197919423654097,
+        "aware_pfn": 0.07878236337602139,
+        "nb_plugin": 0.4183781058181051,
+        "nb_clean": 0.16627851821911316
+      },
+      "overconf": {
+        "oracle_pfn": 0.024499367764510685,
+        "naive_pfn": 0.18132418136791675,
+        "aware_pfn": 0.013598137968033556,
+        "nb_plugin": 0.4126571479268346,
+        "nb_clean": 0.15715930873822215
+      },
+      "acc": {
+        "oracle_pfn": 0.6886375,
+        "naive_pfn": 0.5220875,
+        "aware_pfn": 0.52895,
+        "nb_plugin": 0.5267875000000001,
+        "nb_clean": 0.6827125
+      },
+      "naive_sign": "over",
+      "aware_sign": "over",
+      "nll_gain_aware_vs_naive": 0.13451045568727427,
+      "acc_diff_aware_minus_naive": 0.006862499999999994
+    },
+    {
+      "n": 32,
+      "eps": 1.0,
+      "k": 4,
+      "nll": {
+        "oracle_pfn": 0.5757854997836749,
+        "naive_pfn": 0.8353510332509608,
+        "aware_pfn": 0.6899397705755319,
+        "nb_plugin": 3.3999333164546273,
+        "nb_clean": 0.7912408183248192
+      },
+      "ece": {
+        "oracle_pfn": 0.07008447102745995,
+        "naive_pfn": 0.19708151050371814,
+        "aware_pfn": 0.08241012246198952,
+        "nb_plugin": 0.42212210868091754,
+        "nb_clean": 0.1676991755090732
+      },
+      "overconf": {
+        "oracle_pfn": 0.019940574703086168,
+        "naive_pfn": 0.1856228571790154,
+        "aware_pfn": 0.00274518994502724,
+        "nb_plugin": 0.41562132100292914,
+        "nb_clean": 0.1579197158033223
+      },
+      "acc": {
+        "oracle_pfn": 0.6995250000000001,
+        "naive_pfn": 0.5205875,
+        "aware_pfn": 0.536825,
+        "nb_plugin": 0.523975,
+        "nb_clean": 0.6895749999999999
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.14541126267542892,
+      "acc_diff_aware_minus_naive": 0.016237500000000016
+    },
+    {
+      "n": 32,
+      "eps": 4.0,
+      "k": 1,
+      "nll": {
+        "oracle_pfn": 0.5799820810260405,
+        "naive_pfn": 0.7237697541490111,
+        "aware_pfn": 0.6649898634190035,
+        "nb_plugin": 1.9500757601177943,
+        "nb_clean": 0.7932514377904434
+      },
+      "ece": {
+        "oracle_pfn": 0.06846040223275777,
+        "naive_pfn": 0.13395594143176132,
+        "aware_pfn": 0.08345013953186572,
+        "nb_plugin": 0.32635160256794504,
+        "nb_clean": 0.1672776858574243
+      },
+      "overconf": {
+        "oracle_pfn": 0.02258698099756147,
+        "naive_pfn": 0.11269692732643016,
+        "aware_pfn": 0.007049860890582207,
+        "nb_plugin": 0.3194263242844757,
+        "nb_clean": 0.15716314130062795
+      },
+      "acc": {
+        "oracle_pfn": 0.6947125000000001,
+        "naive_pfn": 0.58895,
+        "aware_pfn": 0.5942875,
+        "nb_plugin": 0.5995875,
+        "nb_clean": 0.6865
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.05877989073000767,
+      "acc_diff_aware_minus_naive": 0.005337499999999995
+    },
+    {
+      "n": 32,
+      "eps": 4.0,
+      "k": 4,
+      "nll": {
+        "oracle_pfn": 0.5736593147102143,
+        "naive_pfn": 0.7268150657558372,
+        "aware_pfn": 0.66241496762857,
+        "nb_plugin": 1.9523645713007751,
+        "nb_clean": 0.7687358188263897
+      },
+      "ece": {
+        "oracle_pfn": 0.0712502961695427,
+        "naive_pfn": 0.13297175562683258,
+        "aware_pfn": 0.075812259166874,
+        "nb_plugin": 0.3298937816997866,
+        "nb_clean": 0.1608803291436967
+      },
+      "overconf": {
+        "oracle_pfn": 0.015347800641902727,
+        "naive_pfn": 0.11573112220710609,
+        "aware_pfn": -0.007078189098648724,
+        "nb_plugin": 0.3239821624940137,
+        "nb_clean": 0.14971613720975419
+      },
+      "acc": {
+        "oracle_pfn": 0.7003999999999999,
+        "naive_pfn": 0.593175,
+        "aware_pfn": 0.6011625,
+        "nb_plugin": 0.59215,
+        "nb_clean": 0.692825
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.06440009812726721,
+      "acc_diff_aware_minus_naive": 0.007987500000000036
+    },
+    {
+      "n": 32,
+      "eps": 16.0,
+      "k": 1,
+      "nll": {
+        "oracle_pfn": 0.5782828898722516,
+        "naive_pfn": 0.6562937731723412,
+        "aware_pfn": 0.6256869229369317,
+        "nb_plugin": 1.0592522780248417,
+        "nb_clean": 0.7841077504302602
+      },
+      "ece": {
+        "oracle_pfn": 0.06790793998752487,
+        "naive_pfn": 0.10444467840718571,
+        "aware_pfn": 0.07432972749974578,
+        "nb_plugin": 0.22382777122980735,
+        "nb_clean": 0.1632600522154138
+      },
+      "overconf": {
+        "oracle_pfn": 0.018839765395328868,
+        "naive_pfn": 0.08065649910594802,
+        "aware_pfn": 0.008887903932854532,
+        "nb_plugin": 0.2159561407731362,
+        "nb_clean": 0.15241209440359485
+      },
+      "acc": {
+        "oracle_pfn": 0.6989125,
+        "naive_pfn": 0.6476500000000001,
+        "aware_pfn": 0.6499250000000001,
+        "nb_plugin": 0.6624749999999999,
+        "nb_clean": 0.6932625
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.030606850235409433,
+      "acc_diff_aware_minus_naive": 0.002275000000000027
+    },
+    {
+      "n": 32,
+      "eps": 16.0,
+      "k": 4,
+      "nll": {
+        "oracle_pfn": 0.5856954641791006,
+        "naive_pfn": 0.6980591289902756,
+        "aware_pfn": 0.6244155720109323,
+        "nb_plugin": 1.1350013611124625,
+        "nb_clean": 0.8181617450968358
+      },
+      "ece": {
+        "oracle_pfn": 0.07090972074107849,
+        "naive_pfn": 0.13469153961541597,
+        "aware_pfn": 0.07778198908399792,
+        "nb_plugin": 0.2406412435109822,
+        "nb_clean": 0.17290590624046306
+      },
+      "overconf": {
+        "oracle_pfn": 0.02760812814976671,
+        "naive_pfn": 0.12079258129878437,
+        "aware_pfn": 0.014074080695398157,
+        "nb_plugin": 0.23249145689579676,
+        "nb_clean": 0.16501120114674123
+      },
+      "acc": {
+        "oracle_pfn": 0.6904875,
+        "naive_pfn": 0.64645,
+        "aware_pfn": 0.6509875,
+        "nb_plugin": 0.6493125,
+        "nb_clean": 0.6801875
+      },
+      "naive_sign": "over",
+      "aware_sign": "over",
+      "nll_gain_aware_vs_naive": 0.07364355697934322,
+      "acc_diff_aware_minus_naive": 0.004537500000000083
+    },
+    {
+      "n": 128,
+      "eps": 1.0,
+      "k": 1,
+      "nll": {
+        "oracle_pfn": 0.4970591681813721,
+        "naive_pfn": 0.7454906747865586,
+        "aware_pfn": 0.6613509913323841,
+        "nb_plugin": 2.6988097274364544,
+        "nb_clean": 0.6199969163702728
+      },
+      "ece": {
+        "oracle_pfn": 0.05774652328161756,
+        "naive_pfn": 0.14458375089870532,
+        "aware_pfn": 0.07200055775139481,
+        "nb_plugin": 0.35445057392833135,
+        "nb_clean": 0.11296493973293698
+      },
+      "overconf": {
+        "oracle_pfn": 0.003578985397960063,
+        "naive_pfn": 0.12821578429638175,
+        "aware_pfn": -0.0022097568606957805,
+        "nb_plugin": 0.3479345068207508,
+        "nb_clean": 0.09752450089709025
+      },
+      "acc": {
+        "oracle_pfn": 0.754175,
+        "naive_pfn": 0.5891625,
+        "aware_pfn": 0.6016250000000001,
+        "nb_plugin": 0.59295,
+        "nb_clean": 0.7229
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.08413968345417455,
+      "acc_diff_aware_minus_naive": 0.012462500000000043
+    },
+    {
+      "n": 128,
+      "eps": 1.0,
+      "k": 4,
+      "nll": {
+        "oracle_pfn": 0.508238955866278,
+        "naive_pfn": 0.7471280068216322,
+        "aware_pfn": 0.663090119007191,
+        "nb_plugin": 2.712719013433289,
+        "nb_clean": 0.646269334030396
+      },
+      "ece": {
+        "oracle_pfn": 0.05657950028786436,
+        "naive_pfn": 0.14978896889076568,
+        "aware_pfn": 0.07480193458069116,
+        "nb_plugin": 0.35850503890525953,
+        "nb_clean": 0.12068386583911946
+      },
+      "overconf": {
+        "oracle_pfn": 0.006480012730089949,
+        "naive_pfn": 0.13585713047425962,
+        "aware_pfn": 0.007016250110976395,
+        "nb_plugin": 0.3520297612247284,
+        "nb_clean": 0.10165088219206539
+      },
+      "acc": {
+        "oracle_pfn": 0.7497,
+        "naive_pfn": 0.5855250000000001,
+        "aware_pfn": 0.5985624999999999,
+        "nb_plugin": 0.5880750000000001,
+        "nb_clean": 0.7202
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.08403788781444121,
+      "acc_diff_aware_minus_naive": 0.013037499999999813
+    },
+    {
+      "n": 128,
+      "eps": 4.0,
+      "k": 1,
+      "nll": {
+        "oracle_pfn": 0.5023138253498554,
+        "naive_pfn": 0.6475663319771623,
+        "aware_pfn": 0.5940181627390294,
+        "nb_plugin": 1.1059910928954217,
+        "nb_clean": 0.629717370737944
+      },
+      "ece": {
+        "oracle_pfn": 0.0552191010214854,
+        "naive_pfn": 0.11313470057350641,
+        "aware_pfn": 0.06840926858708263,
+        "nb_plugin": 0.2213042269158484,
+        "nb_clean": 0.11640208917013557
+      },
+      "overconf": {
+        "oracle_pfn": 0.00879954233971657,
+        "naive_pfn": 0.09425586252907814,
+        "aware_pfn": -0.00427543209996075,
+        "nb_plugin": 0.21305624390699243,
+        "nb_clean": 0.09879637165897481
+      },
+      "acc": {
+        "oracle_pfn": 0.7509625,
+        "naive_pfn": 0.6754625000000001,
+        "aware_pfn": 0.68075,
+        "nb_plugin": 0.673775,
+        "nb_clean": 0.726575
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.05354816923813288,
+      "acc_diff_aware_minus_naive": 0.0052874999999998895
+    },
+    {
+      "n": 128,
+      "eps": 4.0,
+      "k": 4,
+      "nll": {
+        "oracle_pfn": 0.4923332596415312,
+        "naive_pfn": 0.6565766156984982,
+        "aware_pfn": 0.5838242926129847,
+        "nb_plugin": 1.1310128177881686,
+        "nb_clean": 0.6388760962556618
+      },
+      "ece": {
+        "oracle_pfn": 0.05633323110623169,
+        "naive_pfn": 0.12328803984296828,
+        "aware_pfn": 0.071051182470005,
+        "nb_plugin": 0.22261188942924084,
+        "nb_clean": 0.12592378188876333
+      },
+      "overconf": {
+        "oracle_pfn": 0.0027734242100094005,
+        "naive_pfn": 0.10556155614894669,
+        "aware_pfn": -0.00043565277364104654,
+        "nb_plugin": 0.21394992782775252,
+        "nb_clean": 0.11101805250305347
+      },
+      "acc": {
+        "oracle_pfn": 0.7592625,
+        "naive_pfn": 0.6871,
+        "aware_pfn": 0.693025,
+        "nb_plugin": 0.6816125,
+        "nb_clean": 0.726475
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.07275232308551349,
+      "acc_diff_aware_minus_naive": 0.005924999999999958
+    },
+    {
+      "n": 128,
+      "eps": 16.0,
+      "k": 1,
+      "nll": {
+        "oracle_pfn": 0.5045100825640915,
+        "naive_pfn": 0.6135652756692569,
+        "aware_pfn": 0.5721177966474043,
+        "nb_plugin": 0.6638543524728457,
+        "nb_clean": 0.6376222727052967
+      },
+      "ece": {
+        "oracle_pfn": 0.05512201662911102,
+        "naive_pfn": 0.10374950442123518,
+        "aware_pfn": 0.06764933701655827,
+        "nb_plugin": 0.13022419995847442,
+        "nb_clean": 0.11974395050583339
+      },
+      "overconf": {
+        "oracle_pfn": 0.006493553111050278,
+        "naive_pfn": 0.08551680069844296,
+        "aware_pfn": -0.0013090598125476425,
+        "nb_plugin": 0.11291339892160895,
+        "nb_clean": 0.10340435350371924
+      },
+      "acc": {
+        "oracle_pfn": 0.7496,
+        "naive_pfn": 0.7006749999999999,
+        "aware_pfn": 0.7015499999999999,
+        "nb_plugin": 0.714675,
+        "nb_clean": 0.7182
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.04144747902185264,
+      "acc_diff_aware_minus_naive": 0.0008749999999999591
+    },
+    {
+      "n": 128,
+      "eps": 16.0,
+      "k": 4,
+      "nll": {
+        "oracle_pfn": 0.49375874982683354,
+        "naive_pfn": 0.5993167681627563,
+        "aware_pfn": 0.5532910794600259,
+        "nb_plugin": 0.6511107849441187,
+        "nb_clean": 0.6247757717933413
+      },
+      "ece": {
+        "oracle_pfn": 0.05502975890444359,
+        "naive_pfn": 0.10573463810752437,
+        "aware_pfn": 0.06739672012063676,
+        "nb_plugin": 0.12510302748394397,
+        "nb_clean": 0.11618932587725694
+      },
+      "overconf": {
+        "oracle_pfn": 0.0045408006537007144,
+        "naive_pfn": 0.08889385369419178,
+        "aware_pfn": 0.00034967763698659873,
+        "nb_plugin": 0.1093080565029356,
+        "nb_clean": 0.09937641706357944
+      },
+      "acc": {
+        "oracle_pfn": 0.756875,
+        "naive_pfn": 0.7175,
+        "aware_pfn": 0.7148125,
+        "nb_plugin": 0.7216374999999999,
+        "nb_clean": 0.7257125
+      },
+      "naive_sign": "over",
+      "aware_sign": "calibrated",
+      "nll_gain_aware_vs_naive": 0.04602568870273038,
+      "acc_diff_aware_minus_naive": -0.002687500000000065
+    }
+  ],
+  "naive_sign_counts": {
+    "over": 12,
+    "under": 0,
+    "calibrated": 0
+  },
+  "aware_sign_counts": {
+    "over": 2,
+    "under": 0,
+    "calibrated": 10
+  },
+  "nll_wins": 12,
+  "k_effect_on_naive_overconf": [
+    0.0042986758110986345,
+    0.003034194880675925,
+    0.04013608219283635,
+    0.007641346177877872,
+    0.011305693619868551,
+    0.003377052995748822
+  ],
+  "headline": "Marginal-based DP synthesizer (d=16, 12 cells): naive PFN on synthetic rows is over-confident in 12, under-confident in 0 and calibrated in 0 cells (largest +0.186 at n=32, eps=1, k=4); quadrupling the synthetic rows changes its over-confidence by +0.003 to +0.040. The noise-aware PFN lowers NLL in 12/12 cells (gain +0.031 to +0.145 nats), with |over-confidence| <= 0.014 and accuracy within 0.016 of naive.",
+  "h4_status": "partially-supported",
+  "h4_note": "Label RR: a trained noise-aware PFN recovers 71-86% of the exact NLL gain over naive plug-in (E4-lite). Synthetic data: the sign of naive mis-calibration depends on the generator. It is under-confident for a noisy full histogram (D2-sparse, exact targets) and over-confident in 12/12 cells for a marginal-based, naive-Bayes-structured synthesizer (E4b-lite, trained networks: +0.081 to +0.186), where non-private naive Bayes is already over-confident (+0.098 to +0.165) and extra synthetic rows add little (+0.003 to +0.040). In E4b-lite the trained noise-aware PFN is calibrated (|over-confidence| <= 0.014) and lowers NLL in 12/12 cells. Open: richer-marginal generators (AIM/MST), real data, TabPFN scale."
+}

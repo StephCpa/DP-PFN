@@ -54,8 +54,20 @@ def main() -> None:
             len(rows), cnt["over"], cnt["under"], cnt["calibrated"], worst_naive["overconf"]["naive_pfn"], worst_naive["n"],
             worst_naive["eps"], worst_naive["k"], min(dk), max(dk), wins, len(rows), min(gains), max(gains),
             max(abs(x["overconf"]["aware_pfn"]) for x in rows), max(abs(x["acc_diff_aware_minus_naive"]) for x in rows)))
+    nb_clean_oc = [x["overconf"]["nb_clean"] for x in rows]
+    h4_note = (
+        "Label RR: a trained noise-aware PFN recovers 71-86%% of the exact NLL gain over naive plug-in (E4-lite). "
+        "Synthetic data: the sign of naive mis-calibration depends on the generator. It is under-confident for a noisy full "
+        "histogram (D2-sparse, exact targets) and over-confident in %d/%d cells for a marginal-based, naive-Bayes-structured "
+        "synthesizer (E4b-lite, trained networks: %+.3f to %+.3f), where non-private naive Bayes is already over-confident "
+        "(%+.3f to %+.3f) and extra synthetic rows add little (%+.3f to %+.3f). In E4b-lite the trained noise-aware PFN is "
+        "calibrated (|over-confidence| <= %.3f) and lowers NLL in %d/%d cells. Open: richer-marginal generators (AIM/MST), "
+        "real data, TabPFN scale." % (
+            cnt["over"], len(rows), min(x["overconf"]["naive_pfn"] for x in rows), max(x["overconf"]["naive_pfn"] for x in rows),
+            min(nb_clean_oc), max(nb_clean_oc), min(dk), max(dk),
+            max(abs(x["overconf"]["aware_pfn"]) for x in rows), wins, len(rows)))
     out = dict(rows=rows, naive_sign_counts=cnt, aware_sign_counts=acnt, nll_wins=wins, k_effect_on_naive_overconf=dk,
-               headline=headline)
+               headline=headline, h4_status="partially-supported", h4_note=h4_note)
     path = write_json(EXP, "summary.json", out, __file__)
     print(headline)
     print("wrote", path)
