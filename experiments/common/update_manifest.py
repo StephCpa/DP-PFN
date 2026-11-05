@@ -26,6 +26,8 @@ def main() -> None:
     e4b = json.loads((ROOT / "artifacts/E4b-lite-noise-aware-synthetic/summary.json").read_text()) \
         if (ROOT / "artifacts/E4b-lite-noise-aware-synthetic/summary.json").exists() else None
     old_h4 = next((h for h in m["hypotheses"] if h["id"] == "H4"), {})
+    e4cp = json.loads((ROOT / "artifacts/E4c-prime-mst-selection/summary.json").read_text()) \
+        if (ROOT / "artifacts/E4c-prime-mst-selection/summary.json").exists() else None
     e4c_note, e4c_summary = "", "pending"
     e4c_path = ROOT / "artifacts/E4c-lite-mst-margins/evaluation.json"
     if e4c_path.exists() and (ROOT / "artifacts/E4b-lite-noise-aware-synthetic/evaluation.json").exists():
@@ -108,6 +110,13 @@ def main() -> None:
                         "artifacts/E4c-lite-mst-margins/training_naive.json",
                         "artifacts/E4c-lite-mst-margins/evaluation.json"],
              summary=e4c_summary),
+        dict(id="E4c-prime-mst-selection",
+             title="Per-dataset, privately selected MST tree vs E4b/E4c releases on identical data (+ non-private oracle tree)",
+             tests=["H4"], status="done" if e4cp else "pending", code="experiments/E4c-prime-mst-selection/",
+             artifacts=["artifacts/E4c-prime-mst-selection/training_aware_mst.json",
+                        "artifacts/E4c-prime-mst-selection/evaluation.json",
+                        "artifacts/E4c-prime-mst-selection/summary.json"],
+             summary=(e4cp or {}).get("headline", "pending")),
         dict(id="G3-rr-sbm-threshold", title="Spectral recovery on edge-RR SBMs vs threshold formulas",
              tests=[], status="done", code="experiments/G3-rr-sbm-threshold/",
              artifacts=["artifacts/G3-rr-sbm-threshold/results.json", "artifacts/G3-rr-sbm-threshold/threshold_eps2.png"],
@@ -128,6 +137,10 @@ def main() -> None:
                    " Open: richer-marginal generators (AIM/MST), real data, TabPFN scale.", "") + e4c_note)
                if e4c_note else (e4b or {}).get("h4_note", old_h4.get("evidence", ""))),
     }
+    if e4cp:
+        st, ev = status["H4"]
+        ev = ev.replace(" Open: a dependence-selected (MST-style) tree, real data, TabPFN scale.", "")
+        status["H4"] = (st, ev + e4cp["h4_note_suffix"] + " Open: larger n*eps, real data, TabPFN scale.")
     for h in m["hypotheses"]:
         if h["id"] in status:
             h["status"], h["evidence"] = status[h["id"]]
@@ -167,6 +180,10 @@ def main() -> None:
         m["loop"]["history"].append(dict(
             at="2026-11-05T15:29:53.000Z", iteration=1, kind="experiment", text="E4c-lite: " + e4c_summary))
         NOW_ = "2026-11-05T15:30:00.000Z"
+    if e4cp:
+        m["loop"]["history"].append(dict(
+            at="2026-11-05T17:00:00.000Z", iteration=1, kind="experiment", text="E4c-prime: " + e4cp["headline"]))
+        NOW_ = "2026-11-05T17:00:00.000Z"
     m["updatedAt"] = NOW_
     MANIFEST.write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
     print("updated", MANIFEST)

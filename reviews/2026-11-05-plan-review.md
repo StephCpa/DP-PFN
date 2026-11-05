@@ -287,11 +287,37 @@ All 12 cells are in the artifact; the 5 omitted rows follow the same pattern.
 - **The noise-aware network still corrects it.** Its over-confidence stays within −0.008 to +0.025 in all 12 cells, and within ±0.01 in 9 of them. It lowers NLL in every cell, by 0.026 to 0.205. Accuracy is essentially unchanged (−0.006 to +0.019).
 - **What this says about MST: little yet.** Spending half the budget on pair tables that are not chosen by dependence costs noise on the label margins and buys almost no correlation, so naive use gets worse at low ε. A real MST-style release remains untested. That means selecting a per-dataset tree by noisy pairwise dependence (spending budget on the selection, as MST does) and then measuring its edges. So is a larger budget rather than a split one.
 
+### 4.10 E4c′: a per-dataset, privately selected MST tree (H4)
+
+*Added after the E4c-lite correction.* This is the test E4c-lite was meant to be: a tree chosen *per dataset by feature–feature dependence*, privately, as MST does. ε is split in thirds:
+
+- ε/3 for the 16 (x_j, y) tables;
+- ε/3 for selection: Prim from node 0, 15 exponential-mechanism picks at ε/45 each, utility q(u, v) = 4·|N₁₁ − N₁·N·₁/n| with sensitivity 4 (proof in the README, brute-force checked);
+- ε/3 for the 15 selected (x_u, x_v, y) tables.
+
+A non-private **oracle tree** (the per-dataset maximum spanning tree on the clean q, budget ε/2 + ε/2) is included as a diagnostic: what a good tree buys if selection were free.
+
+E4b's naive network is reused, and all four releases are built from the same data. The `nb` row reproduces E4b's artifact exactly in 12/12 cells, so every comparison is paired. Artifacts: `artifacts/E4c-prime-mst-selection/{evaluation,summary}.json`. The table shows 6 of the 12 cells; all are in the artifact.
+
+| n | ε | k | Edge \|corr\|: random pair / DP tree / oracle tree | Naive over-conf.: E4b `nb` / star / DP tree / oracle tree | Naive accuracy: `nb` / DP tree | Noise-aware on DP tree: over-conf. / NLL (vs noise-aware on `nb`) |
+| ---: | ---: | ---: | --- | --- | --- | --- |
+| 32 | 4 | 1 | 0.163 / 0.168 / 0.247 | +0.113 / +0.157 / +0.177 / +0.158 | 0.589 / 0.518 | +0.015 / 0.691 (0.665) |
+| 32 | 16 | 1 | 0.167 / 0.178 / 0.251 | +0.081 / +0.092 / +0.107 / +0.105 | 0.648 / 0.591 | +0.009 / 0.667 (0.626) |
+| 128 | 1 | 1 | 0.162 / 0.168 / 0.283 | +0.128 / +0.175 / +0.185 / +0.186 | 0.589 / 0.523 | −0.012 / 0.688 (0.661) |
+| 128 | 4 | 4 | 0.166 / 0.183 / 0.291 | +0.106 / +0.111 / +0.120 / +0.097 | 0.687 / 0.601 | −0.016 / 0.652 (0.584) |
+| 128 | 16 | 1 | 0.165 / 0.214 / 0.286 | +0.086 / +0.076 / +0.082 / **+0.066** | 0.701 / 0.674 | −0.009 / 0.607 (0.572) |
+| 128 | 16 | 4 | 0.161 / 0.212 / 0.287 | +0.089 / +0.080 / +0.081 / **+0.072** | 0.718 / 0.692 | −0.012 / 0.591 (0.553) |
+
+- **Private selection is close to random at this scale.** The DP tree's edges are only −0.001 to +0.051 more correlated than random pairs. It separates from random only at n = 128, ε = 16 (0.21 vs 0.165; oracle 0.29). With 15 picks at ε/45 each, MST's selection needs far more n·ε than small tabular data offer.
+- **A better tree barely helps a naive learner, and only at the largest n·ε.** Relative to E4b's plain release, naive over-confidence is lower in 2/12 cells for the DP tree, 3/12 for the star, and 3/12 even for the non-private oracle tree. The oracle gains appear only at n = 128 with ε = 4–16 (−0.009 to −0.019). Everywhere else, adding pair tables at a fixed budget makes naive use *more* over-confident. The tree also costs naive accuracy: 6–9 points at ε = 4 and at n = 128, ε = 1, less elsewhere (0.4–8.6 overall; little at n = 32, ε = 1, where accuracy is already near chance), because the label tables now get ε/3. E4c-lite's qualitative conclusion therefore survives with a real dependence tree: at small n·ε, the noise from splitting the budget dominates.
+- **The noise-aware PFN stays calibrated on the DP-MST release** (−0.016 to +0.015) and beats naive use in NLL in 12/12 cells (by 0.026–0.166). But it is worse than E4b's noise-aware PFN on the simpler release in **12/12** cells, by 0.002–0.069 nats. At this scale, the MST-style release carries less usable information even for the best analyst.
+- **Practical reading for E4 and the paper.** For small private tables, spend the budget on the label margins. Feature–feature structure only pays off once n·ε is large enough for selection and measurement to beat the noise. Whatever the generator, the noise-aware PFN is the right consumer of the release.
+
 ## 5. Recommended changes to the plan
 
 In priority order. Each item says what to change and why.
 
-*(Added after D2-sparse and E4b-lite.)* **Restate Prop. D2's synthetic-data half.** The direction of naive mis-calibration depends on the release mechanism. It is under-confident for flattening releases (label RR, noisy full histograms) and over-confident for releases whose structure is poorer than the data's (marginal-based synthesizers that drop dependence). Bulk resampling contributes little. The noise-aware target fixes both directions, which is the claim Gate 2 should test.
+*(Added after D2-sparse and E4b-lite.)* **Restate Prop. D2's synthetic-data half.** The direction of naive mis-calibration depends on the release mechanism. It is under-confident for flattening releases (label RR, noisy full histograms) and over-confident for releases whose structure is poorer than the data's (marginal-based synthesizers that drop dependence). Bulk resampling contributes little. The noise-aware target fixes both directions, which is the claim Gate 2 should test. At small n·ε, prefer releases that spend the budget on label margins: added feature–feature tables (E4c-lite, E4c′) cost more noise than they remove, even with a well-chosen tree.
 
 1. **Reposition the tabular paper against PrivTab, TabPATE and Private PoEtry.**
    - Prop. 0, C1, C3 and C4 are now shared ground.
@@ -330,7 +356,7 @@ In priority order. Each item says what to change and why.
 | H1 | partially supported | Prop. 0 and the wrapper and post-processing guarantees are correct (X0). A third route must be added: certified-by-architecture PFNs (PrivTab). The TREDBench caveat limits "synthetic-only continued pretraining". |
 | H2 | partially supported | E1-lite. Λ is small on typical data and grows under search. The network leaks up to 2.5× the exact worst case, so exact-PPD privacy is not inherited. Better-trained PFNs leak more (B5). **Not observed:** leakage "driven large": stays below 2B_y for a small network. |
 | H3 | partially supported | E3-lite (idealised prior, exact-Bayes teachers). PFN-like teachers win at small n·ε, and C2 picks m within 2× in 42/45 configurations. But C2 needs a pointwise bias floor, and its n* is 2–10× conservative. Real PFN teachers, and trained teachers with charged tuning, are untested. |
-| H4 | partially supported (core claim supported in pilot) | Label RR: E4-lite's trained noise-aware PFN recovers 71–86% of the exact NLL gain. Synthetic data: the *direction* in H4 is generator-dependent. It is under-confident for a noisy full histogram (D2-sparse) and over-confident for a marginal-based synthesizer (E4b-lite, 12/12 cells), where the trained noise-aware PFN is calibrated and lowers NLL in 12/12 cells. E4c-lite (§4.9): spending half the budget on pair tables not chosen by dependence makes naive use worse in 8/12 cells; noise-aware still lowers NLL in 12/12. Open: a dependence-selected (MST-style) tree, real data, TabPFN scale. |
+| H4 | partially supported (core claim supported in pilot) | Label RR: E4-lite's trained noise-aware PFN recovers 71–86% of the exact NLL gain. Synthetic data: the *direction* in H4 is generator-dependent. It is under-confident for a noisy full histogram (D2-sparse) and over-confident for a marginal-based synthesizer (E4b-lite, 12/12 cells), where the trained noise-aware PFN is calibrated and lowers NLL in 12/12 cells. E4c-lite (§4.9) and E4c′ (§4.10): adding feature-pair tables at a fixed budget, star or private per-dataset MST tree, makes naive use worse except at the largest n·ε, even with a non-private oracle tree. Noise-aware still lowers NLL in 12/12 cells. Open: larger n·ε, real data, TabPFN scale. |
 
 ## 7. Limitations of this review and next steps
 
@@ -338,7 +364,7 @@ In priority order. Each item says what to change and why.
 - **No released checkpoints.** HuggingFace was blocked, so no TabPFN or NodePFN weights were run. Every pilot uses closed-form priors and small in-house networks or exact Bayes. They test the *mechanisms and targets*, not backbone-scale behaviour.
 - **Search budgets are small.** E1-lite's adversarial search is a lower bound with a modest budget. E3-lite's trained teacher is untuned logistic regression.
 - **Suggested next iteration**, in order:
-  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7) and with trained networks on a marginal-based synthesizer as E4b-lite (§4.8). Still open: a dependence-selected, MST-style tree of feature pairs (E4c-lite's star does not test it; §4.9), longer training for the noisiest RR cell, and real tables.
+  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7) and with trained networks on a marginal-based synthesizer as E4b-lite (§4.8). ~~A dependence-selected, MST-style tree~~: done as E4c′ (§4.10); it does not help at n ≤ 128. Still open: the n·ε at which a tree starts to pay, longer training for the noisiest RR cell, and real tables.
   2. Rerun E3-lite with the E1 network as the teacher, and with tuned plus charged trained teachers.
   3. Write C2′ and the T4 calibration argument (soft scores waste sensitivity) as short theorems.
   4. Read PrivTab and decide the paper's positioning.
