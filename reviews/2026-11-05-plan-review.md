@@ -237,7 +237,7 @@ Gap recovered = (NLL naive PFN − NLL aware PFN) / (NLL naive PFN − NLL exact
 - **The predicted direction does not hold.** Naive use is over-confident in only one of the nine cells (n = 50, ε = 0.5, +0.040). Everywhere else it is under-confident, and the bias grows with n, reaching −0.188 at n = 200, ε = 1. Sparsity did not restore the over-confidence seen in the 20-cell model.
 - **The useful claim survives.** Conditioning on the noisy histogram instead of the synthetic rows cuts NLL in every cell, by up to 0.098 at n = 200, ε = 1, and its over-confidence stays within 0.04 of zero. Accuracy is close between the two (within 0.03). So the reason to be noise-aware is likelihood, not the sign of the bias.
 - **Why the sign flips.** A histogram release with Laplace noise biases every cell probability toward uniform, because empty cells get positive noise and are clipped. Resampling 5n rows from that flattened histogram is a stronger version of label randomized response, not a source of false precision. The over-confidence in the 20-cell model was a small-n effect, not the general behaviour of synthetic data.
-- **Scope.** One sparse logistic family, exact targets, no trained network. A generator that preserves margins exactly (AIM, MST) could still produce over-confident naive use. That is untested.
+- **Scope.** One sparse logistic family, exact targets, no trained network. A generator that preserves margins exactly (AIM, MST) could still produce over-confident naive use. §4.8 tests the simplest such generator (feature–label margins only) and finds that it does. Generators that also release some feature–feature margins remain untested.
 
 ### 4.8 E4b-lite: trained noise-aware PFN on marginal-based, high-dimensional DP synthetic data (H4, Gate 2)
 
