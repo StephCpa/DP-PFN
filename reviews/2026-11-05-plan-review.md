@@ -263,7 +263,7 @@ Artifacts: `artifacts/E4b-lite-noise-aware-synthetic/{evaluation,summary}.json`.
 All 12 cells are in the artifact; the 5 omitted rows follow the same pattern.
 
 - **Here the predicted over-confidence does appear, in 12 of 12 cells** (+0.08 to +0.19), the opposite of D2-sparse. The two results are consistent once the mechanism is named. A noisy full histogram flattens toward uniform, which acts like randomized response and gives under-confidence. A marginal-based synthesizer instead emits features that are conditionally independent given y, so a downstream learner counts correlated evidence as independent, which gives over-confidence. Non-private naive Bayes on the real records is already over-confident by +0.10 to +0.17 in this prior.
-- **Bulk rows are not the main driver.** Quadrupling the synthetic rows (k = 1 → 4) changes the naive PFN's over-confidence by only +0.003 to +0.040. Prop. D2's stated reason ("every synthetic row is counted as real evidence") should be replaced by "the release's structure is treated as the data's structure". The sign of the error depends on M.
+- **At small k, bulk rows are not the main driver.** Quadrupling the synthetic rows (k = 1 → 4) changes the naive PFN's over-confidence by only +0.003 to +0.040. *Corrected by the n·ε sweep (§4.11):* in the limit of many synthetic rows (k → ∞, the release's own classifier) over-confidence at n·ε ≤ 128 is +0.32 to +0.41, against +0.11 to +0.18 for the PFN on k = 1 rows. So bulk rows do matter once the synthetic sample is much larger than n. Prop. D2 should name both mechanisms: "the release's structure is treated as the data's structure" and "every synthetic row is counted as real evidence". The sign of the error depends on M.
 - **The noise-aware PFN fixes it.** It is calibrated in every cell (|over-confidence| ≤ 0.014; 10/12 within ±0.01). It lowers NLL in 12/12 cells by 0.03–0.15 nats and cuts ECE from 0.10–0.20 to 0.07–0.08. Accuracy moves by −0.003 to +0.016. It also uses extra synthetic rows sensibly: its NLL at k = 4 is never more than 0.002 worse than at k = 1, and up to 0.019 better. At n = 32 its NLL even beats *non-private* naive Bayes on the real records (0.62–0.69 vs 0.77–0.82).
 - **Scope.** One star-structured synthesizer with no feature–feature margins. E4c-lite (§4.9) adds 15 feature-pair tables at the same total budget, but does not choose them by dependence. Networks are small and the prior is synthetic.
 
@@ -313,11 +313,36 @@ E4b's naive network is reused, and all four releases are built from the same dat
 - **The noise-aware PFN stays calibrated on the DP-MST release** (−0.016 to +0.015) and beats naive use in NLL in 12/12 cells (by 0.026–0.166). But it is worse than E4b's noise-aware PFN on the simpler release in **12/12** cells, by 0.002–0.069 nats. At this scale, the MST-style release carries less usable information even for the best analyst.
 - **Practical reading for E4 and the paper.** For small private tables, spend the budget on the label margins. Feature–feature structure only pays off once n·ε is large enough for selection and measurement to beat the noise. Whatever the generator, the noise-aware PFN is the right consumer of the release.
 
+### 4.11 E4c′ n·ε sweep: when does a tree of feature pairs start to pay?
+
+*Added after E4c′.* The grid is n ∈ {32, 128, 512, 2048, 8192} × ε ∈ {1, 4, 16, 64}: 20 cells, 200 tasks × 400 clean test labels each. Releases as in §4.10: `nb` (all of ε on the label tables), the private per-dataset MST tree (ε/3 split) and the non-private oracle tree. Two learners are measured:
+
+- **The release's own classifier.** Naive Bayes for `nb`, tree-augmented naive Bayes (TAN) for the tree releases, computed exactly from the noisy tables. This is what a naive learner converges to when fed many synthetic rows (k → ∞), and it is cheap at any n.
+- **E4b's naive PFN on k = 1 synthetic rows**, only where it is in its training range (n ≤ 512).
+
+Noise-free naive Bayes and TAN are included as structural ceilings. Artifacts: `artifacts/E4c-prime-mst-selection/{sweep,sweep_summary}.json`; figure `sweep.png`.
+
+| n·ε | Cells | Private tree edge \|corr\| (random ≈ 0.165, oracle ≈ 0.24–0.32) | Release classifier over-conf.: margins / private tree | NLL(private tree) − NLL(margins) | NLL(oracle tree) − NLL(margins) | PFN over-conf. (n ≤ 512): margins / private tree |
+| ---: | ---: | --- | --- | --- | --- | --- |
+| 32–128 | 3 | 0.163–0.172 | +0.32…+0.41 / +0.41…+0.44 | +0.64…+1.26 | +0.55…+0.86 | +0.11…+0.18 / +0.17…+0.20 |
+| 512 | 3 | 0.176–0.179 | +0.22…+0.23 / +0.33…+0.37 | +0.78…+1.73 | +0.53…+1.28 | +0.08…+0.11 / +0.11…+0.13 |
+| 2,048 | 4 | 0.208–0.224 | +0.09…+0.17 / +0.23…+0.27 | +0.26…+1.12 | +0.10…+0.60 | +0.07…+0.08 / +0.08…+0.09 |
+| 8,192 | 4 | 0.273–0.297 | +0.08…+0.09 / +0.06…+0.10 | **−0.020…+0.017** (2/4 better) | **−0.081…−0.029** (4/4) | +0.07…+0.08 / **+0.04…+0.05** |
+| 32,768 | 3 | 0.312–0.317 | +0.08…+0.09 / **+0.00…+0.02** | **−0.110…−0.094** (3/3) | −0.113…−0.097 | +0.083 / **+0.025** |
+| ≥ 131,072 | 3 | 0.316–0.321 | +0.08…+0.09 / **−0.01…+0.00** | **−0.119…−0.105** (3/3) | same as private | — |
+
+- **n·ε is the right axis.** Cells with the same n·ε but n and ε 64× apart behave alike. The per-cell signal-to-noise ratio of the tables scales with n·ε/d.
+- **Private selection becomes informative near n·ε ≈ 2,000** (0.21–0.22 vs 0.165 for random pairs) and is near-oracle by n·ε ≈ 32,768.
+- **The crossover is n·ε ≈ 8,000.** Below about 2,000 every tree release, even the non-private oracle, is worse than plain margins on every metric. At 8,192 the oracle tree wins in 4/4 cells and the private tree in 2/4 (NLL) and 3/4 (over-confidence). The naive PFN's over-confidence also drops (+0.04…+0.05 vs +0.07…+0.08). From 32,768 up, the private tree wins every cell by about 0.1 nats and matches noise-free TAN. With d = 16, that is roughly n·ε/d ≳ 500–2,000.
+- **Plain marginals carry a permanent structural over-confidence.** It stays at +0.075 to +0.087 even when privacy noise is negligible (n·ε ≥ 32,768), identical to noise-free naive Bayes. Only the tree removes it (to −0.006…+0.017). Noise-free TAN beats noise-free naive Bayes by 0.055–0.122 nats for n ≥ 128, so the structure is worth having once it can be measured.
+- **Bulk synthetic rows do matter when k is large.** At n·ε ≤ 128, the k → ∞ classifier is over-confident by +0.32 to +0.41, against +0.11 to +0.18 for the PFN on k = 1 rows. E4b's k = 1 → 4 change (+0.003 to +0.040) was too small a step to show this (corrected in §4.8).
+- **Scope.** This is one prior with d = 16. The PFN is only measured to n = 512, and the noise-aware PFN was not retrained for large n. The plug-in classifier is the k → ∞ limit, not a trained network on huge contexts.
+
 ## 5. Recommended changes to the plan
 
 In priority order. Each item says what to change and why.
 
-*(Added after D2-sparse and E4b-lite.)* **Restate Prop. D2's synthetic-data half.** The direction of naive mis-calibration depends on the release mechanism. It is under-confident for flattening releases (label RR, noisy full histograms) and over-confident for releases whose structure is poorer than the data's (marginal-based synthesizers that drop dependence). Bulk resampling contributes little. The noise-aware target fixes both directions, which is the claim Gate 2 should test. At small n·ε, prefer releases that spend the budget on label margins: added feature–feature tables (E4c-lite, E4c′) cost more noise than they remove, even with a well-chosen tree.
+*(Added after D2-sparse and E4b-lite.)* **Restate Prop. D2's synthetic-data half.** The direction of naive mis-calibration depends on the release mechanism. It is under-confident for flattening releases (label RR, noisy full histograms) and over-confident for releases whose structure is poorer than the data's (marginal-based synthesizers that drop dependence). Bulk resampling adds little at k ≤ 4 but a great deal as k → ∞ (§4.11). The noise-aware target fixes both directions, which is the claim Gate 2 should test. Below n·ε ≈ 2,000, prefer releases that spend the budget on label margins: added feature–feature tables (E4c-lite, E4c′) cost more noise than they remove, even with a well-chosen tree. Above n·ε ≈ 8,000–33,000, a privately selected tree is worth its budget (§4.11).
 
 1. **Reposition the tabular paper against PrivTab, TabPATE and Private PoEtry.**
    - Prop. 0, C1, C3 and C4 are now shared ground.
@@ -356,7 +381,7 @@ In priority order. Each item says what to change and why.
 | H1 | partially supported | Prop. 0 and the wrapper and post-processing guarantees are correct (X0). A third route must be added: certified-by-architecture PFNs (PrivTab). The TREDBench caveat limits "synthetic-only continued pretraining". |
 | H2 | partially supported | E1-lite. Λ is small on typical data and grows under search. The network leaks up to 2.5× the exact worst case, so exact-PPD privacy is not inherited. Better-trained PFNs leak more (B5). **Not observed:** leakage "driven large": stays below 2B_y for a small network. |
 | H3 | partially supported | E3-lite (idealised prior, exact-Bayes teachers). PFN-like teachers win at small n·ε, and C2 picks m within 2× in 42/45 configurations. But C2 needs a pointwise bias floor, and its n* is 2–10× conservative. Real PFN teachers, and trained teachers with charged tuning, are untested. |
-| H4 | partially supported (core claim supported in pilot) | Label RR: E4-lite's trained noise-aware PFN recovers 71–86% of the exact NLL gain. Synthetic data: the *direction* in H4 is generator-dependent. It is under-confident for a noisy full histogram (D2-sparse) and over-confident for a marginal-based synthesizer (E4b-lite, 12/12 cells), where the trained noise-aware PFN is calibrated and lowers NLL in 12/12 cells. E4c-lite (§4.9) and E4c′ (§4.10): adding feature-pair tables at a fixed budget, star or private per-dataset MST tree, makes naive use worse except at the largest n·ε, even with a non-private oracle tree. Noise-aware still lowers NLL in 12/12 cells. Open: larger n·ε, real data, TabPFN scale. |
+| H4 | partially supported (core claim supported in pilot) | Label RR: E4-lite's trained noise-aware PFN recovers 71–86% of the exact NLL gain. Synthetic data: the *direction* in H4 is generator-dependent. It is under-confident for a noisy full histogram (D2-sparse) and over-confident for a marginal-based synthesizer (E4b-lite, 12/12 cells), where the trained noise-aware PFN is calibrated and lowers NLL in 12/12 cells. E4c-lite (§4.9) and E4c′ (§4.10): adding feature-pair tables at a fixed budget, star or private per-dataset MST tree, makes naive use worse except at the largest n·ε, even with a non-private oracle tree. Noise-aware still lowers NLL in 12/12 cells. The n·ε sweep (§4.11) puts the crossover where a private tree starts to pay at n·ε ≈ 8,000; below about 2,000, plain margins are better. Open: real data, TabPFN scale. |
 
 ## 7. Limitations of this review and next steps
 
@@ -364,7 +389,7 @@ In priority order. Each item says what to change and why.
 - **No released checkpoints.** HuggingFace was blocked, so no TabPFN or NodePFN weights were run. Every pilot uses closed-form priors and small in-house networks or exact Bayes. They test the *mechanisms and targets*, not backbone-scale behaviour.
 - **Search budgets are small.** E1-lite's adversarial search is a lower bound with a modest budget. E3-lite's trained teacher is untuned logistic regression.
 - **Suggested next iteration**, in order:
-  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7) and with trained networks on a marginal-based synthesizer as E4b-lite (§4.8). ~~A dependence-selected, MST-style tree~~: done as E4c′ (§4.10); it does not help at n ≤ 128. Still open: the n·ε at which a tree starts to pay, longer training for the noisiest RR cell, and real tables.
+  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7) and with trained networks on a marginal-based synthesizer as E4b-lite (§4.8). ~~A dependence-selected, MST-style tree~~: done as E4c′ (§4.10); it does not help at n ≤ 128. ~~The n·ε at which a tree starts to pay~~: about 8,000 (§4.11). Still open: longer training for the noisiest RR cell, real tables, and a noise-aware PFN retrained for large n.
   2. Rerun E3-lite with the E1 network as the teacher, and with tuned plus charged trained teachers.
   3. Write C2′ and the T4 calibration argument (soft scores waste sensitivity) as short theorems.
   4. Read PrivTab and decide the paper's positioning.

@@ -27,3 +27,15 @@ The sensitivity of q is 4. For a 2×2 table, q = 4·|D₁₁| with D₁₁ = N�
 python experiments/E4c-prime-mst-selection/e4cp_mst.py train --steps 4000
 python experiments/E4c-prime-mst-selection/e4cp_mst.py eval
 ```
+
+## n·ε sweep (`sweep.py`, `summarize_sweep.py`)
+
+Where does a tree start to pay? The grid is n ∈ {32, 128, 512, 2048, 8192} × ε ∈ {1, 4, 16, 64}, 200 tasks per cell. For each release it measures the release's own classifier (naive Bayes for `nb`, TAN for the tree releases, computed exactly from the noisy tables; this is the k → ∞ limit of naive use). E4b's naive PFN on k = 1 rows is also measured where it is in range (n ≤ 512). Noise-free naive Bayes and TAN are ceilings.
+
+```bash
+python experiments/E4c-prime-mst-selection/sweep.py
+python experiments/E4c-prime-mst-selection/summarize_sweep.py
+```
+
+Outputs: `artifacts/E4c-prime-mst-selection/{sweep.json, sweep_summary.json, sweep.png}`.
+
