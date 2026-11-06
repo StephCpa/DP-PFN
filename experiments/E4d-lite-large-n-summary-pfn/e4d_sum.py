@@ -20,6 +20,16 @@ Network (one model for both releases):
   query          one token per query feature (value + feature-id embedding) + a CLS token;
                  3 decoder layers (self-attention among the query's tokens, cross-attention to memory).
 Trained on clean query labels; n ~ log-U[32, 8192], eps ~ log-U[0.5, 64], release type 50/50.
+
+Two architectures (--arch):
+  xattn    (v1, above) query-feature tokens must find their table by cross-attention on learned
+           feature-id embeddings.  It failed to learn in 5,000 steps (NLL ~ base rate everywhere);
+           kept for the record: artifacts/*_v1_cross_attention.json.
+  aligned  (v2, default) one token per feature j holding the query value x*_j, label table j and, for
+           a tree release, the parent's value x*_par(j) and the (parent, j, y) table; plus a meta and a
+           CLS token; 3 self-attention layers across the 18 tokens.  The alignment that v1 had to learn
+           is built in, mirroring the naive-Bayes / TAN factorisation over features, and the model is
+           equivariant to feature order, like the prior.
 """
 
 from __future__ import annotations
@@ -152,13 +162,54 @@ class SumPFN(nn.Module):
         return torch.log_softmax(self.head(h[:, 0]), -1).view(B, m, 2)
 
 
+class AlignedPFN(nn.Module):
+    """Per-feature tokens built from the release, aligned with the query's features."""
+
+    IN = 20  # x_j, x_par, has_par, label table (4) + scale, pair table (8) + scale, meta (3)
+
+    def __init__(self, d=128, heads=4, layers=3, ff=256):
+        super().__init__()
+        self.tok = nn.Sequential(nn.Linear(self.IN, d), nn.GELU(), nn.Linear(d, d), nn.GELU(), nn.Linear(d, d))
+        self.meta = mlp(3, d)
+        self.cls = nn.Parameter(torch.randn(1, 1, d) * 0.02)
+        self.body = nn.TransformerEncoder(nn.TransformerEncoderLayer(d, heads, ff, 0.0, batch_first=True, norm_first=True),
+                                          layers, enable_nested_tensor=False)
+        self.head = nn.Sequential(nn.LayerNorm(d), nn.Linear(d, d), nn.GELU(), nn.Linear(d, 2))
+
+    def forward(self, lab, pair, pmask, par, chi, meta, xq):
+        B, m = xq.shape[:2]
+        ar = torch.arange(B)
+        # per-feature parent and edge index (root and nb release: no parent)
+        parent = torch.full((B, D), -1, dtype=torch.long)
+        edge = torch.full((B, D), -1, dtype=torch.long)
+        has_tree = ~pmask[:, 0]
+        for e in range(D - 1):
+            parent[ar[has_tree], chi[has_tree, e]] = par[has_tree, e]
+            edge[ar[has_tree], chi[has_tree, e]] = e
+        has_par = (parent >= 0).float()  # (B, D)
+        pf = torch.gather(pair, 1, edge.clamp_min(0)[:, :, None].expand(B, D, 9)) * has_par[:, :, None]  # (B, D, 9)
+        xpar = torch.gather(xq, 2, parent.clamp_min(0)[:, None, :].expand(B, m, D)) * has_par[:, None, :]  # (B, m, D)
+        static = torch.cat([lab, pf, meta[:, None, :].expand(B, D, 3)], -1)  # (B, D, 17)
+        tok_in = torch.cat([(2 * xq - 1).unsqueeze(-1), ((2 * xpar - 1) * has_par[:, None, :]).unsqueeze(-1),
+                            has_par[:, None, :, None].expand(B, m, D, 1),
+                            static[:, None].expand(B, m, D, 17)], -1)  # (B, m, D, 20)
+        h = self.tok(tok_in.reshape(B * m, D, self.IN))
+        h = torch.cat([self.cls.expand(B * m, 1, -1), self.meta(meta).repeat_interleave(m, 0)[:, None], h], 1)
+        h = self.body(h)
+        return torch.log_softmax(self.head(h[:, 0]), -1).view(B, m, 2)
+
+
+def make_model(arch):
+    return SumPFN() if arch == "xattn" else AlignedPFN()
+
+
 # ------------------------------------------------------------------ train
 def train(args):
     torch.manual_seed(args.seed)
     torch.set_num_threads(args.threads)
     gen = torch.Generator().manual_seed(args.seed)
     (HERE / "results").mkdir(exist_ok=True)
-    model = SumPFN()
+    model = make_model(args.arch)
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     warm = max(1, args.steps // 20)
     sched = torch.optim.lr_scheduler.LambdaLR(
@@ -185,16 +236,16 @@ def train(args):
         if step % 250 == 0 or step == args.steps:
             curve.append(dict(step=step, train_loss=float(loss), seconds=time.time() - t0))
             print("sumpfn step %5d loss %.4f (%.0fs)" % (step, float(loss), time.time() - t0), flush=True)
-    torch.save(model.state_dict(), HERE / "results" / "sumpfn.pt")
-    write_json(EXP, "training.json", dict(config=vars(args), curve=curve, skipped_steps=skipped), __file__, args.seed)
+    torch.save(model.state_dict(), HERE / "results" / f"sumpfn_{args.arch}.pt")
+    write_json(EXP, args.out or "training.json", dict(config=vars(args), curve=curve, skipped_steps=skipped), __file__, args.seed)
 
 
 # ------------------------------------------------------------------ evaluate
 @torch.no_grad()
 def evaluate(args):
     torch.set_num_threads(args.threads)
-    sp = SumPFN()
-    sp.load_state_dict(torch.load(HERE / "results" / "sumpfn.pt", weights_only=True))
+    sp = make_model(args.arch)
+    sp.load_state_dict(torch.load(HERE / "results" / f"sumpfn_{args.arch}.pt", weights_only=True))
     sp.eval()
     rows_nets = {}
     for name, path in (("clean_pfn", EXPS / "E4b-lite-noise-aware-synthetic/results/pfn_naive.pt"),
@@ -253,7 +304,7 @@ def evaluate(args):
             if "clean_pfn" in res:
                 line += " | clean_pfn %.4f" % res["clean_pfn"]["nll"]
             print(line, flush=True)
-    write_json(EXP, "evaluation.json", dict(config=vars(args), rows=out), __file__, args.seed)
+    write_json(EXP, args.out or "evaluation.json", dict(config=vars(args), rows=out), __file__, args.seed)
 
 
 def main():
@@ -266,6 +317,8 @@ def main():
     t.add_argument("--lr", type=float, default=1e-3)
     t.add_argument("--threads", type=int, default=4)
     t.add_argument("--seed", type=int, default=0)
+    t.add_argument("--arch", choices=["aligned", "xattn"], default="aligned")
+    t.add_argument("--out", type=str, default="")
     e = sub.add_parser("eval")
     e.add_argument("--ns", type=int, nargs="*", default=[32, 128, 512, 2048, 8192])
     e.add_argument("--epss", type=float, nargs="*", default=[1.0, 4.0, 16.0, 64.0])
@@ -276,6 +329,8 @@ def main():
     e.add_argument("--row-aware-max-n", type=int, default=128)
     e.add_argument("--threads", type=int, default=4)
     e.add_argument("--seed", type=int, default=3)
+    e.add_argument("--arch", choices=["aligned", "xattn"], default="aligned")
+    e.add_argument("--out", type=str, default="")
     args = ap.parse_args()
     train(args) if args.cmd == "train" else evaluate(args)
 
