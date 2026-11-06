@@ -210,6 +210,8 @@ def train(args):
     gen = torch.Generator().manual_seed(args.seed)
     (HERE / "results").mkdir(exist_ok=True)
     model = make_model(args.arch)
+    if args.init:  # warm start (continued training); optimizer state starts fresh
+        model.load_state_dict(torch.load(HERE / "results" / args.init, weights_only=True))
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     warm = max(1, args.steps // 20)
     sched = torch.optim.lr_scheduler.LambdaLR(
@@ -233,10 +235,12 @@ def train(args):
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
         sched.step()
+        if step in args.save_at:
+            torch.save(model.state_dict(), HERE / "results" / f"sumpfn_{args.arch}{args.tag}_step{step}.pt")
         if step % 250 == 0 or step == args.steps:
             curve.append(dict(step=step, train_loss=float(loss), seconds=time.time() - t0))
             print("sumpfn step %5d loss %.4f (%.0fs)" % (step, float(loss), time.time() - t0), flush=True)
-    torch.save(model.state_dict(), HERE / "results" / f"sumpfn_{args.arch}.pt")
+    torch.save(model.state_dict(), HERE / "results" / f"sumpfn_{args.arch}{args.tag}.pt")
     write_json(EXP, args.out or "training.json", dict(config=vars(args), curve=curve, skipped_steps=skipped), __file__, args.seed)
 
 
@@ -245,7 +249,7 @@ def train(args):
 def evaluate(args):
     torch.set_num_threads(args.threads)
     sp = make_model(args.arch)
-    sp.load_state_dict(torch.load(HERE / "results" / f"sumpfn_{args.arch}.pt", weights_only=True))
+    sp.load_state_dict(torch.load(HERE / "results" / (args.ckpt or f"sumpfn_{args.arch}.pt"), weights_only=True))
     sp.eval()
     rows_nets = {}
     for name, path in (("clean_pfn", EXPS / "E4b-lite-noise-aware-synthetic/results/pfn_naive.pt"),
@@ -257,6 +261,8 @@ def evaluate(args):
     out = []
     for n in args.ns:
         for eps_v in args.epss:
+            if n * eps_v < args.min_neps:
+                continue
             cs = args.seed * 1000003 + n * 131 + int(eps_v * 10)
             gen = torch.Generator().manual_seed(cs)
             acc = {}
@@ -319,6 +325,9 @@ def main():
     t.add_argument("--seed", type=int, default=0)
     t.add_argument("--arch", choices=["aligned", "xattn"], default="aligned")
     t.add_argument("--out", type=str, default="")
+    t.add_argument("--init", type=str, default="", help="checkpoint in results/ to warm-start from")
+    t.add_argument("--tag", type=str, default="", help="suffix for checkpoint names")
+    t.add_argument("--save-at", type=int, nargs="*", default=[], help="extra checkpoints at these (local) steps")
     e = sub.add_parser("eval")
     e.add_argument("--ns", type=int, nargs="*", default=[32, 128, 512, 2048, 8192])
     e.add_argument("--epss", type=float, nargs="*", default=[1.0, 4.0, 16.0, 64.0])
@@ -331,6 +340,8 @@ def main():
     e.add_argument("--seed", type=int, default=3)
     e.add_argument("--arch", choices=["aligned", "xattn"], default="aligned")
     e.add_argument("--out", type=str, default="")
+    e.add_argument("--ckpt", type=str, default="", help="checkpoint file in results/ (default sumpfn_<arch>.pt)")
+    e.add_argument("--min-neps", type=float, default=0.0, help="only evaluate cells with n*eps >= this")
     args = ap.parse_args()
     train(args) if args.cmd == "train" else evaluate(args)
 
