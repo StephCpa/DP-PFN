@@ -56,7 +56,9 @@ SENS_Q = 4.0
 def lap(shape, scale, gen):
     """Laplace(0, scale) from an explicit generator (inverse CDF)."""
     u = torch.rand(shape, generator=gen) - 0.5
-    return -scale * torch.sign(u) * torch.log1p(-2 * u.abs().clamp(max=0.5 - 1e-12))
+    # 0.5 - 2**-25 is the largest float32 below 0.5: this only changes the case rand == 0 exactly,
+    # which otherwise gives log(0) = -inf.  (0.5 - 1e-12 rounds to 0.5 in float32 and did not guard it.)
+    return -scale * torch.sign(u) * torch.log1p(-2 * u.abs().clamp(max=0.5 - 2.0 ** -25))
 
 
 def dependence(x):

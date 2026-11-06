@@ -105,14 +105,17 @@ def release(x, y, eps, gen, tree, noise=True):
 def memory_inputs(rel, n, eps):
     B = rel["TL"].shape[0]
     nf = float(n)
-    lab = torch.cat([rel["TL"].reshape(B, D, 4) / nf, (rel["sL"] / nf).view(-1, 1, 1).expand(B, D, 1)], -1)
+    # asinh tames heavy Laplace tails at small n*eps; noise scales enter on a log scale
+    lab = torch.cat([torch.asinh(4 * rel["TL"].reshape(B, D, 4) / nf),
+                     (torch.log(rel["sL"] / nf) / 5).view(-1, 1, 1).expand(B, D, 1)], -1)
     if rel["TP"] is None:
         pair = torch.zeros(B, D - 1, 9)
         pmask = torch.ones(B, D - 1, dtype=torch.bool)
         par = chi = torch.zeros(B, D - 1, dtype=torch.long)
         flag = torch.zeros(B)
     else:
-        pair = torch.cat([rel["TP"].reshape(B, D - 1, 8) / nf, (rel["sP"] / nf).view(-1, 1, 1).expand(B, D - 1, 1)], -1)
+        pair = torch.cat([torch.asinh(4 * rel["TP"].reshape(B, D - 1, 8) / nf),
+                          (torch.log(rel["sP"] / nf) / 5).view(-1, 1, 1).expand(B, D - 1, 1)], -1)
         pmask = torch.zeros(B, D - 1, dtype=torch.bool)
         par, chi, flag = rel["par"], rel["chi"], torch.ones(B)
     meta = torch.stack([torch.log(eps) / 4, torch.full((B,), math.log(nf) / 9), flag], -1)
@@ -160,7 +163,7 @@ def train(args):
     warm = max(1, args.steps // 20)
     sched = torch.optim.lr_scheduler.LambdaLR(
         opt, lambda s: min(1.0, (s + 1) / warm) * 0.5 * (1 + math.cos(math.pi * min(1.0, s / args.steps))))
-    curve, t0 = [], time.time()
+    curve, t0, skipped = [], time.time(), 0
     for step in range(1, args.steps + 1):
         task = draw_tasks(args.batch, gen)
         n = int(math.exp(float(torch.empty(1).uniform_(math.log(32), math.log(8192), generator=gen))))
@@ -170,6 +173,10 @@ def train(args):
         tree = bool(torch.rand(1, generator=gen) < 0.5)
         rel = release(xd, yd, eps, gen, tree)
         loss = -model(*memory_inputs(rel, n, eps), xq).gather(2, yq.unsqueeze(-1)).mean()
+        if not torch.isfinite(loss):
+            skipped += 1
+            print("non-finite loss at step %d (n=%d, tree=%s); step skipped" % (step, n, tree), flush=True)
+            continue
         opt.zero_grad()
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
@@ -179,7 +186,7 @@ def train(args):
             curve.append(dict(step=step, train_loss=float(loss), seconds=time.time() - t0))
             print("sumpfn step %5d loss %.4f (%.0fs)" % (step, float(loss), time.time() - t0), flush=True)
     torch.save(model.state_dict(), HERE / "results" / "sumpfn.pt")
-    write_json(EXP, "training.json", dict(config=vars(args), curve=curve), __file__, args.seed)
+    write_json(EXP, "training.json", dict(config=vars(args), curve=curve, skipped_steps=skipped), __file__, args.seed)
 
 
 # ------------------------------------------------------------------ evaluate
