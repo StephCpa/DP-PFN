@@ -38,3 +38,13 @@ The raw noisy counts, unclipped, are what the PFN reads.
 python experiments/E4d-lite-large-n-summary-pfn/e4d_sum.py train --arch aligned --steps 6000 --n-qry 16
 python experiments/E4d-lite-large-n-summary-pfn/e4d_sum.py eval --arch aligned
 ```
+
+**Longer training** (closes the high-n·ε gap; review §4.12.1). Warm start from the 6,000-step model, 12,000 more steps:
+
+```bash
+python experiments/E4d-lite-large-n-summary-pfn/e4d_sum.py train --arch aligned --init sumpfn_aligned.pt --tag _18k --steps 12000 --save-at 6000 --lr 3e-4 --n-qry 16 --seed 1 --out training_continued_18k.json
+python experiments/E4d-lite-large-n-summary-pfn/e4d_sum.py eval --arch aligned --ckpt sumpfn_aligned_18k_step6000.pt --min-neps 8192 --out evaluation_12k_high_neps.json
+python experiments/E4d-lite-large-n-summary-pfn/e4d_sum.py eval --arch aligned --ckpt sumpfn_aligned_18k.pt --out evaluation_18k.json
+python experiments/E4d-lite-large-n-summary-pfn/compare_steps.py
+```
+

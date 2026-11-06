@@ -32,6 +32,8 @@ def main() -> None:
         if (ROOT / "artifacts/E4c-prime-mst-selection/sweep_summary.json").exists() else None
     e4d = json.loads((ROOT / "artifacts/E4d-lite-large-n-summary-pfn/summary.json").read_text()) \
         if (ROOT / "artifacts/E4d-lite-large-n-summary-pfn/summary.json").exists() else None
+    e4d_long = json.loads((ROOT / "artifacts/E4d-lite-large-n-summary-pfn/continued_training_summary.json").read_text()) \
+        if (ROOT / "artifacts/E4d-lite-large-n-summary-pfn/continued_training_summary.json").exists() else None
     e4c_note, e4c_summary = "", "pending"
     e4c_path = ROOT / "artifacts/E4c-lite-mst-margins/evaluation.json"
     if e4c_path.exists() and (ROOT / "artifacts/E4b-lite-noise-aware-synthetic/evaluation.json").exists():
@@ -132,9 +134,14 @@ def main() -> None:
                         "artifacts/E4d-lite-large-n-summary-pfn/summary.json",
                         "artifacts/E4d-lite-large-n-summary-pfn/e4d.png",
                         "artifacts/E4d-lite-large-n-summary-pfn/training_v1_cross_attention.json",
-                        "artifacts/E4d-lite-large-n-summary-pfn/evaluation_v1_cross_attention.json"],
+                        "artifacts/E4d-lite-large-n-summary-pfn/evaluation_v1_cross_attention.json",
+                        "artifacts/E4d-lite-large-n-summary-pfn/training_continued_18k.json",
+                        "artifacts/E4d-lite-large-n-summary-pfn/evaluation_12k_high_neps.json",
+                        "artifacts/E4d-lite-large-n-summary-pfn/evaluation_18k.json",
+                        "artifacts/E4d-lite-large-n-summary-pfn/continued_training_summary.json"],
              summary=((e4d or {}).get("headline", "pending")
-                      + " (A first cross-attention reader stayed at base-rate NLL and is kept as v1.)")),
+                      + " (A first cross-attention reader stayed at base-rate NLL and is kept as v1.)"
+                      + ((" Longer training: " + e4d_long["headline"]) if e4d_long else ""))),
         dict(id="G3-rr-sbm-threshold", title="Spectral recovery on edge-RR SBMs vs threshold formulas",
              tests=[], status="done", code="experiments/G3-rr-sbm-threshold/",
              artifacts=["artifacts/G3-rr-sbm-threshold/results.json", "artifacts/G3-rr-sbm-threshold/threshold_eps2.png"],
@@ -168,6 +175,10 @@ def main() -> None:
                      "margins' structural over-confidence, and prefers the tree release from n*eps = %d." % (
                          e4d["aware_overconf_range"][0], e4d["aware_overconf_range"][1], e4d["aware_beats_plugin_nb_cells"],
                          e4d["cells"], e4d["aware_beats_plugin_tree_cells"], e4d["cells"], e4d["aware_prefers_tree_from_n_eps"]))
+            if e4d_long:
+                tail += (" Trained 3x longer (18k steps) it beats the tree release's own classifier in %d/20 cells and is "
+                         "within %+.3f..%+.3f nats of it at n*eps >= 32,768." % (
+                             e4d_long["beats_plugin_tree_18k"], *e4d_long["gap_to_plugin_tree_at_high_neps"]["18k"]))
         status["H4"] = (st, ev + e4cp["h4_note_suffix"] + tail + " Open: real data, TabPFN scale.")
     for h in m["hypotheses"]:
         if h["id"] in status:
@@ -220,6 +231,10 @@ def main() -> None:
         m["loop"]["history"].append(dict(
             at="2026-11-06T13:00:00.000Z", iteration=1, kind="experiment", text="E4d-lite: " + e4d["headline"]))
         NOW_ = "2026-11-06T13:00:00.000Z"
+    if e4d_long:
+        m["loop"]["history"].append(dict(
+            at="2026-11-06T15:00:00.000Z", iteration=1, kind="experiment", text="E4d-lite longer training: " + e4d_long["headline"]))
+        NOW_ = "2026-11-06T15:00:00.000Z"
     m["updatedAt"] = NOW_
     MANIFEST.write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
     print("updated", MANIFEST)
