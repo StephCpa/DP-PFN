@@ -16,6 +16,7 @@ These are **"-lite" pilots**. Each tests one claim of the proposal in the cheape
 | `E4b-lite-noise-aware-synthetic` | trained noise-aware vs naive PFN on high-dimensional, marginal-based DP synthetic data | Prop. D2, H4, Gate 2 | ~30 min train + ~10 min eval |
 | `E4c-lite-mst-margins` | does a tree of feature pairs, at the same total budget, shrink that over-confidence? | Prop. D2, H4 | ~35 min train + ~15 min eval |
 | `E4c-prime-mst-selection` | a per-dataset, privately selected MST tree vs E4b/E4c releases on the same data; non-private oracle tree as a diagnostic | Prop. D2, H4 | ~20 min train + ~4 min eval |
+| `E4d-lite-large-n-summary-pfn` | noise-aware PFN for large n (reads the noisy tables as tokens) vs the releases' own classifiers, n ≤ 8192 | Thm. D1, H4 | ~30 min train + ~10 min eval |
 
 Environment: `python -m venv venv && pip install numpy scipy scikit-learn torch networkx matplotlib`. Run `OMP_NUM_THREADS=1` for the numpy jobs when they share a machine with training.
 
