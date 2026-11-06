@@ -1,0 +1,328 @@
+{
+  "provenance": {
+    "script": "experiments/E4d-lite-large-n-summary-pfn/summarize.py",
+    "git_commit": "d7949b2a96b8fae50eed0d69aa300318ade90234",
+    "git_dirty": true,
+    "utc_time": "2026-11-06T02:04:03+00:00",
+    "python": "3.13.18",
+    "platform": "Linux-6.18.44-fc-v242-x86_64-with-glibc2.39",
+    "libraries": {
+      "numpy": "2.5.4",
+      "scipy": "1.18.1",
+      "torch": "2.15.0+cu132",
+      "sklearn": "1.9.1",
+      "networkx": "3.7"
+    },
+    "seed": null,
+    "argv": []
+  },
+  "levels": [
+    {
+      "n_eps": 32.0,
+      "cells": 1,
+      "median": {
+        "plugin_nb": {
+          "nll": 3.0290959655005594,
+          "overconf": 0.40747934969264865
+        },
+        "sum_aware_nb": {
+          "nll": 0.6891132714551137,
+          "overconf": 0.012212326126545676
+        },
+        "plugin_tree": {
+          "nll": 3.8576116792285937,
+          "overconf": 0.44257257925367943
+        },
+        "sum_aware_tree": {
+          "nll": 0.6922943801881087,
+          "overconf": 0.01078431667797268
+        },
+        "clean_nb": {
+          "nll": 0.8132537213541978,
+          "overconf": 0.16177107992793435
+        },
+        "clean_tan": {
+          "nll": 0.8006647941704694,
+          "overconf": 0.1659826957021403
+        }
+      },
+      "aware_beats_plugin_nb": 1,
+      "aware_beats_plugin_tree": 1,
+      "aware_prefers_tree": 0
+    },
+    {
+      "n_eps": 128.0,
+      "cells": 2,
+      "median": {
+        "plugin_nb": {
+          "nll": 2.2435103550087216,
+          "overconf": 0.34236731043739793
+        },
+        "sum_aware_nb": {
+          "nll": 0.6590288886719846,
+          "overconf": 0.0059367426870856445
+        },
+        "plugin_tree": {
+          "nll": 3.2753310856541287,
+          "overconf": 0.41727324366626484
+        },
+        "sum_aware_tree": {
+          "nll": 0.6830259584522507,
+          "overconf": -0.006859912852663543
+        },
+        "clean_nb": {
+          "nll": 0.7113186516057436,
+          "overconf": 0.12816317839626373
+        },
+        "clean_tan": {
+          "nll": 0.6830292983506399,
+          "overconf": 0.11631011583501266
+        }
+      },
+      "aware_beats_plugin_nb": 2,
+      "aware_beats_plugin_tree": 2,
+      "aware_prefers_tree": 0
+    },
+    {
+      "n_eps": 512.0,
+      "cells": 3,
+      "median": {
+        "plugin_nb": {
+          "nll": 1.1213467829307664,
+          "overconf": 0.22401032271017024
+        },
+        "sum_aware_nb": {
+          "nll": 0.5852711976508873,
+          "overconf": -0.0032866344006964943
+        },
+        "plugin_tree": {
+          "nll": 2.466233248984409,
+          "overconf": 0.3586025100725141
+        },
+        "sum_aware_tree": {
+          "nll": 0.6399572850561575,
+          "overconf": -0.003053194199595598
+        },
+        "clean_nb": {
+          "nll": 0.617916251337838,
+          "overconf": 0.0949871182766395
+        },
+        "clean_tan": {
+          "nll": 0.563295329408743,
+          "overconf": 0.06412755343735072
+        }
+      },
+      "aware_beats_plugin_nb": 3,
+      "aware_beats_plugin_tree": 3,
+      "aware_prefers_tree": 0
+    },
+    {
+      "n_eps": 2048.0,
+      "cells": 4,
+      "median": {
+        "plugin_nb": {
+          "nll": 0.644949637762627,
+          "overconf": 0.1067967105681027
+        },
+        "sum_aware_nb": {
+          "nll": 0.5411624275601927,
+          "overconf": -0.0017109780353843226
+        },
+        "plugin_tree": {
+          "nll": 1.3084144912169227,
+          "overconf": 0.24230981106547375
+        },
+        "sum_aware_tree": {
+          "nll": 0.5538651472464577,
+          "overconf": 0.0011838656428037216
+        },
+        "clean_nb": {
+          "nll": 0.6211685137916729,
+          "overconf": 0.09660055535348598
+        },
+        "clean_tan": {
+          "nll": 0.5331221929239244,
+          "overconf": 0.04286978465480768
+        }
+      },
+      "aware_beats_plugin_nb": 4,
+      "aware_beats_plugin_tree": 4,
+      "aware_prefers_tree": 0
+    },
+    {
+      "n_eps": 8192.0,
+      "cells": 4,
+      "median": {
+        "plugin_nb": {
+          "nll": 0.5957243712075129,
+          "overconf": 0.08426010953274596
+        },
+        "sum_aware_nb": {
+          "nll": 0.5262861401588366,
+          "overconf": 0.0019535628217738116
+        },
+        "plugin_tree": {
+          "nll": 0.5939137901275611,
+          "overconf": 0.06430788330436552
+        },
+        "sum_aware_tree": {
+          "nll": 0.5097430309864697,
+          "overconf": -0.004194259141327346
+        },
+        "clean_nb": {
+          "nll": 0.5944779973080698,
+          "overconf": 0.0838369050713835
+        },
+        "clean_tan": {
+          "nll": 0.4870263210420828,
+          "overconf": 0.00875746859276896
+        }
+      },
+      "aware_beats_plugin_nb": 4,
+      "aware_beats_plugin_tree": 4,
+      "aware_prefers_tree": 4
+    },
+    {
+      "n_eps": 32768.0,
+      "cells": 3,
+      "median": {
+        "plugin_nb": {
+          "nll": 0.5834900973095292,
+          "overconf": 0.07898299141261568
+        },
+        "sum_aware_nb": {
+          "nll": 0.5187772880400563,
+          "overconf": 0.0017664347606478267
+        },
+        "plugin_tree": {
+          "nll": 0.47746836326781344,
+          "overconf": 0.001461719527852097
+        },
+        "sum_aware_tree": {
+          "nll": 0.49650117324335036,
+          "overconf": 0.00020452676564455352
+        },
+        "clean_nb": {
+          "nll": 0.5836517393856472,
+          "overconf": 0.07921604990658196
+        },
+        "clean_tan": {
+          "nll": 0.47245699852925255,
+          "overconf": -0.002404592178924209
+        }
+      },
+      "aware_beats_plugin_nb": 3,
+      "aware_beats_plugin_tree": 0,
+      "aware_prefers_tree": 3
+    },
+    {
+      "n_eps": 131072.0,
+      "cells": 2,
+      "median": {
+        "plugin_nb": {
+          "nll": 0.5835024251284636,
+          "overconf": 0.08307743991974675
+        },
+        "sum_aware_nb": {
+          "nll": 0.515254664395187,
+          "overconf": -0.00316910347766243
+        },
+        "plugin_tree": {
+          "nll": 0.46903604165351764,
+          "overconf": -0.00012438254620647136
+        },
+        "sum_aware_tree": {
+          "nll": 0.49208711992188303,
+          "overconf": 0.0026216050252900478
+        },
+        "clean_nb": {
+          "nll": 0.5834922465594192,
+          "overconf": 0.08311806337191055
+        },
+        "clean_tan": {
+          "nll": 0.46886401857453275,
+          "overconf": -0.0002781560627430746
+        }
+      },
+      "aware_beats_plugin_nb": 2,
+      "aware_beats_plugin_tree": 0,
+      "aware_prefers_tree": 2
+    },
+    {
+      "n_eps": 524288.0,
+      "cells": 1,
+      "median": {
+        "plugin_nb": {
+          "nll": 0.5827026764180028,
+          "overconf": 0.08262627713817942
+        },
+        "sum_aware_nb": {
+          "nll": 0.5181187447106171,
+          "overconf": -0.007666426034411413
+        },
+        "plugin_tree": {
+          "nll": 0.47050592125026736,
+          "overconf": -0.002241281244305715
+        },
+        "sum_aware_tree": {
+          "nll": 0.49595952524340337,
+          "overconf": 0.0031938801620737672
+        },
+        "clean_nb": {
+          "nll": 0.582699784655077,
+          "overconf": 0.08260182574844882
+        },
+        "clean_tan": {
+          "nll": 0.4705038334900252,
+          "overconf": -0.002053407625392717
+        }
+      },
+      "aware_beats_plugin_nb": 1,
+      "aware_beats_plugin_tree": 0,
+      "aware_prefers_tree": 1
+    }
+  ],
+  "aware_overconf_range": [
+    -0.0097372943745926,
+    0.01874557970103342
+  ],
+  "aware_beats_plugin_nb_cells": 20,
+  "aware_beats_plugin_tree_cells": 14,
+  "cells": 20,
+  "large_neps_overconf": {
+    "plugin_nb": [
+      0.07617200294271498,
+      0.08729659973540323
+    ],
+    "sum_aware_nb": [
+      -0.007776209945324811,
+      0.004946573638007976
+    ]
+  },
+  "large_neps_gap_to_clean_tan": {
+    "sum_aware_tree": [
+      0.010657546462404466,
+      0.02545569175337814
+    ],
+    "sum_aware_nb": [
+      0.03256920196251001,
+      0.047614911220591916
+    ],
+    "plugin_tree": [
+      -0.00013561281920876356,
+      0.005011364738560897
+    ]
+  },
+  "continuity_vs_row_aware": {
+    "nb": [
+      -0.035935175384669615,
+      -0.0006280194155450225
+    ],
+    "tree": [
+      -0.052651906227559886,
+      -0.00018488138592431813
+    ]
+  },
+  "aware_prefers_tree_from_n_eps": 8192.0,
+  "headline": "Noise-aware PFN reading the noisy tables (n 32-8192, 20 cells): calibrated everywhere (over-confidence -0.010 to +0.019) and better in NLL than the release's own classifier in 20/20 cells (plain release) and 14/20 (tree release). At n*eps >= 32,768 it removes plain margins' structural over-confidence (-0.008..+0.005 vs +0.076..+0.087 for the naive-Bayes plug-in). The noise-aware analyst prefers the tree release in every cell from n*eps = 8192.0; at n <= 128 the table reader is within -0.036..-0.001 (plain) and -0.053..-0.000 (tree) nats of the row-reading noise-aware PFNs."
+}

@@ -17,7 +17,7 @@ Companion files:
 3. **Prop. G3's threshold should use the dense-regime SNR.** Simulation confirms this. At NodePFN's graph size, ε = 2 edge RR erases structural signal, so edge-LDP gains must come from features.
 4. **NodePFN facts in Sections 6–7 need fixing.** The prior is always assortative, RR leaves its density range, and the released pipeline tunes preprocessing per dataset.
 5. **E1-lite supports the amortization caveat, moderately.** A PFN within 0.0006 nats of exact Bayes tracks the exact leakage on typical data, but leaks 1.2–2.5× the exact worst case under search. It stayed far below 2B_y.
-6. **Gate 2 passes in pilot form for label RR and for marginal-based DP synthetic data.** For label RR, a trained noise-aware PFN recovers 71–86% of the exact noise-aware NLL gain over naive plug-in (E4-lite). For synthetic data, the *sign* of naive mis-calibration depends on the generator: under-confident for a noisy full histogram (D2-sparse), over-confident in 12/12 cells for a marginal-based synthesizer (E4b-lite). A trained noise-aware PFN is calibrated and lowers NLL in every E4b cell.
+6. **Gate 2 passes in pilot form for label RR and for marginal-based DP synthetic data.** For label RR, a trained noise-aware PFN recovers 71–86% of the exact noise-aware NLL gain over naive plug-in (E4-lite). For synthetic data, the *sign* of naive mis-calibration depends on the generator: under-confident for a noisy full histogram (D2-sparse), over-confident in 12/12 cells for a marginal-based synthesizer (E4b-lite). A trained noise-aware PFN is calibrated and lowers NLL in every E4b cell. At large n, a noise-aware PFN that reads the noisy tables stays calibrated from n = 32 to 8,192 and prefers a private tree release from n·ε ≈ 8,000 (E4d-lite, §4.12).
 
 Recommended plan changes are in §5. Hypothesis status is in §6.
 
@@ -338,6 +338,35 @@ Noise-free naive Bayes and TAN are included as structural ceilings. Artifacts: `
 - **Bulk synthetic rows do matter when k is large.** At n·ε ≤ 128, the k → ∞ classifier is over-confident by +0.32 to +0.41, against +0.11 to +0.18 for the PFN on k = 1 rows. E4b's k = 1 → 4 change (+0.003 to +0.040) was too small a step to show this (corrected in §4.8).
 - **Scope.** This is one prior with d = 16. The PFN is only measured to n = 512, and the noise-aware PFN was not retrained for large n. The plug-in classifier is the k → ∞ limit, not a trained network on huge contexts.
 
+### 4.12 E4d-lite: a noise-aware PFN for large n that reads the release itself (H4, Thm. D1)
+
+*Added after the n·ε sweep.* The noise-aware PFNs of E4b and E4c′ read synthetic rows, cost O(rows²), and were trained only for n ≤ 128. The releases are noisy count tables, and the synthetic rows are a post-processing of them. So this PFN reads the tables directly as tokens, the "statistic tokens" option of proposal Section 5. It has the same Thm. D1 target, and its cost does not depend on n.
+
+**Two architectures were tried.**
+
+- **v1 failed.** Query features had to find their tables by cross-attention on learned feature-id embeddings. After 5,000 steps it stayed at base-rate NLL (0.665–0.693) in all 20 cells: calibrated but uninformative. It is kept as `*_v1_cross_attention.json`.
+- **v2, used here.** It builds that alignment in: one token per feature holds the query value, that feature's label table and, for a tree release, the parent's value and the (parent, child, y) table. Self-attention runs across the features. One network covers both releases, trained 6,000 steps on n ~ log-U[32, 8192], ε ~ log-U[0.5, 64].
+
+There was also a bug in the shared Laplace sampler: it returned −∞ when a uniform draw was exactly 0, a float32 issue. It was fixed in a way that changes only that case; an E4c′ cell re-run matches its artifact exactly.
+
+The grid is the sweep's 20 cells, 200 tasks × 400 clean labels each. Artifacts: `artifacts/E4d-lite-large-n-summary-pfn/{evaluation,summary}.json`; figure `e4d.png`. Medians over the cells at each n·ε level:
+
+| n·ε | NLL plain release: own classifier / **noise-aware PFN** | NLL tree release: own classifier / **noise-aware PFN** | Over-conf. plain release: own classifier / **noise-aware** | Noise-aware prefers the tree release |
+| ---: | --- | --- | --- | ---: |
+| 32 | 3.029 / **0.689** | 3.858 / **0.692** | +0.407 / **+0.012** | 0/1 |
+| 128 | 2.244 / **0.659** | 3.275 / **0.683** | +0.342 / **+0.006** | 0/2 |
+| 512 | 1.121 / **0.585** | 2.466 / **0.640** | +0.224 / **−0.003** | 0/3 |
+| 2,048 | 0.645 / **0.541** | 1.308 / **0.554** | +0.107 / **−0.002** | 0/4 |
+| 8,192 | 0.596 / **0.526** | 0.594 / **0.510** | +0.084 / **+0.002** | **4/4** |
+| 32,768 | 0.583 / **0.519** | **0.477** / 0.497 | +0.079 / **+0.002** | **3/3** |
+| ≥ 131,072 | 0.583 / **0.515–0.518** | **0.469–0.471** / 0.492–0.496 | +0.083 / **−0.008…−0.003** | **3/3** |
+
+- **The noise-aware PFN is calibrated at every scale.** Its over-confidence is −0.010 to +0.019 across all 20 cells (n = 32–8,192, ε = 1–64). The releases' own classifiers range from +0.08 to +0.44.
+- **It beats the plain release's own classifier in 20/20 cells**, by 0.07 nats even at the largest n·ε. There it removes the structural over-confidence of plain margins (−0.008…+0.005 vs +0.076…+0.087). It even beats *noise-free* naive Bayes on the real records (0.514–0.525 vs 0.574–0.594). It cannot see the feature correlations, but it has learned from the prior how much to discount independent-looking evidence. "Noise-aware" here also means "release-aware": it corrects what the release leaves out, not only its noise.
+- **It beats the tree release's own classifier in 14/20 cells**: everywhere up to n·ε = 8,192 (0.510 vs 0.594 there), often by a wide margin. At n·ε ≥ 32,768 it is 0.007–0.026 nats worse. There that classifier is essentially noise-free TAN (within 0.005), so the gap is the network's own amortization error at the high end. More training or capacity is the obvious remedy.
+- **The noise-aware analyst prefers the tree release from n·ε = 8,192 on, in every cell**, the same crossover the sweep found for the releases' own classifiers. Below that it prefers the plain release, consistent with E4c′. Release choice therefore does not depend on which of these consumers reads it: below n·ε ≈ 2,000, spend the budget on label margins; from about 8,000, release a private tree.
+- **Small n.** At n = 32 the private noise-aware PFN beats both *non-private* plug-ins (naive Bayes and TAN on the real records) at every ε, because those plug-ins over-fit. At n ≤ 128 the table reader matches or beats the earlier row-reading noise-aware PFNs (0 to 0.05 nats lower NLL). The privacy cost against a non-private PFN on the real records remains (best private 0.526, on the tree release, vs 0.498 at n = 128, ε = 64).
+
 ## 5. Recommended changes to the plan
 
 In priority order. Each item says what to change and why.
@@ -381,7 +410,7 @@ In priority order. Each item says what to change and why.
 | H1 | partially supported | Prop. 0 and the wrapper and post-processing guarantees are correct (X0). A third route must be added: certified-by-architecture PFNs (PrivTab). The TREDBench caveat limits "synthetic-only continued pretraining". |
 | H2 | partially supported | E1-lite. Λ is small on typical data and grows under search. The network leaks up to 2.5× the exact worst case, so exact-PPD privacy is not inherited. Better-trained PFNs leak more (B5). **Not observed:** leakage "driven large": stays below 2B_y for a small network. |
 | H3 | partially supported | E3-lite (idealised prior, exact-Bayes teachers). PFN-like teachers win at small n·ε, and C2 picks m within 2× in 42/45 configurations. But C2 needs a pointwise bias floor, and its n* is 2–10× conservative. Real PFN teachers, and trained teachers with charged tuning, are untested. |
-| H4 | partially supported (core claim supported in pilot) | Label RR: E4-lite's trained noise-aware PFN recovers 71–86% of the exact NLL gain. Synthetic data: the *direction* in H4 is generator-dependent. It is under-confident for a noisy full histogram (D2-sparse) and over-confident for a marginal-based synthesizer (E4b-lite, 12/12 cells), where the trained noise-aware PFN is calibrated and lowers NLL in 12/12 cells. E4c-lite (§4.9) and E4c′ (§4.10): adding feature-pair tables at a fixed budget, star or private per-dataset MST tree, makes naive use worse except at the largest n·ε, even with a non-private oracle tree. Noise-aware still lowers NLL in 12/12 cells. The n·ε sweep (§4.11) puts the crossover where a private tree starts to pay at n·ε ≈ 8,000; below about 2,000, plain margins are better. Open: real data, TabPFN scale. |
+| H4 | partially supported (core claim supported in pilot) | Label RR: E4-lite's trained noise-aware PFN recovers 71–86% of the exact NLL gain. Synthetic data: the *direction* in H4 is generator-dependent. It is under-confident for a noisy full histogram (D2-sparse) and over-confident for a marginal-based synthesizer (E4b-lite, 12/12 cells), where the trained noise-aware PFN is calibrated and lowers NLL in 12/12 cells. E4c-lite (§4.9) and E4c′ (§4.10): adding feature-pair tables at a fixed budget, star or private per-dataset MST tree, makes naive use worse except at the largest n·ε, even with a non-private oracle tree. Noise-aware still lowers NLL in 12/12 cells. The n·ε sweep (§4.11) puts the crossover where a private tree starts to pay at n·ε ≈ 8,000; below about 2,000, plain margins are better. E4d-lite (§4.12): a table-reading noise-aware PFN is calibrated from n = 32 to 8,192, beats the plain release's own classifier in 20/20 cells and the tree release's in 14/20 (0.007–0.026 nats short at n·ε ≥ 32,768). Open: real data, TabPFN scale. |
 
 ## 7. Limitations of this review and next steps
 
@@ -389,7 +418,7 @@ In priority order. Each item says what to change and why.
 - **No released checkpoints.** HuggingFace was blocked, so no TabPFN or NodePFN weights were run. Every pilot uses closed-form priors and small in-house networks or exact Bayes. They test the *mechanisms and targets*, not backbone-scale behaviour.
 - **Search budgets are small.** E1-lite's adversarial search is a lower bound with a modest budget. E3-lite's trained teacher is untuned logistic regression.
 - **Suggested next iteration**, in order:
-  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7) and with trained networks on a marginal-based synthesizer as E4b-lite (§4.8). ~~A dependence-selected, MST-style tree~~: done as E4c′ (§4.10); it does not help at n ≤ 128. ~~The n·ε at which a tree starts to pay~~: about 8,000 (§4.11). Still open: longer training for the noisiest RR cell, real tables, and a noise-aware PFN retrained for large n.
+  1. ~~E4 with a trained noise-aware PFN on label RR~~: done as E4-lite (§4.6). ~~High-dimensional DP synthetic data~~: done at target level as D2-sparse (§4.7) and with trained networks on a marginal-based synthesizer as E4b-lite (§4.8). ~~A dependence-selected, MST-style tree~~: done as E4c′ (§4.10); it does not help at n ≤ 128. ~~The n·ε at which a tree starts to pay~~: about 8,000 (§4.11). ~~A noise-aware PFN retrained for large n~~: done as E4d-lite (§4.12), reading the tables rather than rows. Still open: closing its 0.01–0.03-nat gap to noise-free TAN at n·ε ≥ 32,768, longer training for the noisiest RR cell, and real tables.
   2. Rerun E3-lite with the E1 network as the teacher, and with tuned plus charged trained teachers.
   3. Write C2′ and the T4 calibration argument (soft scores waste sensitivity) as short theorems.
   4. Read PrivTab and decide the paper's positioning.

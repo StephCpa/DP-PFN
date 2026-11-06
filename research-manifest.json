@@ -52,10 +52,11 @@
         "D2-sparse-synthetic",
         "E4b-lite-noise-aware-synthetic",
         "E4c-lite-mst-margins",
-        "E4c-prime-mst-selection"
+        "E4c-prime-mst-selection",
+        "E4d-lite-large-n-summary-pfn"
       ],
       "source": "proposal Section 5; tested by E4, Gate 2",
-      "evidence": "Label RR: a trained noise-aware PFN recovers 71-86% of the exact NLL gain over naive plug-in (E4-lite). Synthetic data: the sign of naive mis-calibration depends on the generator. It is under-confident for a noisy full histogram (D2-sparse, exact targets) and over-confident in 12/12 cells for a marginal-based, naive-Bayes-structured synthesizer (E4b-lite, trained networks: +0.081 to +0.186), where non-private naive Bayes is already over-confident (+0.098 to +0.165) and extra synthetic rows add little (+0.003 to +0.040). In E4b-lite the trained noise-aware PFN is calibrated (|over-confidence| <= 0.014) and lowers NLL in 12/12 cells. E4c-lite spends half the budget on 15 feature-pair tables chosen by label informativeness (a star, not a dependence-selected MST tree): naive over-confidence rises in 8/12 cells (by up to +0.061) because the split budget adds noise and the star recovers little correlation; the noise-aware PFN stays in -0.008..+0.025 and lowers NLL in 12/12 cells. E4c-prime selects a per-dataset tree privately, as MST does: at n<=128, eps<=16 the selection is close to random, and even a non-private oracle tree lowers naive over-confidence only at n=128 with eps=4-16 (3/12 cells), because splitting the budget adds more noise than the tree removes. The noise-aware PFN stays calibrated on the DP-MST release and beats naive in NLL in 12/12 cells, though that release is less informative than E4b's. An n*eps sweep (n 32-8192, eps 1-64) puts the crossover at n*eps ~ 8,000: below ~2,000 plain feature-label margins beat every tree release; from 32,768 the private tree wins every cell by ~0.1 nats and removes the +0.08 structural over-confidence that plain margins keep. Bulk synthetic rows matter in the k -> inf limit (+0.32 to +0.41 over-confidence at n*eps <= 128 vs +0.11 to +0.18 for k=1). Open: real data, TabPFN scale."
+      "evidence": "Label RR: a trained noise-aware PFN recovers 71-86% of the exact NLL gain over naive plug-in (E4-lite). Synthetic data: the sign of naive mis-calibration depends on the generator. It is under-confident for a noisy full histogram (D2-sparse, exact targets) and over-confident in 12/12 cells for a marginal-based, naive-Bayes-structured synthesizer (E4b-lite, trained networks: +0.081 to +0.186), where non-private naive Bayes is already over-confident (+0.098 to +0.165) and extra synthetic rows add little (+0.003 to +0.040). In E4b-lite the trained noise-aware PFN is calibrated (|over-confidence| <= 0.014) and lowers NLL in 12/12 cells. E4c-lite spends half the budget on 15 feature-pair tables chosen by label informativeness (a star, not a dependence-selected MST tree): naive over-confidence rises in 8/12 cells (by up to +0.061) because the split budget adds noise and the star recovers little correlation; the noise-aware PFN stays in -0.008..+0.025 and lowers NLL in 12/12 cells. E4c-prime selects a per-dataset tree privately, as MST does: at n<=128, eps<=16 the selection is close to random, and even a non-private oracle tree lowers naive over-confidence only at n=128 with eps=4-16 (3/12 cells), because splitting the budget adds more noise than the tree removes. The noise-aware PFN stays calibrated on the DP-MST release and beats naive in NLL in 12/12 cells, though that release is less informative than E4b's. An n*eps sweep (n 32-8192, eps 1-64) puts the crossover at n*eps ~ 8,000: below ~2,000 plain feature-label margins beat every tree release; from 32,768 the private tree wins every cell by ~0.1 nats and removes the +0.08 structural over-confidence that plain margins keep. Bulk synthetic rows matter in the k -> inf limit (+0.32 to +0.41 over-confidence at n*eps <= 128 vs +0.11 to +0.18 for k=1). E4d-lite: a noise-aware PFN reading the noisy tables is calibrated from n=32 to 8192 (-0.010 to +0.019), beats the plain release's own classifier in 20/20 cells and the tree release's in 14/20, removes plain margins' structural over-confidence, and prefers the tree release from n*eps = 8192. Open: real data, TabPFN scale."
     }
   ],
   "loop": {
@@ -114,6 +115,12 @@
         "iteration": 1,
         "kind": "experiment",
         "text": "E4c-prime sweep: n*eps sweep (n 32-8192, eps 1-64, 20 cells): the release's own classifier (k -> inf limit of naive use) gains from a tree once n*eps >= 8192 for the non-private oracle tree and >= 32768 for the private per-dataset MST tree (all cells at and above, NLL); below ~2,000 every tree release is worse than plain feature-label margins. Private selection becomes informative near n*eps 2,000 and near-oracle by 8,000-33,000. Plain marginals keep a structural over-confidence of +0.075 to +0.087 at n*eps >= 32,768 that only the tree removes (noise-free TAN beats noise-free NB by 0.055-0.122 nats for n >= 128). At n*eps <= 128 the plug-in is far more over-confident than the PFN on k=1 rows (+0.321 to +0.412 vs +0.111 to +0.181), so bulk synthetic rows matter when k is large."
+      },
+      {
+        "at": "2026-11-06T13:00:00.000Z",
+        "iteration": 1,
+        "kind": "experiment",
+        "text": "E4d-lite: Noise-aware PFN reading the noisy tables (n 32-8192, 20 cells): calibrated everywhere (over-confidence -0.010 to +0.019) and better in NLL than the release's own classifier in 20/20 cells (plain release) and 14/20 (tree release). At n*eps >= 32,768 it removes plain margins' structural over-confidence (-0.008..+0.005 vs +0.076..+0.087 for the naive-Bayes plug-in). The noise-aware analyst prefers the tree release in every cell from n*eps = 8192.0; at n <= 128 the table reader is within -0.036..-0.001 (plain) and -0.053..-0.000 (tree) nats of the row-reading noise-aware PFNs."
       }
     ]
   },
@@ -255,6 +262,24 @@
       "summary": "Per-dataset DP MST selection (eps/3 each for label tables, selection and pair tables; 12 cells paired with E4b, 12/12 verified): private selection picks edges barely more correlated than random pairs (-0.001 to +0.051 |corr|; 0.21 vs oracle 0.29 at n=128, eps=16). Relative to E4b's release, naive over-confidence is lower in only 2/12 cells for the DP tree, 3/12 for the star and 3/12 even for a non-private oracle tree; at n=128, eps=16 the oracle tree lowers it by 0.017-0.019. The DP tree costs naive use 0.004-0.086 accuracy. The noise-aware PFN on the DP-MST release stays calibrated (-0.016 to +0.015) and beats naive in NLL in 12/12 cells, but is worse than E4b's noise-aware PFN on the simpler release in 12/12 cells (by 0.002-0.069 nats). Sweep: n*eps sweep (n 32-8192, eps 1-64, 20 cells): the release's own classifier (k -> inf limit of naive use) gains from a tree once n*eps >= 8192 for the non-private oracle tree and >= 32768 for the private per-dataset MST tree (all cells at and above, NLL); below ~2,000 every tree release is worse than plain feature-label margins. Private selection becomes informative near n*eps 2,000 and near-oracle by 8,000-33,000. Plain marginals keep a structural over-confidence of +0.075 to +0.087 at n*eps >= 32,768 that only the tree removes (noise-free TAN beats noise-free NB by 0.055-0.122 nats for n >= 128). At n*eps <= 128 the plug-in is far more over-confident than the PFN on k=1 rows (+0.321 to +0.412 vs +0.111 to +0.181), so bulk synthetic rows matter when k is large."
     },
     {
+      "id": "E4d-lite-large-n-summary-pfn",
+      "title": "Noise-aware PFN for large n reading the noisy tables (n 32-8192) vs the releases' own classifiers",
+      "tests": [
+        "H4"
+      ],
+      "status": "done",
+      "code": "experiments/E4d-lite-large-n-summary-pfn/",
+      "artifacts": [
+        "artifacts/E4d-lite-large-n-summary-pfn/training.json",
+        "artifacts/E4d-lite-large-n-summary-pfn/evaluation.json",
+        "artifacts/E4d-lite-large-n-summary-pfn/summary.json",
+        "artifacts/E4d-lite-large-n-summary-pfn/e4d.png",
+        "artifacts/E4d-lite-large-n-summary-pfn/training_v1_cross_attention.json",
+        "artifacts/E4d-lite-large-n-summary-pfn/evaluation_v1_cross_attention.json"
+      ],
+      "summary": "Noise-aware PFN reading the noisy tables (n 32-8192, 20 cells): calibrated everywhere (over-confidence -0.010 to +0.019) and better in NLL than the release's own classifier in 20/20 cells (plain release) and 14/20 (tree release). At n*eps >= 32,768 it removes plain margins' structural over-confidence (-0.008..+0.005 vs +0.076..+0.087 for the naive-Bayes plug-in). The noise-aware analyst prefers the tree release in every cell from n*eps = 8192.0; at n <= 128 the table reader is within -0.036..-0.001 (plain) and -0.053..-0.000 (tree) nats of the row-reading noise-aware PFNs. (A first cross-attention reader stayed at base-rate NLL and is kept as v1.)"
+    },
+    {
       "id": "G3-rr-sbm-threshold",
       "title": "Spectral recovery on edge-RR SBMs vs threshold formulas",
       "tests": [],
@@ -295,6 +320,12 @@
     "artifacts/E4c-prime-mst-selection/sweep.png",
     "artifacts/E4c-prime-mst-selection/sweep_summary.json",
     "artifacts/E4c-prime-mst-selection/training_aware_mst.json",
+    "artifacts/E4d-lite-large-n-summary-pfn/e4d.png",
+    "artifacts/E4d-lite-large-n-summary-pfn/evaluation.json",
+    "artifacts/E4d-lite-large-n-summary-pfn/evaluation_v1_cross_attention.json",
+    "artifacts/E4d-lite-large-n-summary-pfn/summary.json",
+    "artifacts/E4d-lite-large-n-summary-pfn/training.json",
+    "artifacts/E4d-lite-large-n-summary-pfn/training_v1_cross_attention.json",
     "artifacts/G3-rr-sbm-threshold/results.json",
     "artifacts/G3-rr-sbm-threshold/threshold_eps2.png",
     "artifacts/X0-theory-audit/audit.json"
@@ -311,5 +342,5 @@
       ]
     }
   ],
-  "updatedAt": "2026-11-06T10:00:00.000Z"
+  "updatedAt": "2026-11-06T13:00:00.000Z"
 }

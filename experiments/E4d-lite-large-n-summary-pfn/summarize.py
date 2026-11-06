@@ -93,7 +93,7 @@ def main() -> None:
         for ax, metric in zip(axes, ("nll", "overconf")):
             ys = [l["median"][key][metric] for l in levels]
             ax.plot(xs, ys, "-" + mk, color=col, label=lab)
-    axes[0].plot(xs, [l["median"]["clean_tan"]["nll"] for l in levels], "--", color=REF, lw=1.5, label="noise-free TAN (ceiling)")
+    axes[0].plot(xs, [l["median"]["clean_tan"]["nll"] for l in levels], "--", color=REF, lw=1.5, label="noise-free TAN plug-in (non-private)")
     axes[0].set_yscale("log")
     axes[0].set_ylabel("NLL on clean test labels (median over cells)")
     axes[0].set_title("Log-loss")
