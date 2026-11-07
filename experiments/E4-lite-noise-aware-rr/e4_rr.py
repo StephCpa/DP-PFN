@@ -127,7 +127,11 @@ def train(args):
         opt, lambda s: min(1.0, (s + 1) / warm) * 0.5 * (1 + math.cos(math.pi * min(1.0, s / args.steps))))
     curve, t0 = [], time.time()
     for step in range(1, args.steps + 1):
-        n = int(torch.randint(args.n_min, args.n_max + 1, (1,), generator=gen))
+        if args.n_dist == "uniform":
+            n = int(torch.randint(args.n_min, args.n_max + 1, (1,), generator=gen))
+        else:  # log-uniform: equal weight per octave of n
+            u = torch.empty(1).uniform_(math.log(args.n_min), math.log(args.n_max + 1), generator=gen)
+            n = min(args.n_max, int(u.exp().floor()))
         xc, yrel, xq, yq, rho, _ = sample(args.batch, n, args.n_qry, args.mode, gen)
         loss = -model(xc, yrel, xq, rho).gather(2, yq.unsqueeze(-1)).mean()
         opt.zero_grad()
@@ -155,6 +159,11 @@ def evaluate(args):
         ckpt = args.aware_ckpt if (mode == "aware" and args.aware_ckpt) else f"pfn_{mode}.pt"
         net.load_state_dict(torch.load(HERE / "results" / ckpt, weights_only=True))
         nets[mode] = net.eval()
+    extra = {}  # further aware checkpoints scored on the same draws: results key "aware_pfn@<stem>"
+    for ckpt in args.extra_aware:
+        net = PFN()
+        net.load_state_dict(torch.load(HERE / "results" / ckpt, weights_only=True))
+        extra["aware_pfn@" + Path(ckpt).stem] = net.eval()
     rows = []
     for n in args.ns:
         for eps in args.epss:
@@ -170,11 +179,13 @@ def evaluate(args):
                     "naive_pfn": nets["naive"](xc, yrel, xq, zero)[..., 1].exp().double(),
                     "aware_pfn": nets["aware"](xc, yrel, xq, rho)[..., 1].exp().double(),
                 }
+                for k, net in extra.items():
+                    preds[k] = net(xc, yrel, xq, rho)[..., 1].exp().double()
                 y = yq.numpy()
                 for k, p in preds.items():
                     for mk, mv in metrics(p.numpy(), y).items():
                         acc.setdefault(k, {}).setdefault(mk, []).append(mv)
-                for k in ("aware_pfn", "naive_pfn", "naive_exact"):
+                for k in ("aware_pfn", "naive_pfn", "naive_exact", *extra):
                     acc[k].setdefault("kl_from_aware_exact", []).append(kl_bern(preds["aware_exact"].numpy(), preds[k].numpy()))
                 acc["naive_pfn"].setdefault("kl_from_naive_exact", []).append(kl_bern(preds["naive_exact"].numpy(), preds["naive_pfn"].numpy()))
             res = {k: {mk: float(np.mean(v)) for mk, v in d.items()} for k, d in acc.items()}
@@ -195,6 +206,7 @@ def main():
     t.add_argument("--batch", type=int, default=64)
     t.add_argument("--n-min", type=int, default=8)
     t.add_argument("--n-max", type=int, default=128)
+    t.add_argument("--n-dist", choices=["uniform", "loguniform"], default="uniform", help="distribution of context size n")
     t.add_argument("--n-qry", type=int, default=32)
     t.add_argument("--lr", type=float, default=1e-3)
     t.add_argument("--threads", type=int, default=2)
@@ -212,6 +224,7 @@ def main():
     e.add_argument("--threads", type=int, default=4)
     e.add_argument("--seed", type=int, default=1)
     e.add_argument("--aware-ckpt", type=str, default="", help="aware checkpoint in results/ (default pfn_aware.pt)")
+    e.add_argument("--extra-aware", type=str, nargs="*", default=[], help="more aware checkpoints scored on the same draws")
     e.add_argument("--out", type=str, default="")
     args = ap.parse_args()
     train(args) if args.cmd == "train" else evaluate(args)

@@ -17,3 +17,25 @@ python experiments/E4-lite-noise-aware-rr/e4_rr.py train --mode aware --threads 
 python experiments/E4-lite-noise-aware-rr/e4_rr.py train --mode naive --threads 2
 python experiments/E4-lite-noise-aware-rr/e4_rr.py eval
 ```
+
+**Longer training** (review §4.6.1). Warm start from the 4,000-step model, 12,000 more steps, same paired evaluation:
+
+```bash
+python experiments/E4-lite-noise-aware-rr/e4_rr.py train --mode aware --init pfn_aware.pt --tag _16k --steps 12000 --save-at 4000 8000 --lr 3e-4 --seed 7 --threads 4
+python experiments/E4-lite-noise-aware-rr/e4_rr.py eval --aware-ckpt pfn_aware_16k_step4000.pt --out evaluation_8k.json
+python experiments/E4-lite-noise-aware-rr/e4_rr.py eval --aware-ckpt pfn_aware_16k_step8000.pt --out evaluation_12k.json
+python experiments/E4-lite-noise-aware-rr/e4_rr.py eval --aware-ckpt pfn_aware_16k.pt --out evaluation_16k.json
+python experiments/E4-lite-noise-aware-rr/compare_steps.py
+```
+
+**Training range** (review §4.6.2). In the runs above n = 128 is the top of the training range U{8..128}. Two more continuations of the same 4,000-step model, identical to the `_16k` run except for the context sizes: n ~ U{8..256}, and n ~ log-U[8, 256] (equal weight per octave, which keeps small n well represented). One evaluation pass scores all ten aware checkpoints on the same draws, over n ∈ {32, 64, 128, 256}. Its 4k and n ≤ 128 numbers reproduce the committed single-checkpoint files exactly.
+
+```bash
+python experiments/E4-lite-noise-aware-rr/e4_rr.py train --mode aware --init pfn_aware.pt --tag _n256 --steps 12000 --save-at 4000 8000 --lr 3e-4 --seed 7 --threads 2 --n-max 256
+python experiments/E4-lite-noise-aware-rr/e4_rr.py train --mode aware --init pfn_aware.pt --tag _n256log --steps 12000 --save-at 4000 8000 --lr 3e-4 --seed 7 --threads 2 --n-max 256 --n-dist loguniform
+python experiments/E4-lite-noise-aware-rr/e4_rr.py eval --ns 32 64 128 256 --out evaluation_range.json --extra-aware \
+    pfn_aware_16k_step4000.pt pfn_aware_16k_step8000.pt pfn_aware_16k.pt \
+    pfn_aware_n256_step4000.pt pfn_aware_n256_step8000.pt pfn_aware_n256.pt \
+    pfn_aware_n256log_step4000.pt pfn_aware_n256log_step8000.pt pfn_aware_n256log.pt
+python experiments/E4-lite-noise-aware-rr/compare_range.py
+```
