@@ -41,7 +41,7 @@ Iteration 1 (5 Nov 2026) is done: a plan review plus first-round research. Start
   - E3-lite: C2, PFN vs trained teachers, Vote vs LogPool.
   - D2-check: noise-aware calibration.
   - G3-check: edge-RR threshold.
-  - E4-lite: a trained noise-aware PFN on label RR. It recovers 71–86% of the exact calibration gain over naive TabPFN-style use, so Gate 2 passes in pilot form for label RR.
+  - E4-lite: a trained noise-aware PFN on label RR. It recovers 71–86% of the exact calibration gain over naive TabPFN-style use, so Gate 2 passes in pilot form for label RR. Trained 4× longer, it reaches 84–94% at n = 128.
   - D2-sparse and E4b-lite: on DP synthetic data, naive use is under-confident for a noisy full histogram but over-confident for a marginal-based synthesizer (12/12 cells). A trained noise-aware PFN is calibrated and lowers NLL in every E4b cell.
   - E4c-lite and E4c′: adding feature-pair tables at a fixed budget, whether a star or a privately selected per-dataset MST tree, makes naive use worse except at the largest n·ε, even with a non-private oracle tree. At n ≤ 128, spend the budget on label margins. An n·ε sweep puts the crossover where a private tree starts to pay at n·ε ≈ 8,000.
   - E4d-lite: a noise-aware PFN that reads the noisy tables directly is calibrated from n = 32 to 8,192, beats the plain release's own classifier in every cell, and also prefers a private tree from n·ε ≈ 8,000. Trained 3× longer, it matches noise-free TAN at the largest n·ε.

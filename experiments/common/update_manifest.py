@@ -25,6 +25,8 @@ def main() -> None:
         if (ROOT / "artifacts/E4-lite-noise-aware-rr/summary.json").exists() else None
     e4b = json.loads((ROOT / "artifacts/E4b-lite-noise-aware-synthetic/summary.json").read_text()) \
         if (ROOT / "artifacts/E4b-lite-noise-aware-synthetic/summary.json").exists() else None
+    e4_long = json.loads((ROOT / "artifacts/E4-lite-noise-aware-rr/continued_training_summary.json").read_text()) \
+        if (ROOT / "artifacts/E4-lite-noise-aware-rr/continued_training_summary.json").exists() else None
     old_h4 = next((h for h in m["hypotheses"] if h["id"] == "H4"), {})
     e4cp = json.loads((ROOT / "artifacts/E4c-prime-mst-selection/summary.json").read_text()) \
         if (ROOT / "artifacts/E4c-prime-mst-selection/summary.json").exists() else None
@@ -93,8 +95,13 @@ def main() -> None:
              artifacts=["artifacts/E4-lite-noise-aware-rr/training_aware.json",
                         "artifacts/E4-lite-noise-aware-rr/training_naive.json",
                         "artifacts/E4-lite-noise-aware-rr/evaluation.json",
-                        "artifacts/E4-lite-noise-aware-rr/summary.json"],
-             summary=(e4 or {}).get("headline", "pending")),
+                        "artifacts/E4-lite-noise-aware-rr/summary.json",
+                        "artifacts/E4-lite-noise-aware-rr/training_aware_16k.json",
+                        "artifacts/E4-lite-noise-aware-rr/evaluation_8k.json",
+                        "artifacts/E4-lite-noise-aware-rr/evaluation_12k.json",
+                        "artifacts/E4-lite-noise-aware-rr/evaluation_16k.json",
+                        "artifacts/E4-lite-noise-aware-rr/continued_training_summary.json"],
+             summary=(e4 or {}).get("headline", "pending") + ((" Longer training: " + e4_long["headline"]) if e4_long else "")),
         dict(id="D2-sparse-synthetic", title="Naive vs noise-aware use of a sparse 512-cell DP histogram (exact Bayes)",
              tests=["H4"], status="done", code="experiments/D2-sparse-synthetic/",
              artifacts=["artifacts/D2-sparse-synthetic/results.json"],
@@ -179,6 +186,11 @@ def main() -> None:
                 tail += (" Trained 3x longer (18k steps) it beats the tree release's own classifier in %d/20 cells and is "
                          "within %+.3f..%+.3f nats of it at n*eps >= 32,768." % (
                              e4d_long["beats_plugin_tree_18k"], *e4d_long["gap_to_plugin_tree_at_high_neps"]["18k"]))
+        if e4_long:
+            nc = e4_long["noisiest_cell"]
+            tail += (" Training the label-RR network 4x longer raises the noisiest cell (n=128, eps=0.5) from %.0f%% to %.0f%% "
+                     "of the exact NLL gain (KL to the exact target %.4f -> %.4f); the rest trades off against small n." % (
+                         100 * nc["4k"]["gap_recovered"], 100 * nc["16k"]["gap_recovered"], nc["4k"]["kl"], nc["16k"]["kl"]))
         status["H4"] = (st, ev + e4cp["h4_note_suffix"] + tail + " Open: real data, TabPFN scale.")
     for h in m["hypotheses"]:
         if h["id"] in status:
@@ -231,10 +243,15 @@ def main() -> None:
         m["loop"]["history"].append(dict(
             at="2026-11-06T13:00:00.000Z", iteration=1, kind="experiment", text="E4d-lite: " + e4d["headline"]))
         NOW_ = "2026-11-06T13:00:00.000Z"
+    if e4_long:
+        m["loop"]["history"].append(dict(
+            at="2026-11-07T10:00:00.000Z", iteration=1, kind="experiment", text="E4-lite longer training: " + e4_long["headline"]))
     if e4d_long:
         m["loop"]["history"].append(dict(
             at="2026-11-06T15:00:00.000Z", iteration=1, kind="experiment", text="E4d-lite longer training: " + e4d_long["headline"]))
         NOW_ = "2026-11-06T15:00:00.000Z"
+    if e4_long:
+        NOW_ = "2026-11-07T10:00:00.000Z"
     m["updatedAt"] = NOW_
     MANIFEST.write_text(json.dumps(m, indent=2, ensure_ascii=False) + "\n")
     print("updated", MANIFEST)
