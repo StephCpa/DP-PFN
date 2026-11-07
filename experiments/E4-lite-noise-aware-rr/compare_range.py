@@ -11,8 +11,11 @@ same 4,000-step model, identical except for the context-size distribution during
   log256 : n ~ log-U[8, 256] (equal weight per octave of n)
 
 gap_recovered = (NLL naive PFN - NLL aware PFN) / (NLL naive PFN - NLL exact noise-aware target), as in
-compare_steps.py.  The naive PFN was trained on n <= 128, so at n = 256 it extrapolates; there the gap
-is also reported against the exact naive plug-in (gap_vs_exact_naive), which needs no network.
+compare_steps.py.  Because the exact target is the Bayes predictor under the prior, the expected NLL excess
+of any predictor over it equals its KL from the target, so gap_kl = 1 - KL(aware) / KL(naive PFN) estimates
+the same quantity without the sampling noise of the test labels (which is larger than the whole noise-aware
+gain at n = 32).  The naive PFN was trained on n <= 128, so at n = 256 it extrapolates; there the gap is also
+reported against the exact naive plug-in (gap_vs_exact_naive), which needs no network.
 """
 
 from __future__ import annotations
@@ -57,6 +60,7 @@ def main() -> None:
             d_pfn, d_ex = nv["nll"] - ex["nll"], nx["nll"] - ex["nll"]
             row[k] = dict(nll=a["nll"], overconf=a["overconf"], ece=a["ece"], acc=a["acc"], kl=a["kl_from_aware_exact"],
                           gap_recovered=(nv["nll"] - a["nll"]) / d_pfn if d_pfn > 0.002 else None,
+                          gap_kl=1 - a["kl_from_aware_exact"] / nv["kl_from_aware_exact"] if c[1] != INF else None,
                           gap_vs_exact_naive=(nx["nll"] - a["nll"]) / d_ex if d_ex > 0.002 else None)
         cells.append(row)
 
@@ -69,12 +73,16 @@ def main() -> None:
     for k in NETS:
         agg[k] = dict(
             noisiest_gap=cell(128, 0.5)[k]["gap_recovered"],
+            noisiest_gap_kl=cell(128, 0.5)[k]["gap_kl"],
             noisiest_overconf=cell(128, 0.5)[k]["overconf"],
             noisiest_kl=cell(128, 0.5)[k]["kl"],
             n128_gaps=[cell(128, e)[k]["gap_recovered"] for e in (0.5, 1.0, 2.0)],
             n256_gaps_vs_exact_naive=[cell(256, e)[k]["gap_vs_exact_naive"] for e in (0.5, 1.0, 2.0)],
             n32_nll_minus_naive=[cell(32, e)[k]["nll"] - cell(32, e)["naive_pfn"]["nll"] for e in (0.5, 1.0, 2.0)],
             n32_overconf=[cell(32, e)[k]["overconf"] for e in (0.5, 1.0, 2.0)],
+            n32_kl=[cell(32, e)[k]["kl"] for e in (0.5, 1.0, 2.0, INF)],
+            gap_kl_by_n={n: [cell(n, e)[k]["gap_kl"] for e in (0.5, 1.0, 2.0)] for n in (32, 64, 128, 256)},
+            kl_worse_than_naive_pfn_rr=sum(c[k]["kl"] > c["naive_pfn"]["kl"] for c in rr),
             mean_kl_old8=sum(c[k]["kl"] for c in old8) / len(old8),
             mean_kl_all16=sum(c[k]["kl"] for c in cells) / len(cells),
             max_kl_all16=max(c[k]["kl"] for c in cells),
@@ -88,23 +96,26 @@ def main() -> None:
         "Same 4k start, 12k more steps, only the training range of n changed. Noisiest cell (n=128, eps=0.5), "
         "share of the exact noise-aware NLL gain: n<=128 %.0f%%, U{8..256} %.0f%%, log-U[8,256] %.0f%% "
         "(KL to exact %.4f / %.4f / %.4f). Mean KL over 16 cells %.4f / %.4f / %.4f; max |over-confidence - exact| "
-        "%.3f / %.3f / %.3f. n=32 NLL minus naive PFN, worst eps: %+.4f / %+.4f / %+.4f." % (
+        "%.3f / %.3f / %.3f. Largest KL at n=32: %.4f / %.4f / %.4f." % (
             100 * a["noisiest_gap"], 100 * b["noisiest_gap"], 100 * g["noisiest_gap"],
             a["noisiest_kl"], b["noisiest_kl"], g["noisiest_kl"],
             a["mean_kl_all16"], b["mean_kl_all16"], g["mean_kl_all16"],
             a["max_abs_overconf_minus_exact_rr"], b["max_abs_overconf_minus_exact_rr"], g["max_abs_overconf_minus_exact_rr"],
-            max(a["n32_nll_minus_naive"]), max(b["n32_nll_minus_naive"]), max(g["n32_nll_minus_naive"])))
+            max(a["n32_kl"]), max(b["n32_kl"]), max(g["n32_kl"])))
     write_json(EXP, "range_summary.json", out, __file__)
 
     print("reproduces committed evaluations (max |diff|):", {k: "%.1e" % v for k, v in repro.items()})
     print(out["headline"])
-    print("\n%-10s %8s %8s %10s %10s %10s %8s %8s %8s %8s" % (
-        "network", "gap128.5", "oc128.5", "KL128.5", "meanKL16", "max|oc-ex|", "n32 dNLL", "n32 oc", "beats", "clean"))
+    print("\n%-11s %8s %8s %8s %8s %8s %10s %8s %8s %6s %8s" % (
+        "network", "gap128.5", "gapKL", "oc128.5", "KL128.5", "meanKL16", "max|oc-ex|", "maxKL32", "n32 oc", "beats", "clean"))
     for k, v in agg.items():
-        print("%-10s %7.0f%% %+8.3f %10.4f %10.4f %10.3f %+8.4f %+8.3f %5d/%d %+8.4f" % (
-            k, 100 * v["noisiest_gap"], v["noisiest_overconf"], v["noisiest_kl"], v["mean_kl_all16"],
-            v["max_abs_overconf_minus_exact_rr"], max(v["n32_nll_minus_naive"]), max(v["n32_overconf"], key=abs),
+        print("%-11s %7.0f%% %7.0f%% %+8.3f %8.4f %8.4f %10.3f %8.4f %+8.3f %3d/%d %+8.4f" % (
+            k, 100 * v["noisiest_gap"], 100 * v["noisiest_gap_kl"], v["noisiest_overconf"], v["noisiest_kl"], v["mean_kl_all16"],
+            v["max_abs_overconf_minus_exact_rr"], max(v["n32_kl"]), max(v["n32_overconf"], key=abs),
             v["beats_naive_pfn_rr"], len(rr), max(v["clean_nll_minus_exact"], key=abs)))
+    print("\ngap_kl by n (eps 0.5/1/2):")
+    for k, v in agg.items():
+        print("%-11s %s" % (k, "  ".join("n=%d %s" % (n, "/".join("%3.0f%%" % (100 * x) for x in g)) for n, g in v["gap_kl_by_n"].items())))
     print("\ncell         exact NLL/oc     naive pfn/exact |  aware NLL: 4k  n128  u256  log256 (16k) | KL: 4k n128 u256 log256")
     for c in cells:
         ks = ("4k", "n128@16k", "u256@16k", "log256@16k")
