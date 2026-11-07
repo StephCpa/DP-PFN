@@ -119,6 +119,8 @@ def train(args):
     out = HERE / "results"
     out.mkdir(exist_ok=True)
     model = PFN()
+    if args.init:  # warm start (continued training); optimizer state starts fresh
+        model.load_state_dict(torch.load(out / args.init, weights_only=True))
     opt = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=1e-4)
     warm = max(1, args.steps // 20)
     sched = torch.optim.lr_scheduler.LambdaLR(
@@ -133,11 +135,13 @@ def train(args):
         torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
         opt.step()
         sched.step()
+        if step in args.save_at:
+            torch.save(model.state_dict(), out / f"pfn_{args.mode}{args.tag}_step{step}.pt")
         if step % 250 == 0 or step == args.steps:
             curve.append(dict(step=step, train_loss=float(loss), seconds=time.time() - t0))
             print("%s step %5d loss %.4f (%.0fs)" % (args.mode, step, float(loss), time.time() - t0), flush=True)
-    torch.save(model.state_dict(), out / f"pfn_{args.mode}.pt")
-    write_json(EXP, f"training_{args.mode}.json", dict(config=vars(args), curve=curve), __file__, args.seed)
+    torch.save(model.state_dict(), out / f"pfn_{args.mode}{args.tag}.pt")
+    write_json(EXP, args.out or f"training_{args.mode}{args.tag}.json", dict(config=vars(args), curve=curve), __file__, args.seed)
 
 
 # ------------------------------------------------------------------ evaluate
@@ -148,7 +152,8 @@ def evaluate(args):
     nets = {}
     for mode in ("aware", "naive"):
         net = PFN()
-        net.load_state_dict(torch.load(HERE / "results" / f"pfn_{mode}.pt", weights_only=True))
+        ckpt = args.aware_ckpt if (mode == "aware" and args.aware_ckpt) else f"pfn_{mode}.pt"
+        net.load_state_dict(torch.load(HERE / "results" / ckpt, weights_only=True))
         nets[mode] = net.eval()
     rows = []
     for n in args.ns:
@@ -178,7 +183,7 @@ def evaluate(args):
             for k, v in res.items():
                 extra = "".join("  %s %.4f" % (kk, vv) for kk, vv in v.items() if kk.startswith("kl"))
                 print("   %-13s acc %.3f  NLL %.4f  ECE %.4f  overconf %+.4f%s" % (k, v["acc"], v["nll"], v["ece"], v["overconf"], extra), flush=True)
-    write_json(EXP, "evaluation.json", dict(config=vars(args), rows=rows), __file__, args.seed)
+    write_json(EXP, args.out or "evaluation.json", dict(config=vars(args), rows=rows), __file__, args.seed)
 
 
 def main():
@@ -194,6 +199,10 @@ def main():
     t.add_argument("--lr", type=float, default=1e-3)
     t.add_argument("--threads", type=int, default=2)
     t.add_argument("--seed", type=int, default=0)
+    t.add_argument("--init", type=str, default="", help="checkpoint in results/ to warm-start from")
+    t.add_argument("--tag", type=str, default="", help="suffix for checkpoint and curve names")
+    t.add_argument("--save-at", type=int, nargs="*", default=[], help="extra checkpoints at these (local) steps")
+    t.add_argument("--out", type=str, default="")
     e = sub.add_parser("eval")
     e.add_argument("--ns", type=int, nargs="*", default=[32, 128])
     e.add_argument("--epss", type=float, nargs="*", default=[0.5, 1.0, 2.0, float("inf")])
@@ -202,6 +211,8 @@ def main():
     e.add_argument("--queries", type=int, default=400)
     e.add_argument("--threads", type=int, default=4)
     e.add_argument("--seed", type=int, default=1)
+    e.add_argument("--aware-ckpt", type=str, default="", help="aware checkpoint in results/ (default pfn_aware.pt)")
+    e.add_argument("--out", type=str, default="")
     args = ap.parse_args()
     train(args) if args.cmd == "train" else evaluate(args)
 
